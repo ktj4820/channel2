@@ -33,7 +33,7 @@ class BaseTestCase(TestCase):
             'NUM_VIDEOS': 1,
         })
         dc.create_users()
-        dc.create_tags()
+        dc.create_labels()
         dc.create_videos()
 
         cls.user = dc.user

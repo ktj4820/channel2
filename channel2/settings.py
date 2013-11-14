@@ -96,6 +96,26 @@ LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
 
 #-------------------------------------------------------------------------------
+# local site settings
+#-------------------------------------------------------------------------------
+
+FFMPEG_PATH = ''
+
+# The length for which the video link is valid for
+VIDEO_LINK_EXPIRE = 3 * 60 * 60
+
+X_ACCEL = False
+
+SITE_DOMAIN = 'localhost:8000'
+SITE_SCHEME = 'http'
+
+EMAIL_HOST = ''
+EMAIL_PORT = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+
+#-------------------------------------------------------------------------------
 # localsettings.py
 #-------------------------------------------------------------------------------
 

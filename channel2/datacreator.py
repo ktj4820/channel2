@@ -1,11 +1,11 @@
 from collections import defaultdict
 import datetime, os, random, sys
+from channel2.label.models import Label
 
 sys.path.append(os.path.split(os.path.realpath(os.path.dirname(__file__)))[0])
 os.environ['DJANGO_SETTINGS_MODULE'] = 'channel2.settings'
 
 from channel2.account.models import User
-from channel2.tag.models import Tag
 from channel2.video.models import Video
 
 #-------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ DEFAULT_CONF = {
     'NUM_VIDEOS': 100,
 }
 
-TAGS = (
+LABELS = (
     ('Anime', (
         ('Accel World', None),
         ('Another', None),
@@ -46,23 +46,32 @@ class DataCreator:
         self.end = None
 
     def datacreator_start(self):
-        print '----------------------'
-        print 'datacreator.py started'
+        print('----------------------')
+        print('datacreator.py started')
         self.start = datetime.datetime.now()
 
     def datacreator_end(self):
         self.end = datetime.datetime.now()
-        print 'datacreator.py finished in %s' % (self.end-self.start)
-        print '-----------------------'
+        print('datacreator.py finished in %s' % (self.end-self.start))
+        print('-----------------------')
 
-    def run_method(self, f):
-        start = datetime.datetime.now()
-        f()
-        end = datetime.datetime.now()
-        print '\t%s - %s' % (f.__func__.func_name, end-start)
+    def timed(func):
+        """
+        use @timed to decorate a function that will print out the time it took
+        for this function to run.
+        """
+
+        def inner(*args, **kwargs):
+            start = datetime.datetime.now()
+            result = func(*args, **kwargs)
+            finish = datetime.datetime.now()
+            print('\t{} - {}'.format(func.__name__, finish-start))
+            return result
+        return inner
 
     #---------------------------------------------------------------------------
 
+    @timed
     def create_users(self):
         self.user = User(email='testuser@example.com', first_name='Test', last_name='User', is_staff=True)
         self.user.set_password('password')
@@ -77,18 +86,20 @@ class DataCreator:
 
         return self.user
 
-    def create_tags(self):
+    @timed
+    def create_labels(self):
 
         def create_tag_list(parent, tag_list):
             if not tag_list: return
             for i, (tag, children) in enumerate(tag_list):
-                tag = Tag.objects.create(tag=tag, parent=parent, pinned=(not parent), order=i)
+                tag = Label.objects.create(tag=tag, parent=parent, pinned=(not parent), order=i)
                 create_tag_list(tag, children)
 
-        create_tag_list(None, TAGS)
+        create_tag_list(None, LABELS)
 
+    @timed
     def create_videos(self):
-        tag_list = Tag.objects.get(tag='Anime').children.all()
+        tag_list = Label.objects.get(tag='Anime').children.all()
         video_dict = defaultdict(list)
 
         for i in range(self.conf['NUM_VIDEOS']):
@@ -105,9 +116,9 @@ class DataCreator:
     def run(self):
         self.datacreator_start()
 
-        self.run_method(self.create_users)
-        self.run_method(self.create_tags)
-        self.run_method(self.create_videos)
+        self.create_users()
+        self.create_labels()
+        self.create_videos()
 
         self.datacreator_end()
 
