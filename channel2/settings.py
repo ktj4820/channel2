@@ -21,6 +21,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'channel2.sqlite3'),
+        'TEST_NAME': os.path.join(BASE_DIR, 'data/test.sqlite3'),
     }
 }
 
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     'south',
 
     'channel2.account',
+    'channel2.admin',
     'channel2.core',
     'channel2.flat',
     'channel2.label',
@@ -94,6 +96,8 @@ AUTH_USER_MODEL = 'account.User'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
+
+TEST_RUNNER = 'channel2.core.tests.Channel2TestSuiteRunner'
 
 #-------------------------------------------------------------------------------
 # local site settings

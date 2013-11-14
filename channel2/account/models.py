@@ -1,3 +1,4 @@
+import binascii
 import os
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
@@ -30,7 +31,7 @@ class User(AbstractBaseUser):
         return self.name
 
     def generate_token(self):
-        self.token = os.urandom(32).encode('hex')
+        self.token = binascii.hexlify(os.urandom(32))
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

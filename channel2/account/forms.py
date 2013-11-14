@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate
-from channel2.core.widgets import EmailInput
+from django.forms.widgets import EmailInput
 
 
 class AccountLoginForm(forms.Form):

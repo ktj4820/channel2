@@ -7,6 +7,6 @@ urlpatterns = patterns('',
     url(r'^$',                  VideoListView.as_view(), name='video.list'),
 
     # apps
-    url(r'^account/$',          include('channel2.account.urls')),
+    url(r'^account/',           include('channel2.account.urls')),
 
 )

@@ -1,4 +1,8 @@
+import shutil, tempfile
+from django.db import connections
 from django.test import TestCase
+from django.test.simple import DjangoTestSuiteRunner
+from channel2 import settings
 from channel2.account.models import User
 
 
@@ -9,42 +13,33 @@ def fast_check_password(self, raw_password):
     return self.password == raw_password
 
 
+class Channel2TestSuiteRunner(DjangoTestSuiteRunner):
+
+    def copy_db(self, db_path):
+        self.temp_db = tempfile.NamedTemporaryFile()
+        shutil.copy2(db_path, self.temp_db.name)
+        return self.temp_db.name
+
+    def setup_databases(self, **kwargs):
+        for alias in connections:
+            connection = connections[alias]
+            self.copy_db(settings.DATABASES[alias]['TEST_NAME'])
+            connection.settings_dict['NAME'] = self.temp_db.name
+
+    def teardown_databases(self, old_config, **kwargs):
+        self.temp_db.close()
+
+
 class BaseTestCase(TestCase):
-    """
-    BaseTestCase class which other test classes can inherit from.
-    This class provides a user and an authenticated session.
-    """
 
-    @classmethod
-    def setUpClass(cls):
-        super(BaseTestCase, cls).setUpClass()
-
-        # monkey patching User model to speed up tests
-        cls.original_set_password = User.set_password
-        cls.original_check_password = User.check_password
+    def setUp(self):
+        super(BaseTestCase, self).setUp()
 
         User.set_password = fast_set_password
         User.check_password = fast_check_password
 
-        User.objects.all().delete()
+        self.user = User.objects.get(email='testuser@example.com')
+        self.user.set_password('password')
+        self.user.save()
 
-        dc = DataCreator({
-            'NUM_USERS': 1,
-            'NUM_VIDEOS': 1,
-        })
-        dc.create_users()
-        dc.create_labels()
-        dc.create_videos()
-
-        cls.user = dc.user
-
-    @classmethod
-    def tearDownClass(cls):
-        User.set_password = cls.original_set_password
-        User.check_password = cls.original_check_password
-        super(BaseTestCase, cls).tearDownClass()
-
-    def setUp(self):
-        super(BaseTestCase, self).setUp()
         self.client.login(email='testuser@example.com', password='password')
-

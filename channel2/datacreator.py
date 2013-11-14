@@ -11,8 +11,15 @@ from channel2.video.models import Video
 #-------------------------------------------------------------------------------
 
 DEFAULT_CONF = {
-    'NUM_USERS': 3,
-    'NUM_VIDEOS': 100,
+    'USERS': 3,
+    'LABELS': 100,
+    'VIDEOS': 100,
+}
+
+TEST_CONF = {
+    'USERS': 0,
+    'LABELS': 1,
+    'VIDEOS': 1,
 }
 
 LABELS = (
@@ -78,7 +85,7 @@ class DataCreator:
         self.user.save()
 
         self.user_list = []
-        for i in range(1, self.conf['NUM_USERS']+1):
+        for i in range(1, self.conf['USERS']+1):
             user = User(email='testuser{}@example.com'.format(i), name='Test User {}'.format(i))
             user.set_password('password')
             user.save()
@@ -88,11 +95,14 @@ class DataCreator:
 
     @timed
     def create_labels(self):
+        self.label_list = []
         def create_label_list(parent, label_list):
             if not label_list: return
             for i, (label, children) in enumerate(label_list):
                 label = Label.objects.create(name=label, parent=parent, pinned=(not parent), order=i)
-                create_label_list(label, children)
+                self.label_list.append(label)
+                if len(self.label_list) < self.conf['LABELS']:
+                    create_label_list(label, children)
         create_label_list(None, LABELS)
 
     @timed
@@ -100,7 +110,7 @@ class DataCreator:
         label_list = Label.objects.get(name='Anime').children.all()
         video_dict = defaultdict(list)
 
-        for i in range(self.conf['NUM_VIDEOS']):
+        for i in range(self.conf['VIDEOS']):
             label = random.choice(label_list)
             episode = len(video_dict[label.name]) + 1
             video = Video.objects.create(

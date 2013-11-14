@@ -15,7 +15,7 @@ class AccountViewTests(BaseTestCase):
 
     def test_account_logout_view_get(self):
         response = self.client.get(reverse('account.logout'))
-        self.assertEquals(response.status_code, 405)
+        self.assertEqual(response.status_code, 405)
 
     def test_account_logout_view_post(self):
         response = self.client.post(reverse('account.logout'))
@@ -30,7 +30,7 @@ class AccountViewTestsAnonymous(BaseTestCase):
 
     def test_account_login_view_get(self):
         response = self.client.get(reverse('account.login'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-login.html')
 
     def test_account_login_view_post_failed(self):
@@ -38,7 +38,7 @@ class AccountViewTestsAnonymous(BaseTestCase):
             'email': 'wronguser@example.com',
             'password': 'password',
         })
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-login.html')
 
     def test_account_login_view_post(self):
@@ -50,7 +50,7 @@ class AccountViewTestsAnonymous(BaseTestCase):
 
     def test_account_logout_view_get(self):
         response = self.client.get(reverse('account.logout'))
-        self.assertEquals(response.status_code, 405)
+        self.assertEqual(response.status_code, 405)
 
     def test_account_logout_view_post(self):
         response = self.client.post(reverse('account.logout'))
@@ -61,7 +61,7 @@ class AccountViewTestsAnonymous(BaseTestCase):
         self.user.save()
 
         response = self.client.get(reverse('account.activate', args=[self.user.token]))
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-activate.html')
 
     def test_account_activate_view_post_invalid(self):
@@ -72,7 +72,7 @@ class AccountViewTestsAnonymous(BaseTestCase):
             'password1': '1234',
             'password2': '5678',
         })
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-activate.html')
 
     def test_account_activate_view_post(self):
