@@ -36,7 +36,7 @@ header {
 }
 
 .header-heading {
-    display: block;
+    .inline-block();
 
     > a {
         color: #fff;
@@ -48,3 +48,8 @@ header {
         text-align: center;
     }
 }
+
+@media screen and (max-width: @screen-xs1) {
+    .header-heading { display: block; }
+}
+
