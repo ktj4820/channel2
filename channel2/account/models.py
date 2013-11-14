@@ -39,3 +39,6 @@ class User(AbstractBaseUser):
 
     def __unicode__(self):
         return self.email
+
+    class Meta:
+        db_table = 'user'

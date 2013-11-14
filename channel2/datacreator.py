@@ -1,11 +1,11 @@
 from collections import defaultdict
 import datetime, os, random, sys
-from channel2.label.models import Label
 
 sys.path.append(os.path.split(os.path.realpath(os.path.dirname(__file__)))[0])
 os.environ['DJANGO_SETTINGS_MODULE'] = 'channel2.settings'
 
 from channel2.account.models import User
+from channel2.label.models import Label
 from channel2.video.models import Video
 
 #-------------------------------------------------------------------------------
@@ -73,13 +73,13 @@ class DataCreator:
 
     @timed
     def create_users(self):
-        self.user = User(email='testuser@example.com', first_name='Test', last_name='User', is_staff=True)
+        self.user = User(email='testuser@example.com', name='Test User', is_staff=True)
         self.user.set_password('password')
         self.user.save()
 
         self.user_list = []
         for i in range(1, self.conf['NUM_USERS']+1):
-            user = User(email='testuser{}@example.com'.format(i), first_name='Test{}'.format(i), last_name='User',)
+            user = User(email='testuser{}@example.com'.format(i), name='Test User {}'.format(i))
             user.set_password('password')
             user.save()
             self.user_list.append(user)
@@ -88,28 +88,26 @@ class DataCreator:
 
     @timed
     def create_labels(self):
-
-        def create_tag_list(parent, tag_list):
-            if not tag_list: return
-            for i, (tag, children) in enumerate(tag_list):
-                tag = Label.objects.create(tag=tag, parent=parent, pinned=(not parent), order=i)
-                create_tag_list(tag, children)
-
-        create_tag_list(None, LABELS)
+        def create_label_list(parent, label_list):
+            if not label_list: return
+            for i, (label, children) in enumerate(label_list):
+                label = Label.objects.create(name=label, parent=parent, pinned=(not parent), order=i)
+                create_label_list(label, children)
+        create_label_list(None, LABELS)
 
     @timed
     def create_videos(self):
-        tag_list = Label.objects.get(tag='Anime').children.all()
+        label_list = Label.objects.get(name='Anime').children.all()
         video_dict = defaultdict(list)
 
         for i in range(self.conf['NUM_VIDEOS']):
-            tag = random.choice(tag_list)
-            episode = len(video_dict[tag.tag]) + 1
+            label = random.choice(label_list)
+            episode = len(video_dict[label.name]) + 1
             video = Video.objects.create(
-                name='{} {:02d}'.format(tag.tag, episode),
-                tag=tag,
+                name='{} {:02d}'.format(label.name, episode),
+                label=label,
             )
-            video_dict[tag.tag].append(video)
+            video_dict[label.name].append(video)
 
     #---------------------------------------------------------------------------
 

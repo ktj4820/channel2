@@ -39,10 +39,10 @@ class Video(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)[:100] or '-'
-        if not self.cover:
-            super().save(*args, **kwargs)
-            self.generate_cover()
         super().save(*args, **kwargs)
+
+        if not self.cover:
+            self.generate_cover()
 
     def generate_cover(self):
         """
@@ -61,7 +61,7 @@ class Video(models.Model):
 
             if os.path.exists(cover_path):
                 self.cover.delete()
-                self.cover.save('', File(open(cover_path)), save=False)
+                self.cover.save('', File(open(cover_path)), save=True)
 
 
 class VideoLink(models.Model):

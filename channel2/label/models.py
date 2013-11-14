@@ -4,6 +4,8 @@ from channel2.core.utils import slugify
 
 class Label(models.Model):
 
+    parent      = models.ForeignKey('self', null=True, related_name='children')
+
     name        = models.CharField(max_length=100)
     slug        = models.SlugField(max_length=100)
 
@@ -18,8 +20,8 @@ class Label(models.Model):
         db_table = 'label'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.tag)[:100] or '-'
+        self.slug = slugify(self.name)[:100] or '-'
         super().save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.tag
+        return self.name

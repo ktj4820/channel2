@@ -11,6 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Label'
         db.create_table('label', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(related_name='children', null=True, to=orm['label.Label'])),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100)),
             ('markdown', self.gf('django.db.models.fields.TextField')(blank=True)),
@@ -29,13 +30,14 @@ class Migration(SchemaMigration):
 
     models = {
         'label.label': {
-            'Meta': {'object_name': 'Label', 'db_table': "'label'"},
+            'Meta': {'db_table': "'label'", 'object_name': 'Label'},
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'markdown': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'order': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'children'", 'null': 'True', 'to': "orm['label.Label']"}),
             'pinned': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100'})
         }
