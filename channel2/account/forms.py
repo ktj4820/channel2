@@ -1,16 +1,21 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.forms.widgets import EmailInput
+from django.utils.translation import ugettext as _
 
 
 class AccountLoginForm(forms.Form):
 
-    email = forms.EmailField(widget=EmailInput(attrs={
-        'placeholder': 'Email',
-        'autocomplete': 'off',
-        'class': 'account-input',
-    }))
+    email = forms.EmailField(
+        label=_('Email'),
+        widget=EmailInput(attrs={
+            'placeholder': 'Email',
+            'autocomplete': 'off',
+            'class': 'account-input',
+        })
+    )
     password = forms.CharField(
+        label=_('Password'),
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Password',
             'class': 'account-input',
@@ -18,9 +23,10 @@ class AccountLoginForm(forms.Form):
     )
 
     def __init__(self, request=None, *args, **kwargs):
+        super(AccountLoginForm, self).__init__(*args, **kwargs)
         self.request = request
         self.user_cache = None
-        super(AccountLoginForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ''
 
     def clean(self):
         email = self.cleaned_data.get('email')
@@ -39,6 +45,7 @@ class AccountLoginForm(forms.Form):
 class AccountActivateForm(forms.Form):
 
     password1 = forms.CharField(
+        label=_('Password'),
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Password',
             'class': 'account-input',
@@ -46,6 +53,7 @@ class AccountActivateForm(forms.Form):
     )
 
     password2 = forms.CharField(
+        label=_('Confirm Password'),
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Confirm Password',
             'class': 'account-input',

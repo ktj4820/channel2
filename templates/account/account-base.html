@@ -2,8 +2,14 @@
 {% load i18n %}
 
 {% block body %}
-    <div id="template-{{ TEMPLATE_NAME }}" class="content">
-        {% block content %}{% endblock %}
+    <div id="template-{{ TEMPLATE_NAME }}" class="account-container">
+        <div class="account-table">
+            <div class="account-row">
+                <div class="account-cell">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
     </div>
     {% include '_include/footer.html' %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
