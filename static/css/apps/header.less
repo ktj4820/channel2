@@ -1,0 +1,50 @@
+/* --------------------------------------------------
+    header styles
+---------------------------------------------------*/
+
+header {
+    .transform(translateZ(0));
+
+    background-color: #222;
+    border-bottom: #000;
+    height: 50px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+#header-menu-icon, #header-logout-icon {
+    -webkit-tap-highlight-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    width: 50px;
+    text-align: center;
+}
+#header-menu-icon {
+    font-size: 24px;
+    float: left;
+}
+#header-logout-icon {
+    font-size: 20px;
+    float: right;
+}
+
+.header-heading {
+    display: block;
+
+    > a {
+        color: #fff;
+        display: block;
+        font-size: 20px;
+        font-weight: @font-weight-base;
+        line-height: 50px;
+        padding: 0 15px;
+        text-align: center;
+    }
+}

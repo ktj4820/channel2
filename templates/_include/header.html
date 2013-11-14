@@ -1,0 +1,8 @@
+<header>
+    <span class="icon icon-menu" id="header-menu-icon"></span>
+    <a href="#" onclick="document.getElementById('account-logout-form').submit()" id="header-logout-icon" class="icon icon-logout"></a>
+    <h1 class="header-heading"><a href="{% url 'video.list' %}">Channel 2</a></h1>
+</header>
+<form action="{% url 'account.logout' %}" method="post" class="none" id="account-logout-form">
+    {% csrf_token %}
+</form>
