@@ -1,7 +1,7 @@
 import shutil, tempfile
 from django.db import connections
 from django.test import TestCase
-from django.test.simple import DjangoTestSuiteRunner
+from django.test.runner import DiscoverRunner
 from channel2 import settings
 from channel2.account.models import User
 
@@ -13,7 +13,7 @@ def fast_check_password(self, raw_password):
     return self.password == raw_password
 
 
-class Channel2TestSuiteRunner(DjangoTestSuiteRunner):
+class Channel2TestSuiteRunner(DiscoverRunner):
 
     def copy_db(self, db_path):
         self.temp_db = tempfile.NamedTemporaryFile()
