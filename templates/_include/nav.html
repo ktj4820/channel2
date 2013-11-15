@@ -1,7 +1,11 @@
+{% load i18n %}
 <nav>
     <div>
         {% for label in PINNED_LABELS %}
-            <a href=""><span class="icon icon-doc-text-inv"></span>{{ label.name }}</a>
+            <a href=""><span class="icon icon-doc-text"></span>{{ label.name }}</a>
         {% endfor %}
+        <span class="nav-sep"></span>
+        <a href="#"><span class="icon icon-help-circled"></span>{% trans 'Help' %}</a>
+        <a href="#" onclick="document.getElementById('account-logout-form').submit()" class="max-xs"><span class="icon icon-logout"></span>{% trans 'Logout' %}</a>
     </div>
 </nav>
