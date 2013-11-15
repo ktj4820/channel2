@@ -50,5 +50,21 @@ header {
 }
 
 @media screen and (max-width: @screen-xs1) {
-    .header-heading { display: block; }
+    .header-heading {
+        display: block;
+        padding-right: 25px;
+    }
+}
+
+.header-menu {
+    float: right;
+    padding: 0 15px;
+    > a {
+        .inline-block();
+        color: #ccc;
+        line-height: 50px;
+        padding: 0 15px;
+        &:hover, &.active { color: #fff; }
+        &.active { background-color: #000; }
+    }
 }

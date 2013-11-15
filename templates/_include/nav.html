@@ -1,5 +1,7 @@
 <nav>
     <div>
-
+        {% for label in PINNED_LABELS %}
+            <a href=""><span class="icon icon-doc-text-inv"></span>{{ label.name }}</a>
+        {% endfor %}
     </div>
 </nav>

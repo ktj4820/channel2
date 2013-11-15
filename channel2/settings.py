@@ -65,7 +65,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
+    'channel2.label.context_processors.pinned_labels',
 )
 
 TEMPLATE_DIRS = (
