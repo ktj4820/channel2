@@ -1,1 +1,26 @@
 {% extends 'base.html' %}
+
+{% block content %}
+    <ul class="vl">
+        {% for video in video_list %}
+            <li class="vli">
+                <a href="#" class="block">
+                    <div class="vli-cover">
+                        {% if video.cover %}
+                            <img src="">
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/no-preview.png">
+                        {% endif %}
+                    </div>
+                    <div class="vli-info">
+                        <span class="block">{{ video.name }}</span>
+                        {% if video.file %}
+                            <span>{{ video.file.size|filesizeformat }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% include '_components/pagination.html' with page=video_list %}
+{% endblock %}

@@ -67,6 +67,55 @@ ul {
 }
 
 /* --------------------------------------------------
+    pagination
+---------------------------------------------------*/
+
+@pagination-bg:             #fff;
+@pagination-bg-hover:       #eee;
+@pagination-bg-active:      @color-accent1;
+@pagination-border:         #ddd;
+@pagination-color-active:   #fff;
+
+.pagination {
+    margin: 30px 0 45px;
+    overflow: auto;
+    white-space: nowrap;
+
+    > li {
+        .inline-block();
+        background-color: @pagination-bg;
+        border: 1px solid @pagination-border;
+        border-left: none;
+        > span, > a {
+            display: block;
+            line-height: 36px;
+            padding: 0 15px;
+        }
+        &:first-child {
+            .border-radius(5px 0 0 5px);
+            border-left: 1px solid @pagination-border;
+        }
+        &:last-child {
+            .border-radius(0 5px 5px 0);
+        }
+        &.disabled:hover {
+            background-color: @pagination-bg;
+            cursor: not-allowed;
+        }
+        &:hover { background-color: @pagination-bg-hover; }
+        &.active {
+            background-color: @pagination-bg-active;
+            border-color: @pagination-bg-active;
+            > a, > span { color: @pagination-color-active; }
+        }
+    }
+}
+
+.pagination-nav {
+    .inline-block();
+}
+
+/* --------------------------------------------------
     global classes
 ---------------------------------------------------*/
 
