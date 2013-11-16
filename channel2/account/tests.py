@@ -89,3 +89,23 @@ class AccountViewTestsAnonymous(BaseTestCase):
         self.assertTrue(user.is_active)
         self.assertTrue(user.check_password('12345678'))
         self.assertFalse(user.token)
+
+
+class AccountCreateViewTests(BaseTestCase):
+
+    def test_account_create_view_get(self):
+        response = self.client.get(reverse('account.create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/account-create.html')
+
+    def test_account_create_view_post_invalid(self):
+        response = self.client.post(reverse('account.create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/account-create.html')
+
+    def test_account_create_view_post(self):
+        response = self.client.post(reverse('account.create'), {
+            'email': 'newuser@example.com',
+        })
+        self.assertRedirects(response, reverse('account.create'))
+        self.assertTrue(User.objects.filter(email='newuser@example.com').exists())

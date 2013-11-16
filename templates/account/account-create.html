@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <form action="" method="post" class="container">
+        <h2>{% trans 'Create Account' %}</h2>
+        {% csrf_token %}
+        {% include '_components/field.html' with field=form.email %}
+        <button type="submit" class="btn">{% trans 'Create' %}</button>
+    </form>
+{% endblock %}

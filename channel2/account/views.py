@@ -1,11 +1,13 @@
 from django.contrib.auth import logout, login
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import redirect, get_object_or_404
+from django.utils.translation import ugettext as _
 from django.views.generic.base import View
-from channel2.account.forms import AccountLoginForm, AccountActivateForm
+from channel2.account.forms import AccountLoginForm, AccountActivateForm, AccountCreateForm
 from channel2.account.models import User
-from channel2.core.views import TemplateView
+from channel2.core.views import TemplateView, StaffOnlyView
 
 
 class AccountLoginView(TemplateView):
@@ -64,5 +66,26 @@ class AccountActivateView(TemplateView):
 
         return self.render_to_response({
             'target_user': target_user,
+            'form': form,
+        })
+
+
+class AccountCreateView(StaffOnlyView):
+
+    template_name = 'account/account-create.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'form': AccountCreateForm()
+        })
+
+    def post(self, request):
+        form = AccountCreateForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('An activation email has been sent to the user.'))
+            return redirect('account.create')
+
+        return self.render_to_response({
             'form': form,
         })

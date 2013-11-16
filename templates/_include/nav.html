@@ -1,4 +1,5 @@
 {% load i18n core_tags %}
+{% url 'account.create' as url_account_create %}
 {% url 'label.list' as url_label_list %}
 {% url 'video.list' as url_video_list %}
 <nav>
@@ -12,7 +13,7 @@
         <a href="{{ url_label_list }}"{% if request.path == url_label_list %} class="active"{% endif %}><span class="icon icon-tag"></span>{% trans 'All Labels' %}</a>
         <span class="nav-sep"></span>
         {% if user.is_staff %}
-            <a href=""><span class="icon icon-user-add"></span>{% trans 'Create User' %}</a>
+            <a href="{{ url_account_create }}"{% if request.path == url_account_create %} class="active"{% endif %}><span class="icon icon-user-add"></span>{% trans 'Create Account' %}</a>
         {% endif %}
         <a href="#"><span class="icon icon-help-circled"></span>{% trans 'Help' %}</a>
         <a href="#" class="max-xs"><span class="icon icon-cog"></span>{% trans 'Settings' %}</a>
