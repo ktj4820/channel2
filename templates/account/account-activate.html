@@ -1,5 +1,16 @@
 {% extends 'account/account-base.html' %}
+{% load i18n %}
 
 {% block content %}
-
+    <form action="" method="post" class="account-form">
+        <h2 class="account-heading">Channel 2</h2>
+        <div class="non-field-error">{% trans 'Please set a password for your account and login.' %}</div>
+        {% csrf_token %}
+        {% include '_components/non-field-errors.html' %}
+        {% include '_components/field.html' with field=form.password1 %}
+        {% include '_components/field.html' with field=form.password2 %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-account btn-block">{% trans 'Login' %}</button>
+        </div>
+    </form>
 {% endblock %}
