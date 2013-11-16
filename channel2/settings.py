@@ -79,11 +79,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
 
     'south',
 
     'channel2.account',
-    'channel2.admin',
     'channel2.core',
     'channel2.flat',
     'channel2.label',

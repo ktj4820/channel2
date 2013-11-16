@@ -80,13 +80,13 @@ class DataCreator:
 
     @timed
     def create_users(self):
-        self.user = User(email='testuser@example.com', name='Test User', is_staff=True)
+        self.user = User(email='testuser@example.com', is_staff=True)
         self.user.set_password('password')
         self.user.save()
 
         self.user_list = []
         for i in range(1, self.conf['USERS']+1):
-            user = User(email='testuser{}@example.com'.format(i), name='Test User {}'.format(i))
+            user = User(email='testuser{}@example.com'.format(i))
             user.set_password('password')
             user.save()
             self.user_list.append(user)

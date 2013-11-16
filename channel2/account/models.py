@@ -17,7 +17,6 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
 
     email = models.EmailField(max_length=254, unique=True)
-    name = models.CharField(max_length=50, blank=True)
 
     token = models.CharField(max_length=64, null=True)
     is_active = models.BooleanField(default=True)
@@ -25,10 +24,10 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     def get_full_name(self):
-        return self.name
+        return self.email
 
     def get_short_name(self):
-        return self.name
+        return self.email
 
     def generate_token(self):
         self.token = binascii.hexlify(os.urandom(32))
