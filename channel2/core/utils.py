@@ -1,6 +1,9 @@
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Page
+from django.template import loader
 from django.utils.text import slugify as django_slugify
 from unidecode import unidecode
+from channel2.settings import EMAIL_HOST_USER, DEBUG, ADMINS
 
 
 def slugify(s):
@@ -36,3 +39,28 @@ def paginate(object_list, page_size, page_num):
     page.page_range = paginator.page_range[start:end]
 
     return page
+
+
+def get_request_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def email_alert(subject, template, context):
+    """
+    Send an email to ADMINS
+    """
+
+    if DEBUG or not EMAIL_HOST_USER: return
+
+    recipient_list = [email for _, email in ADMINS]
+    send_mail(
+        subject=subject,
+        message=loader.get_template(template).render(context),
+        from_email=EMAIL_HOST_USER,
+        recipient_list=recipient_list
+    )

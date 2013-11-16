@@ -1,6 +1,11 @@
-from channel2.core.utils import paginate
+import os, binascii
+from django.shortcuts import get_object_or_404, redirect
+from django.utils import timezone
+from channel2.core.response import HttpResponseXAccel
+from channel2.core.utils import paginate, get_request_ip, email_alert
 from channel2.core.views import ProtectedTemplateView
-from channel2.video.models import Video
+from channel2.settings import VIDEO_LINK_EXPIRE
+from channel2.video.models import Video, VideoLink
 
 
 class VideoListView(ProtectedTemplateView):
@@ -14,3 +19,49 @@ class VideoListView(ProtectedTemplateView):
         return self.render_to_response({
             'video_list': video_list,
         })
+
+
+class VideoView(ProtectedTemplateView):
+
+    def get(self, request, id, slug):
+        video = get_object_or_404(Video, id=id)
+        video.views += 1
+        video.save()
+
+        link = VideoLink.objects.create(
+            video=video,
+            key=binascii.hexlify(os.urandom(32)),
+            ip_address=get_request_ip(request),
+            created_by=request.user,
+        )
+
+        return redirect('video.link', key=link.key)
+
+
+class VideoLinkView(ProtectedTemplateView):
+
+    template_name = 'video/video-unavailable.html'
+
+    messages = {
+        'file_missing': 'Oops! This video no longer exists. An email has been sent to Derek so that he can investigate this.',
+        'link_expired': 'The video link has expired. Please reload the video.',
+        'ip_address_mistmatch': 'Your ip address has changed. Please reload the video.' ,
+    }
+
+    def get(self, request, key):
+        link = get_object_or_404(
+            VideoLink.objects.select_related('video'),
+            key=key,
+        )
+
+        if not link.video.file:
+            email_alert('[Channel 2] Video File Missing', 'video/video-file-missing-alert.txt', {'video': link.video})
+            return self.render_to_response({'message': self.messages['file_missing']})
+
+        if link.ip_address != get_request_ip(request):
+            return self.render_to_response({'message': self.messages['ip_address_mistmatch']})
+
+        if timezone.now() - link.created_on > timezone.timedelta(seconds=VIDEO_LINK_EXPIRE):
+            return self.render_to_response({'message': self.messages['link_expired']})
+
+        return HttpResponseXAccel(link.video.file, content_type='video/mp4')

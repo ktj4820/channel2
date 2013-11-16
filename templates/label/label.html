@@ -36,10 +36,10 @@
         <ul class="vl">
             {% for video in video_list %}
                 <li class="vli">
-                    <a href="#" class="block">
+                    <a href="{% url 'video' video.id video.slug %}" class="block">
                         <div class="vli-cover">
                             {% if video.cover %}
-                                <img src="">
+                                <img src="{{ video.cover.url }}">
                             {% else %}
                                 <img src="{{ STATIC_URL }}images/no-preview.png">
                             {% endif %}
