@@ -3,31 +3,31 @@
     <div class="text-center">
         <ul class="pagination">
             {% if page.has_previous %}
-                <li class="pagination-nav"><a href="?{{ request.GET|getparams:"p" }}&p={{ page.previous_page_number }}">&laquo;</a></li>
+                <li class="pagination-nav"><a href="?{{ request.GET|getparams:"p" }}&p={{ page.previous_page_number }}" class="icon icon-left-open"></a></li>
             {% else %}
-                <li class="pagination-nav disabled"><span>&laquo;</span></li>
+                <li class="pagination-nav disabled"><span class="icon icon-left-open"></span></li>
             {% endif %}
             {% if page.page_range|first > 1 %}
-                <li><a href="?{{ request.GET|getparams:"p" }}&p=1">1</a></li>
+                <li class="min-xs"><a href="?{{ request.GET|getparams:"p" }}&p=1">1</a></li>
             {% endif %}
             {% if page.page_range|first > 2 %}
-                <li class="disabled"><span>&hellip;</span></li>
+                <li class="disabled min-xs"><span>&hellip;</span></li>
             {% endif %}
             {% for p in page.page_range %}
-                <li{% if p == page.number %} class="active"{% endif %}>
+                <li class="{% if p == page.number %}active{% else %}min-xs{% endif %}">
                     <a href="?{{ request.GET|getparams:"p" }}&p={{ p }}">{{ p }}</a>
                 </li>
             {% endfor %}
             {% if page.page_range|last < page.paginator.num_pages|add:"-1" %}
-                <li class="disabled"><span>&hellip;</span></li>
+                <li class="disabled min-xs"><span>&hellip;</span></li>
             {% endif %}
             {% if page.page_range|last < page.paginator.num_pages %}
-                <li><a href="?{{ request.GET|getparams:"p" }}&p={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</a></li>
+                <li class="min-xs"><a href="?{{ request.GET|getparams:"p" }}&p={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</a></li>
             {% endif %}
             {% if page.has_next %}
-                <li class="pagination-nav"><a href="?{{ request.GET|getparams:"p" }}&p={{ page.next_page_number }}">&raquo;</a></li>
+                <li class="pagination-nav"><a href="?{{ request.GET|getparams:"p" }}&p={{ page.next_page_number }}" class="icon icon-right-open"></a></li>
             {% else %}
-                <li class="pagination-nav disabled"><span>&raquo;</span></li>
+                <li class="pagination-nav disabled"><span class="icon icon-right-open"></span></li>
             {% endif %}
         </ul>
     </div>

@@ -88,6 +88,7 @@ ul {
 ---------------------------------------------------*/
 
 .pagination {
+    padding: 0 15px;
     margin: 30px 0 45px;
     overflow: auto;
     white-space: nowrap;
@@ -124,6 +125,13 @@ ul {
 
 .pagination-nav {
     .inline-block();
+}
+
+@media screen and (max-width: @screen-xs1) {
+    .pagination  {
+        margin: 15px 0 30px;
+        > li { width: 100/3%; }
+    }
 }
 
 /* --------------------------------------------------

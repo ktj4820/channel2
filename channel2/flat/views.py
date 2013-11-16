@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from channel2.core.views import ProtectedTemplateView
 
-# Create your views here.
+
+class FlatHelpView(ProtectedTemplateView):
+
+    template_name = 'flat/flat-help.html'

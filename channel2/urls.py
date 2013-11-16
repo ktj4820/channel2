@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     url(r'^labels/',            include('channel2.label.urls')),
     url(r'^videos/',            include('channel2.video.urls')),
 
+    # flat urls
+    url(r'',                    include('channel2.flat.urls')),
 )
 
 if DEBUG:
