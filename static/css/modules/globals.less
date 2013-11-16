@@ -40,6 +40,33 @@ ul {
 }
 
 /* --------------------------------------------------
+    breadcrumbs
+---------------------------------------------------*/
+
+.breadcrumbs {
+    padding: 12px 18px;
+    white-space: nowrap;
+
+    > a {
+        .inline-block();
+        font-weight: @font-weight-bold;
+        &:after {
+            .inline-block();
+            color: #888;
+            font-family: 'entypo';
+            content: '\e875';
+            padding: 0 10px;
+            margin-top: 1px;
+        }
+    }
+
+    > span {
+        .inline-block();
+        font-weight: @font-weight-bold;
+    }
+}
+
+/* --------------------------------------------------
     global classes
 ---------------------------------------------------*/
 

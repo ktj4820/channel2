@@ -19,7 +19,7 @@ class LabelView(ProtectedTemplateView):
     template_name = 'label/label.html'
 
     def get(self, request, id, slug):
-        label = get_object_or_404(Label, id=id)
+        label = get_object_or_404(Label.objects.prefetch_related('parent'), id=id)
         return self.render_to_response({
             'label': label,
             'label_children_list': label.children.annotate(count=Count('video')),

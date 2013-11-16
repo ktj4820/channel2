@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ label.html|safe }}
+    <div class="breadcrumbs">
+        {% if label.parent %}
+            <a href="{% url 'label' label.parent.id label.parent.slug %}">{{ label.parent.name }}</a>
+        {% endif %}
+        <span>{{ label.name }}</span>
+    </div>
+    {% if label.html %}
+        <hr>
+        {{ label.html|safe }}
+    {% endif %}
     {% if label_children_list %}
         <hr>
         <ul class="ll">
