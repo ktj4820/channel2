@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul class="ll">
+        {% for label in label_list %}
+            <li class="lli">
+                <a href="{% url 'label' label.id label.slug %}">
+                    <span class="badge right">{{ label.count }}</span>
+                    <span>{{ label.name }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

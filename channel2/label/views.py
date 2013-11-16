@@ -1,3 +1,4 @@
+from django.db.models.aggregates import Count
 from django.shortcuts import get_object_or_404
 from channel2.core.views import ProtectedTemplateView
 from channel2.label.models import Label
@@ -9,7 +10,7 @@ class LabelListView(ProtectedTemplateView):
 
     def get(self, request):
         return self.render_to_response({
-            'label_list': Label.objects.all(),
+            'label_list': Label.objects.annotate(count=Count('video')),
         })
 
 
@@ -21,4 +22,5 @@ class LabelView(ProtectedTemplateView):
         label = get_object_or_404(Label, id=id)
         return self.render_to_response({
             'label': label,
+            'label_list': label.children.annotate(count=Count('video')),
         })

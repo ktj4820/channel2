@@ -1,6 +1,7 @@
 {% load i18n %}
 <nav>
     <div>
+        <a href="{% url 'video.list' %}"><span class="icon icon-clock"></span>{% trans 'Latest' %}</a>
         {% for label in PINNED_LABELS %}
             <a href="{% url 'label' label.id label.slug %}"><span class="icon icon-play"></span>{{ label.name }}</a>
         {% endfor %}
