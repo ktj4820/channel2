@@ -11,12 +11,12 @@ class Migration(SchemaMigration):
         # Adding model 'Video'
         db.create_table('video', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('file', self.gf('django.db.models.fields.files.FileField')(null=True, max_length=100)),
+            ('file', self.gf('django.db.models.fields.files.FileField')(null=True, blank=True, max_length=100)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100)),
             ('views', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('label', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['label.Label'], on_delete=models.SET_NULL)),
-            ('cover', self.gf('django.db.models.fields.files.FileField')(null=True, max_length=100)),
+            ('label', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, null=True, to=orm['label.Label'], on_delete=models.SET_NULL)),
+            ('cover', self.gf('django.db.models.fields.files.FileField')(null=True, blank=True, max_length=100)),
             ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('video', ['Video'])
@@ -25,7 +25,7 @@ class Migration(SchemaMigration):
         db.create_table('video_link', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('video', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['video.Video'])),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=64, db_index=True)),
+            ('key', self.gf('django.db.models.fields.CharField')(db_index=True, max_length=64)),
             ('ip_address', self.gf('django.db.models.fields.CharField')(max_length=64)),
             ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='+', to=orm['account.User'])),
@@ -45,34 +45,33 @@ class Migration(SchemaMigration):
         'account.user': {
             'Meta': {'db_table': "'user'", 'object_name': 'User'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '254', 'unique': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '254'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'token': ('django.db.models.fields.CharField', [], {'null': 'True', 'max_length': '64'})
+            'token': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '64'})
         },
         'label.label': {
-            'Meta': {'db_table': "'label'", 'object_name': 'Label'},
+            'Meta': {'db_table': "'label'", 'ordering': "('slug',)", 'object_name': 'Label'},
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'markdown': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'order': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'parent': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'related_name': "'children'", 'to': "orm['label.Label']"}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'children'", 'null': 'True', 'to': "orm['label.Label']"}),
             'pinned': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100'})
         },
         'video.video': {
             'Meta': {'db_table': "'video'", 'object_name': 'Video'},
-            'cover': ('django.db.models.fields.files.FileField', [], {'null': 'True', 'max_length': '100'}),
+            'cover': ('django.db.models.fields.files.FileField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'file': ('django.db.models.fields.files.FileField', [], {'null': 'True', 'max_length': '100'}),
+            'file': ('django.db.models.fields.files.FileField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'label': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'to': "orm['label.Label']", 'on_delete': 'models.SET_NULL'}),
+            'label': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'null': 'True', 'to': "orm['label.Label']", 'on_delete': 'models.SET_NULL'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100'}),
             'views': ('django.db.models.fields.IntegerField', [], {'default': '0'})
@@ -83,7 +82,7 @@ class Migration(SchemaMigration):
             'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'ip_address': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
-            'key': ('django.db.models.fields.CharField', [], {'max_length': '64', 'db_index': 'True'}),
+            'key': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '64'}),
             'video': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['video.Video']"})
         }
     }

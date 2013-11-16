@@ -18,7 +18,7 @@ class Migration(SchemaMigration):
             ('html', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('pinned', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('order', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True)),
-            ('created_on', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('created_on', self.gf('django.db.models.fields.DateTimeField')(blank=True, auto_now_add=True)),
         ))
         db.send_create_signal('label', ['Label'])
 
@@ -30,8 +30,8 @@ class Migration(SchemaMigration):
 
     models = {
         'label.label': {
-            'Meta': {'db_table': "'label'", 'object_name': 'Label'},
-            'created_on': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'Meta': {'object_name': 'Label', 'ordering': "('slug',)", 'db_table': "'label'"},
+            'created_on': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'auto_now_add': 'True'}),
             'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'markdown': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
