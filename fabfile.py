@@ -30,7 +30,7 @@ env.packages = [
     # python stuff
     'build-essential', 'python-dev', 'python-pip',
     # databse
-    'postgresql-server-dev-9.2', 'postgresql-9.2', 'libmysqlclient-dev',
+    'postgresql-server-dev-9.2', 'postgresql-9.2',
     # utilites
     'cron', 'ntp', 'rsync', 'gettext', 'htop',
     # image processing
@@ -87,7 +87,8 @@ def setup():
     sudo('apt-get -y install {}'.format(' '.join(env.packages)))
 
     sudo('pip install supervisor==3.0')
-
+    sudo('pip install virtualenv')
+    sudo('pip install virtualenvwrapper')
     sudo('touch {django_path}/static/maintenance.html'.format(**env))
 
 
