@@ -1,0 +1,44 @@
+/* --------------------------------------------------
+    video styles
+---------------------------------------------------*/
+
+.vl {
+    padding: 8px;
+}
+
+@media screen and (max-width: @screen-xs1) {
+    .vl { padding: 5px; }
+}
+
+.vli {
+    .inline-block();
+    padding: 8px;
+    width: 100%;
+    > a { position: relative; }
+}
+
+@media screen and (max-width: 599px) {
+    .vli { width: 100%; }
+}
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    .vli { width: 100/2%; }
+}
+@media screen and (min-width: 960px) and (max-width: 1879px) {
+    .vli { width: 100/3%; }
+}
+@media screen and (min-width: 1880px) {
+    .vli { width: 100/4%; }
+}
+
+.vli-info {
+    .transparent(50);
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+}

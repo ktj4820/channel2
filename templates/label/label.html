@@ -1,14 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul class="ll">
-        {% for label in label_list %}
-            <li class="lli">
-                <a href="{% url 'label' label.id label.slug %}">
-                    <span class="badge right">{{ label.count }}</span>
-                    <span>{{ label.name }}</span>
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+    {{ label.html|safe }}
+    {% if label_children_list %}
+        <hr>
+        <ul class="ll">
+            {% for label_child in label_children_list %}
+                <li class="lli">
+                    <a href="{% url 'label' label_child.id label_child.slug %}">
+                        <span class="badge right">{{ label_child.count }}</span>
+                        <span>{{ label_child.name }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if video_list %}
+        <hr>
+        <ul class="vl">
+            {% for video in video_list %}
+                <li class="vli">
+                    <a href="#" class="block">
+                        {% if video.cover %}
+                            <img src="" class="vli-cover">
+                        {% else %}
+                            <img src="{{ STATIC_URL }}images/no-preview.png" class="vli-cover">
+                        {% endif %}
+                        <div class="vli-info">
+                            <span class="block">{{ video.name }}</span>
+                            {% if video.file %}
+                                <span>{{ video.file.size|filesizeformat }}</span>
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
