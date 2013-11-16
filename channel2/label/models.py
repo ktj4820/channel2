@@ -18,6 +18,7 @@ class Label(models.Model):
 
     class Meta:
         db_table = 'label'
+        ordering = ('slug',)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)[:100] or '-'

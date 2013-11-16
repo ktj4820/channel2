@@ -8,5 +8,6 @@ urlpatterns = patterns('',
 
     # apps
     url(r'^account/',           include('channel2.account.urls')),
+    url(r'^label/',             include('channel2.label.urls')),
 
 )

@@ -4,6 +4,8 @@ from django.test import TestCase
 from django.test.runner import DiscoverRunner
 from channel2 import settings
 from channel2.account.models import User
+from channel2.label.models import Label
+from channel2.video.models import Video
 
 
 def fast_set_password(self, raw_password):
@@ -41,5 +43,8 @@ class BaseTestCase(TestCase):
         self.user = User.objects.get(email='testuser@example.com')
         self.user.set_password('password')
         self.user.save()
+
+        self.label_list = Label.objects.all()
+        self.video_list = Video.objects.all()
 
         self.client.login(email='testuser@example.com', password='password')

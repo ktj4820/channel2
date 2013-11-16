@@ -2,10 +2,19 @@
 <nav>
     <div>
         {% for label in PINNED_LABELS %}
-            <a href=""><span class="icon icon-doc-text"></span>{{ label.name }}</a>
+            <a href="{% url 'label' label.id label.slug %}"><span class="icon icon-play"></span>{{ label.name }}</a>
         {% endfor %}
         <span class="nav-sep"></span>
+        <a href="{% url 'label.list' %}"><span class="icon icon-tag"></span>{% trans 'All Labels' %}</a>
+        {% if user.is_staff %}
+            <span class="nav-sep"></span>
+            <a href=""><span class="icon icon-tag"></span>{% trans 'Manage Labels' %}</a>
+            <a href=""><span class="icon icon-video"></span>{% trans 'Manage Videos' %}</a>
+            <a href=""><span class="icon icon-users"></span>{% trans 'Manage Users' %}</a>
+        {% endif %}
+        <span class="nav-sep"></span>
         <a href="#"><span class="icon icon-help-circled"></span>{% trans 'Help' %}</a>
+        <a href="#" class="max-xs"><span class="icon icon-cog"></span>{% trans 'Settings' %}</a>
         <a href="#" onclick="document.getElementById('account-logout-form').submit()" class="max-xs"><span class="icon icon-logout"></span>{% trans 'Logout' %}</a>
     </div>
 </nav>
