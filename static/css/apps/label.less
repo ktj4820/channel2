@@ -5,8 +5,13 @@
 .ll {
     .column-width(300px);
     .column-gap(0);
-    padding: 7px;
+    padding: 12px;
 }
+
+@media screen and (max-width: @screen-xs1) {
+    .ll { padding: 7px; }
+}
+
 .lli {
     .inline-block();
 

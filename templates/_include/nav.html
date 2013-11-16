@@ -1,12 +1,15 @@
-{% load i18n %}
+{% load i18n core_tags %}
+{% url 'label.list' as url_label_list %}
+{% url 'video.list' as url_video_list %}
 <nav>
     <div>
-        <a href="{% url 'video.list' %}"><span class="icon icon-clock"></span>{% trans 'Latest' %}</a>
+        <a href="{{ url_video_list }}"{% if request.path == url_video_list %} class="active"{% endif %}><span class="icon icon-clock"></span>{% trans 'Latest' %}</a>
         {% for label in PINNED_LABELS %}
-            <a href="{% url 'label' label.id label.slug %}"><span class="icon icon-play"></span>{{ label.name }}</a>
+            {% url 'label' label.id label.slug as url_label %}
+            <a href="{{ url_label }}"{% if request.path|startswith:url_label %} class="active"{% endif %}><span class="icon icon-play"></span>{{ label.name }}</a>
         {% endfor %}
         <span class="nav-sep"></span>
-        <a href="{% url 'label.list' %}"><span class="icon icon-tag"></span>{% trans 'All Labels' %}</a>
+        <a href="{{ url_label_list }}"{% if request.path == url_label_list %} class="active"{% endif %}><span class="icon icon-tag"></span>{% trans 'All Labels' %}</a>
         {% if user.is_staff %}
             <span class="nav-sep"></span>
             <a href=""><span class="icon icon-tag"></span>{% trans 'Manage Labels' %}</a>
