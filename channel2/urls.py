@@ -4,6 +4,8 @@ from channel2.settings import MEDIA_ROOT, DEBUG
 from channel2.video.views import VideoListView
 
 
+admin.autodiscover()
+
 urlpatterns = patterns('',
 
     url(r'^$',                  VideoListView.as_view(), name='video.list'),

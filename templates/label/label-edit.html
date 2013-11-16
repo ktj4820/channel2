@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="breadcrumbs">
+        {% if label.parent %}
+            <a href="{% url 'label' label.parent.id label.parent.slug %}" class="breadcrumb">{{ label.parent.name }}</a>
+        {% endif %}
+        <a href="{% url 'label' label.id label.slug %}" class="breadcrumb">{{ label.name }}</a>
+        <span class="breadcrumb-active">{% trans 'Edit' %}</span>
+    </div>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="container">
+            {% include '_components/non-field-errors.html' %}
+            {% include '_components/field.html' with field=form.name %}
+            {% include '_components/field.html' with field=form.markdown %}
+        </div>
+        <hr>
+        <div data-bind="html: html" class="container markdown"></div>
+        <div class="clear"></div>
+        <input type="hidden" name="html" data-bind="value: html">
+        <hr>
+        <div class="container">
+            <button type="submit" class="btn">{% trans 'Save' %}</button>
+        </div>
+    </form>
+{% endblock %}

@@ -47,7 +47,7 @@ ul {
     padding: 12px 18px;
     white-space: nowrap;
 
-    > a {
+    > .breadcrumb {
         .inline-block();
         font-weight: @font-weight-bold;
         &:after {
@@ -60,21 +60,32 @@ ul {
         }
     }
 
-    > span {
+    > .breadcrumb-active {
         .inline-block();
         font-weight: @font-weight-bold;
+    }
+
+    > .btn-small {
+        margin-top: -4px;
+    }
+}
+
+/* --------------------------------------------------
+    markdown
+---------------------------------------------------*/
+
+.markdown {
+    p {
+        margin-bottom: 10px;
+    }
+    > :last-of-type {
+        margin-bottom: 0;
     }
 }
 
 /* --------------------------------------------------
     pagination
 ---------------------------------------------------*/
-
-@pagination-bg:             #fff;
-@pagination-bg-hover:       #eee;
-@pagination-bg-active:      @color-accent1;
-@pagination-border:         #ddd;
-@pagination-color-active:   #fff;
 
 .pagination {
     margin: 30px 0 45px;
@@ -83,8 +94,8 @@ ul {
 
     > li {
         .inline-block();
-        background-color: @pagination-bg;
-        border: 1px solid @pagination-border;
+        background-color: #fff;
+        border: 1px solid #ddd;
         border-left: none;
         > span, > a {
             display: block;
@@ -93,20 +104,20 @@ ul {
         }
         &:first-child {
             .border-radius(5px 0 0 5px);
-            border-left: 1px solid @pagination-border;
+            border-left: 1px solid #ddd;
         }
         &:last-child {
             .border-radius(0 5px 5px 0);
         }
         &.disabled:hover {
-            background-color: @pagination-bg;
+            background-color: #fff;
             cursor: not-allowed;
         }
-        &:hover { background-color: @pagination-bg-hover; }
+        &:hover { background-color: #eee; }
         &.active {
-            background-color: @pagination-bg-active;
-            border-color: @pagination-bg-active;
-            > a, > span { color: @pagination-color-active; }
+            background-color: @color-accent1;
+            border-color: @color-accent1;
+            > a, > span { color: #fff; }
         }
     }
 }

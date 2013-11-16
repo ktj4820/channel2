@@ -18,7 +18,7 @@ class User(AbstractBaseUser):
 
     email = models.EmailField(max_length=254, unique=True)
 
-    token = models.CharField(max_length=64, null=True)
+    token = models.CharField(max_length=64, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -31,6 +31,12 @@ class User(AbstractBaseUser):
 
     def generate_token(self):
         self.token = binascii.hexlify(os.urandom(32))
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
     <div class="breadcrumbs">
         {% if label.parent %}
-            <a href="{% url 'label' label.parent.id label.parent.slug %}">{{ label.parent.name }}</a>
+            <a href="{% url 'label' label.parent.id label.parent.slug %}" class="breadcrumb">{{ label.parent.name }}</a>
         {% endif %}
-        <span>{{ label.name }}</span>
+        <span class="breadcrumb-active">{{ label.name }}</span>
+        {% if user.is_staff %}
+            <a href="{% url 'label.edit' label.id label.slug %}" class="btn btn-small right">{% trans 'Edit' %}</a>
+        {% endif %}
     </div>
     {% if label.html %}
         <hr>
-        {{ label.html|safe }}
+        <div class="container markdown">
+            {{ label.html|safe }}
+            <div class="clear"></div>
+        </div>
     {% endif %}
     {% if label_children_list %}
         <hr>
