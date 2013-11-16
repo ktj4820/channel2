@@ -6,6 +6,9 @@
     $('#header-menu-icon').click(function() {
       return $navbar.toggleClass('active');
     });
+    $('.message .icon-cancel').click(function() {
+      return $(this).parent().slideUp(200);
+    });
     if ($('#template-label-edit').length) {
       markdown = new Markdown.Converter();
       LabelModelView = function() {
