@@ -30,11 +30,13 @@
             {% for video in video_list %}
                 <li class="vli">
                     <a href="#" class="block">
-                        {% if video.cover %}
-                            <img src="" class="vli-cover">
-                        {% else %}
-                            <img src="{{ STATIC_URL }}images/no-preview.png" class="vli-cover">
-                        {% endif %}
+                        <div class="vli-cover">
+                            {% if video.cover %}
+                                <img src="">
+                            {% else %}
+                                <img src="{{ STATIC_URL }}images/no-preview.png">
+                            {% endif %}
+                        </div>
                         <div class="vli-info">
                             <span class="block">{{ video.name }}</span>
                             {% if video.file %}

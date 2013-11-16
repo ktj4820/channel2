@@ -3,18 +3,28 @@
 ---------------------------------------------------*/
 
 .vl {
-    padding: 8px;
-}
-
-@media screen and (max-width: @screen-xs1) {
-    .vl { padding: 5px; }
+    padding: 10px;
 }
 
 .vli {
     .inline-block();
-    padding: 8px;
+    padding: 5px;
     width: 100%;
-    > a { position: relative; }
+
+    > a {
+        .transition(ease 100ms all);
+        .border-radius(3px);
+
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        padding: 0px;
+        position: relative;
+        &:hover { border-color: lighten(@color-accent1, 30%); }
+    }
+}
+
+@media screen and (max-width: @screen-xs1) {
+    .vl { padding: 5px; }
 }
 
 @media screen and (max-width: 599px) {
@@ -30,15 +40,9 @@
     .vli { width: 100/4%; }
 }
 
+.vli-cover > img {
+    .border-radius(2px);
+}
 .vli-info {
-    .transparent(50);
-    background-color: #000;
-    color: #fff;
     padding: 5px 10px;
-
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 100;
 }
