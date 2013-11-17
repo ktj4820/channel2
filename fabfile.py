@@ -33,7 +33,7 @@ env.activate            = 'source /var/www/channel2/venv/bin/activate'
 
 env.packages = [
     # python stuff
-    'build-essential', 'python-dev', 'python-pip',
+    'build-essential', 'python-dev', 'python-pip', 'libbz2-dev',
     # databse
     'postgresql-server-dev-9.2', 'postgresql-9.2',
     # utilites
@@ -90,9 +90,10 @@ def setup():
     sudo('apt-get -y install {}'.format(' '.join(env.packages)))
 
     sudo('pip install supervisor==3.0')
+    sudo('pip install virtualenv')
     sudo('touch {django_path}/static/maintenance.html'.format(**env))
 
-    sudo('pyvenv-3.3 {env.venv_path}'.format(**env))
+    sudo('virtualenv {venv_path} --python=/usr/local/bin/python3.3'.format(**env), user='www-data')
 
 #-------------------------------------------------------------------------------
 # deploy
