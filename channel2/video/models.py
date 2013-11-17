@@ -26,7 +26,7 @@ class Video(models.Model):
     file            = models.FileField(upload_to=video_file_upload_to, null=True, blank=True)
 
     name            = models.CharField(max_length=100)
-    slug            = models.SlugField(max_length=100)
+    slug            = models.SlugField(max_length=100, editable=False)
     views           = models.IntegerField(default=0)
     label           = models.ForeignKey(Label, null=True, blank=True, on_delete=models.SET_NULL)
     cover           = models.FileField(upload_to=video_cover_upload_to, null=True, blank=True)
