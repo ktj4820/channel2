@@ -256,5 +256,6 @@ def manage(command):
     e.g. fab production command:shell --> python manage.py shell
     """
 
-    with cd('{django_path}'.format(**env)):
-        sudo('python3.3 manage.py {}'.format(command), user='www-data')
+    with virtualenv():
+        with cd('{django_path}'.format(**env)):
+            sudo('python3.3 manage.py {}'.format(command), user='www-data')
