@@ -35,7 +35,7 @@ class VideoView(ProtectedTemplateView):
             created_by=request.user,
         )
 
-        return redirect('video.link', key=link.key)
+        return redirect('video.link', key=link.key, slug=video.slug)
 
 
 class VideoLinkView(ProtectedTemplateView):
@@ -48,7 +48,7 @@ class VideoLinkView(ProtectedTemplateView):
         'ip_address_mistmatch': 'Your ip address has changed. Please reload the video.' ,
     }
 
-    def get(self, request, key):
+    def get(self, request, key, slug):
         link = get_object_or_404(
             VideoLink.objects.select_related('video'),
             key=key,

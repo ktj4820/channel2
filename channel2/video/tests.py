@@ -47,7 +47,7 @@ class VideoViewTests(BaseTestCase):
         video = Video.objects.all()[0]
         response = self.client.get(reverse('video', args=[video.id, video.slug]))
         link = VideoLink.objects.get(video=video)
-        self.assertRedirects(response, reverse('video.link', args=[link.key]))
+        self.assertRedirects(response, reverse('video.link', args=[link.key, video.slug]))
         self.assertEqual(video.views+1, Video.objects.get(id=video.id).views)
 
 
@@ -75,7 +75,7 @@ class VideoLinkViewTests(BaseTestCase):
         self.video.file = None
         self.video.save()
 
-        response = self.client.get(reverse('video.link', args=[self.link.key]))
+        response = self.client.get(reverse('video.link', args=[self.link.key, self.video.slug]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'video/video-unavailable.html')
         self.assertTrue(VideoLinkView.messages['file_missing'] in str(response.content))
@@ -84,7 +84,7 @@ class VideoLinkViewTests(BaseTestCase):
         self.link.created_on = timezone.now() - timezone.timedelta(seconds=VIDEO_LINK_EXPIRE+1)
         self.link.save()
 
-        response = self.client.get(reverse('video.link', args=[self.link.key]))
+        response = self.client.get(reverse('video.link', args=[self.link.key, self.video.slug]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'video/video-unavailable.html')
         self.assertTrue(VideoLinkView.messages['link_expired'] in str(response.content))
@@ -93,13 +93,13 @@ class VideoLinkViewTests(BaseTestCase):
         self.link.ip_address = 'other ip'
         self.link.save()
 
-        response = self.client.get(reverse('video.link', args=[self.link.key]))
+        response = self.client.get(reverse('video.link', args=[self.link.key, self.video.slug]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'video/video-unavailable.html')
         self.assertTrue(VideoLinkView.messages['ip_address_mistmatch'] in str(response.content))
 
     def test_video_link_view_get(self):
-        response = self.client.get(reverse('video.link', args=[self.link.key]))
+        response = self.client.get(reverse('video.link', args=[self.link.key, self.video.slug]))
         self.assertEqual(response.status_code, 302)
 
         actual_path = urlsplit(response['location'])[2]
