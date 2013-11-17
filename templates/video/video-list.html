@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n humanize %}
 
 {% block content %}
     <ul class="vl">
@@ -13,9 +14,10 @@
                         {% endif %}
                     </div>
                     <div class="vli-info">
-                        <span class="block">{{ video.name }}</span>
+                        <span class="block text-bold">{{ video.name }}</span>
                         {% if video.file %}
-                            <span>{{ video.file.size|filesizeformat }}</span>
+                            <span class="text-small text-muted right">{{ video.file.size|filesizeformat }}</span>
+                            <span class="text-small text-muted">{% blocktrans with date=video.created_on|naturaltime %}added {{ date }}{% endblocktrans %}</span>
                         {% endif %}
                     </div>
                 </a>

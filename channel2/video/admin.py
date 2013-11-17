@@ -4,7 +4,7 @@ from channel2.video.models import Video, VideoLink
 
 class VideoAdmin(admin.ModelAdmin):
 
-    list_display = ('name', 'label', 'created_on',)
+    list_display = ('name', 'views', 'label', 'created_on',)
     search_fields = ('name', 'label',)
     ordering = ('-created_on',)
 
