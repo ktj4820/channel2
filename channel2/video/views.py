@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 from channel2.core.response import HttpResponseXAccel
 from channel2.core.utils import paginate, get_request_ip, email_alert
-from channel2.core.views import ProtectedTemplateView
+from channel2.core.views import ProtectedTemplateView, TemplateView
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
 
@@ -38,7 +38,7 @@ class VideoView(ProtectedTemplateView):
         return redirect('video.link', key=link.key, slug=video.slug)
 
 
-class VideoLinkView(ProtectedTemplateView):
+class VideoLinkView(TemplateView):
 
     template_name = 'video/video-unavailable.html'
 
