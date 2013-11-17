@@ -40,3 +40,10 @@ TEMPLATE_LOADERS = (
 
 SITE_SCHEME = 'http'
 SITE_DOMAIN = 'channel2.derekkwok.net'
+
+SECRET_KEY = os.environ.get('CHANNEL2_SECRET_KEY')
+
+ALLOWED_HOSTS = [
+    'channel2.derekkwok.net',
+    '63.141.249.146',
+]
