@@ -63,8 +63,7 @@ class Video(models.Model):
 
             if os.path.exists(cover_path):
                 self.cover.delete()
-                file = open(cover_path)
-                self.cover.save('temp.jpg', File(file), save=True)
+                self.cover.save('', File(open(cover_path, 'rb')), save=True)
 
 
 class VideoLink(models.Model):
