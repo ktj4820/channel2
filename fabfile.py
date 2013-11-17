@@ -50,9 +50,8 @@ def production():
     use channel2 as host
     """
 
-    if confirm('WORKING WITH PRODUCTION. CONTINUE?', default=False):
-        env.hosts = ['channel2']
-        env.config = 'production'
+    env.hosts = ['channel2']
+    env.config = 'production'
 
 #-------------------------------------------------------------------------------
 # setup
@@ -231,9 +230,7 @@ def postgres_update():
     """
 
     sudo('rm -f /etc/postgresql/9.2/main/postgresql.conf')
-    sudo('rm -f /etc/postgresql/9.2/main/pg_hba.conf')
     put('config/{config}/postgresql.conf'.format(**env), '/etc/postgresql/9.2/main/postgresql.conf', use_sudo=True)
-    put('config/{config}/pg_hba.conf'.format(**env), '/etc/postgresql/9.2/main/pg_hba.conf', use_sudo=True)
     sudo('/etc/init.d/postgresql restart')
 
 def nginx_update():
