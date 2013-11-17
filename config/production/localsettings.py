@@ -14,6 +14,9 @@ EMAIL_HOST_USER = 'derek.kai.chun.kwok@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('CHANNEL2_EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
 
+X_ACCEL = True
+FFMPEG_PATH = '/usr/bin/ffmpeg'
+
 RESOURCE_VERSION = 'fabric:resource-version'
 
 DATABASES = {

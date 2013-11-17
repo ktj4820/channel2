@@ -10,8 +10,10 @@
 #   fab qa setup        # this sets up the QA server
 #   fab qa deploy       # this deploys the master branch to QA server
 #-------------------------------------------------------------------------------
+from contextlib import contextmanager
 
 import datetime
+from fabric.context_managers import prefix
 from fabric.contrib.console import confirm
 from fabric.contrib.project import rsync_project
 from fabric.operations import local, put, run, prompt
@@ -23,8 +25,11 @@ env.use_ssh_config      = True
 env.checkout_path       = '/tmp/django'
 env.deploy_path         = '/var/www/channel2'
 env.django_path         = '/var/www/channel2/django'
-env.media_path          = '/var/www/channel2/media'.format(**env)
-env.static_path         = '/var/www/channel2/static'.format(**env)
+env.media_path          = '/var/www/channel2/media'
+env.static_path         = '/var/www/channel2/static'
+
+env.venv_path           = '/var/www/channel2/venv'
+env.activate            = 'source /var/www/channel2/venv/bin/activate'
 
 env.packages = [
     # python stuff
@@ -54,19 +59,18 @@ def production():
     env.config = 'production'
 
 #-------------------------------------------------------------------------------
-# setup
+# activate virtualenv
 #-------------------------------------------------------------------------------
 
+@contextmanager
+def virtualenv():
+    with cd(env.venv_path):
+        with prefix(env.activate):
+            yield
 
-def full_setup():
-    """
-    runs setup, deploy, nginx_update, postgres_update, postgres_reset
-    """
-    setup()
-    nginx_update()
-    postgres_update()
-    postgres_reset()
-    deploy()
+#-------------------------------------------------------------------------------
+# setup
+#-------------------------------------------------------------------------------
 
 def setup():
     """
@@ -86,10 +90,9 @@ def setup():
     sudo('apt-get -y install {}'.format(' '.join(env.packages)))
 
     sudo('pip install supervisor==3.0')
-    sudo('pip install virtualenv')
-    sudo('pip install virtualenvwrapper')
     sudo('touch {django_path}/static/maintenance.html'.format(**env))
 
+    sudo('pyvenv-3.3 {env.venv_path}'.format(**env))
 
 #-------------------------------------------------------------------------------
 # deploy
@@ -137,8 +140,8 @@ def _fabric_marker():
 
     env.resource_version = datetime.datetime.now().strftime('%Y%m%d%H%M')
     local('sed -ire "s/fabric:resource-version/{resource_version}/g" {checkout_path}/config/{config}/localsettings.py'.format(**env))
-    local('mv {checkout_path}/static/css/app.css {checkout_path}/static/css/app{resource_version}.css'.format(**env))
-    local('mv {checkout_path}/static/js/app.js {checkout_path}/static/js/app{resource_version}.js'.format(**env))
+    local('cp {checkout_path}/static/css/app.css {checkout_path}/static/css/app{resource_version}.css'.format(**env))
+    local('cp {checkout_path}/static/js/app.js {checkout_path}/static/js/app{resource_version}.js'.format(**env))
 
 def _rsync():
     """
@@ -164,8 +167,9 @@ def _install_requirements():
     install requirements
     """
 
-    with cd('{django_path}'.format(**env)):
-        sudo('pip install -r requirements.txt')
+    with virtualenv():
+        with cd('{django_path}'.format(**env)):
+            sudo('pip install -r requirements.txt')
 
 
 def _syncdb_migrate():
@@ -173,10 +177,11 @@ def _syncdb_migrate():
     call python manage.py syncb and python manage.py migrate
     """
 
-    with cd('{django_path}'.format(**env)):
-        sudo('python manage.py syncdb --noinput', user='www-data')
-        sudo('python manage.py migrate', user='www-data')
-        sudo('python manage.py collectstatic --noinput', user='www-data')
+    with virtualenv():
+        with cd('{django_path}'.format(**env)):
+            sudo('python manage.py syncdb --noinput', user='www-data')
+            sudo('python manage.py migrate', user='www-data')
+            sudo('python manage.py collectstatic --noinput', user='www-data')
 
 
 #-------------------------------------------------------------------------------
@@ -251,4 +256,4 @@ def manage(command):
     """
 
     with cd('{django_path}'.format(**env)):
-        sudo('python manage.py {}'.format(command), user='www-data')
+        sudo('python3.3 manage.py {}'.format(command), user='www-data')

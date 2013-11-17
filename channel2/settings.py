@@ -121,9 +121,6 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
-SITE_SCHEME = 'http'
-SITE_DOMAIN = 'localhost:8000'
-
 #-------------------------------------------------------------------------------
 # localsettings.py
 #-------------------------------------------------------------------------------
