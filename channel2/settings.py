@@ -109,7 +109,7 @@ TEST_RUNNER = 'channel2.core.tests.Channel2TestSuiteRunner'
 FFMPEG_PATH = ''
 
 # The length for which the video link is valid for
-VIDEO_LINK_EXPIRE = 3 * 60 * 60
+VIDEO_LINK_EXPIRE = 6 * 60 * 60
 
 X_ACCEL = False
 
