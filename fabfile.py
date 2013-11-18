@@ -162,6 +162,8 @@ def _rsync():
 
     sudo('ln -s {django_path}/config/{config}/localsettings.py {django_path}/channel2/localsettings.py'.format(**env))
     sudo('chown -R www-data:www-data {django_path}'.format(**env))
+    sudo('rm -f {static_path}/css/app2*.css'.format(**env))
+    sudo('rm -f {static_path}/js/app2*.js'.format(**env))
 
 def _install_requirements():
     """
