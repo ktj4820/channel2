@@ -143,6 +143,7 @@ def _fabric_marker():
     local('sed -ire "s/fabric:resource-version/{resource_version}/g" {checkout_path}/config/{config}/localsettings.py'.format(**env))
     local('cp {checkout_path}/static/css/app.css {checkout_path}/static/css/app{resource_version}.css'.format(**env))
     local('cp {checkout_path}/static/js/app.js {checkout_path}/static/js/app{resource_version}.js'.format(**env))
+    local('cp {checkout_path}/static/js/lib.js {checkout_path}/static/js/lib{resource_version}.js'.format(**env))
 
 def _rsync():
     """
@@ -164,6 +165,7 @@ def _rsync():
     sudo('chown -R www-data:www-data {django_path}'.format(**env))
     sudo('rm -f {static_path}/css/app2*.css'.format(**env))
     sudo('rm -f {static_path}/js/app2*.js'.format(**env))
+    sudo('rm -f {static_path}/js/lib2*.js'.format(**env))
 
 def _install_requirements():
     """
