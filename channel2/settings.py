@@ -1,4 +1,5 @@
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DEBUG = False
@@ -101,6 +102,46 @@ LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
 
 TEST_RUNNER = 'channel2.core.tests.Channel2TestSuiteRunner'
+
+#-------------------------------------------------------------------------------
+# logging configuration
+#-------------------------------------------------------------------------------
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'channel2.log'),
+            'maxBytes': 1024 * 1024 * 10,
+            'backupCount': 9,
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
+}
 
 #-------------------------------------------------------------------------------
 # local site settings
