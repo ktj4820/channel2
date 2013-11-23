@@ -166,6 +166,7 @@ def _rsync():
     sudo('rm -f {static_path}/css/app2*.css'.format(**env))
     sudo('rm -f {static_path}/js/app2*.js'.format(**env))
     sudo('rm -f {static_path}/js/lib2*.js'.format(**env))
+    sudo('crontab {django_path}/config/{config}/crontab.txt'.format(**env))
 
 def _install_requirements():
     """

@@ -9,6 +9,7 @@ channel2.sqlite3
 channel2/localsettings.py
 
 .DS_Store
+whoosh
 
 #-------------------------------------------------------------------------------
 # JetBrains

@@ -1,0 +1,1 @@
+*/5 * * * *       sudo -Eu www-data python /var/www/channel2/django/manage.py update_index --remove

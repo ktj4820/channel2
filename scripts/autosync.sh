@@ -7,3 +7,4 @@ rm -fr logs/*
 python manage.py syncdb --noinput
 python manage.py migrate
 python channel2/datacreator.py
+python manage.py rebuild_index --noinput

@@ -84,12 +84,14 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.admin',
 
+    'haystack',
     'south',
 
     'channel2.account',
     'channel2.core',
     'channel2.flat',
     'channel2.label',
+    'channel2.search',
     'channel2.video',
 )
 
@@ -141,6 +143,17 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+#-------------------------------------------------------------------------------
+# search configuration
+#-------------------------------------------------------------------------------
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh'),
+    },
 }
 
 #-------------------------------------------------------------------------------

@@ -50,3 +50,10 @@ ALLOWED_HOSTS = [
     'channel2.derekkwok.net',
     '127.0.0.1',
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': '/var/www/channel2/whoosh',
+    },
+}
