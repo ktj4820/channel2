@@ -48,6 +48,5 @@ SECRET_KEY = os.environ.get('CHANNEL2_SECRET_KEY')
 
 ALLOWED_HOSTS = [
     'channel2.derekkwok.net',
-    '63.141.249.146',
     '127.0.0.1',
 ]

@@ -48,3 +48,10 @@ class BaseTestCase(TestCase):
         self.video_list = Video.objects.all()
 
         self.client.login(email='testuser@example.com', password='password')
+
+
+class TestRequest(object):
+
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)

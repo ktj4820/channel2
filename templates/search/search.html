@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <form action="" method="get" class="">
+        <input type="text" name="q" placeholder="{% trans 'Search Channel 2' %}"{% if request.GET.q %} value="{{ request.GET.q }}{% endif %}">
+    </form>
+    {% include 'video/video-list-component.html' %}
+    {% include '_components/pagination.html' %}
+{% endblock %}
