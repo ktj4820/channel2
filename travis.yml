@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.3"
+notifications:
+  email:
+    recipients:
+      - derek.kai.chun.kwok@gmail.com
+branches:
+  only:
+    - master
+install:
+  - pip install -r requirements.txt --use-mirrors
+script:
+  - coverage run --source=channel2 manage.py test
+after_success:
+  - coveralls
