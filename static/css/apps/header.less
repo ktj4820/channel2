@@ -16,7 +16,7 @@ header {
     z-index: 1000;
 }
 
-#header-menu-icon, #header-logout-icon {
+#header-menu-icon, #header-search-icon {
     -webkit-tap-highlight-color: transparent;
     color: #fff;
     cursor: pointer;
@@ -30,13 +30,16 @@ header {
     font-size: 24px;
     float: left;
 }
-#header-logout-icon {
+#header-search-icon {
     font-size: 20px;
     float: right;
 }
 
 .header-heading {
     .inline-block();
+    background-color: #444;
+    border-right: 1px solid #000;
+    width: @nav-width;
 
     > a {
         color: #fff;
@@ -45,19 +48,22 @@ header {
         font-weight: @font-weight-base;
         line-height: 50px;
         padding: 0 15px;
-        text-align: center;
+        text-align: left;
     }
 }
-
+@media screen and (min-width: @screen-xs) and (max-width: @screen-md1) {
+    .header-heading { display: none; }
+}
 @media screen and (max-width: @screen-xs1) {
     .header-heading {
+        background-color: #222;
         display: block;
-        padding-right: 25px;
+        width: 100%;
+        > a { text-align: center; }
     }
 }
 
 .header-menu {
-    float: right;
     padding: 0 15px;
     > a {
         .inline-block();
@@ -67,4 +73,21 @@ header {
         &:hover, &.active { color: #fff; }
         &.active { background-color: #000; }
     }
+}
+
+#header-search {
+    .inline-block();
+    margin: 6px 10px;
+
+    > input {
+        border: 1px solid #000;
+        height: 36px;
+    }
+}
+
+@media screen and (min-width: @screen-md) {
+    #header-search > input { width: 400px; }
+}
+@media screen and (max-width: @screen-md1) {
+    #header-search > input { width: 300px; }
 }

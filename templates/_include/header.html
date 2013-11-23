@@ -1,10 +1,15 @@
+{% load i18n %}
 <header>
     <span class="icon icon-menu max-md" id="header-menu-icon"></span>
-    <div class="header-menu min-xs">
-        <a>{{ user.email }}</a>
+    <a href="{% url 'search' %}" class="icon icon-search max-xs" id="header-search-icon"></a>
+    <div class="header-menu right min-xs">
+        <a class="min-sm">{{ user.email }}</a>
         <a href="#" onclick="document.getElementById('account-logout-form').submit()"><span class="icon icon-logout"></span></a>
     </div>
     <h1 class="header-heading"><a href="{% url 'video.list' %}">Channel 2</a></h1>
+    <form action="{% url 'search' %}" method="get" class="min-xs" id="header-search">
+        <input type="text" name="q" placeholder="{% trans 'Search for Videos' %}" value="{{ request.GET.q }}">
+    </form>
 </header>
 <form action="{% url 'account.logout' %}" method="post" class="none" id="account-logout-form">
     {% csrf_token %}

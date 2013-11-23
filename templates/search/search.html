@@ -2,9 +2,20 @@
 {% load i18n %}
 
 {% block content %}
-    <form action="" method="get" class="">
+    <form action="" method="get" class="container max-xs">
         <input type="text" name="q" placeholder="{% trans 'Search Channel 2' %}"{% if request.GET.q %} value="{{ request.GET.q }}{% endif %}">
     </form>
+    <hr class="max-xs">
+    {% if not request.GET.q %}
+        <div class="container">
+            <p>{% trans 'Please enter at least one search term.' %}</p>
+        </div>
+    {% endif %}
+    {% if request.GET.q and not video_list %}
+        <div class="container">
+            <p>{% trans 'No results found.' %}</p>
+        </div>
+    {% endif %}
     {% include 'video/video-list-component.html' %}
     {% include '_components/pagination.html' %}
 {% endblock %}
