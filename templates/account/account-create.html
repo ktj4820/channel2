@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <form action="" method="post" class="container">
+    <form action="" method="post" class="container thin-page">
         <h2>{% trans 'Create Account' %}</h2>
         {% csrf_token %}
         {% include '_components/field.html' with field=form.email %}

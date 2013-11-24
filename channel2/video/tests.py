@@ -3,6 +3,7 @@ import os
 import tempfile
 from urllib.parse import urlsplit
 from django.core.files.base import File
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from channel2.core.tests import BaseTestCase
@@ -104,3 +105,27 @@ class VideoLinkViewTests(BaseTestCase):
 
         actual_path = urlsplit(response['location'])[2]
         self.assertEqual(self.video.file.url, actual_path)
+
+
+class VideoAddViewTests(BaseTestCase):
+
+    def test_video_add_view_get(self):
+        response = self.client.get(reverse('video.add'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'video/video-add.html')
+
+    def test_video_add_view_post_invalid(self):
+        response = self.client.post(reverse('video.add'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'video/video-add.html')
+
+    def test_video_add_view_post(self):
+        response = self.client.post(reverse('video.add'), {
+            'file': SimpleUploadedFile('file.mp4', b'binary content of file'),
+            'label': self.label_list[0].id,
+            'name': 'Sample Video 01',
+        })
+        self.assertRedirects(response, reverse('video.add'))
+
+        video = Video.objects.get(name='Sample Video 01')
+        self.assertEqual(video.label, self.label_list[0])

@@ -3,6 +3,7 @@
 {% url 'flat.help' as url_flat_help %}
 {% url 'label.list' as url_label_list %}
 {% url 'video.list' as url_video_list %}
+{% url 'video.add' as url_video_add %}
 <nav>
     <div>
         <a href="{{ url_video_list }}"{% if request.path == url_video_list %} class="active"{% endif %}><span class="icon icon-clock"></span>{% trans 'Latest' %}</a>
@@ -14,6 +15,8 @@
         <span class="nav-sep"></span>
         {% if user.is_staff %}
             <a href="{{ url_account_create }}"{% if request.path == url_account_create %} class="active"{% endif %}><span class="icon icon-user-add"></span>{% trans 'Create Account' %}</a>
+            <a href="{{ url_video_add }}"{% if request.path == url_video_add %} class="active"{% endif %}><span class="icon icon-plus-squared"></span>{% trans 'Add Video' %}</a>
+            <span class="nav-sep"></span>
         {% endif %}
         <a href="{{ url_flat_help }}"{% if request.path == url_flat_help %} class="active"{% endif %}><span class="icon icon-help-circled"></span>{% trans 'Help' %}</a>
         <a href="" onclick="document.getElementById('account-logout-form').submit()" class="max-xs"><span class="icon icon-logout"></span>{% trans 'Logout' %}</a>

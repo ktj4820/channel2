@@ -35,6 +35,17 @@ input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
 }
 
+input[type="file"] {
+    .border-radius(5px);
+
+    background: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 12px 10px;
+    line-height: 1;
+    width: 100%;
+}
+
 textarea {
     .border-radius(5px);
 
@@ -50,12 +61,16 @@ textarea {
     width: 100%;
 }
 
+select {
+    width: 100%;
+}
+
 /* --------------------------------------------------
     form error styles
 ---------------------------------------------------*/
 
 .form-field.error {
-    > input[type="text"], input[type="email"], input[type="password"] {
+    > input[type="text"], > input[type="email"], > input[type="password"], > input[type="file"] {
         .border-radius(5px 5px 0 0);
         border: 1px solid @color-accent4;
     }

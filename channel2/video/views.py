@@ -1,10 +1,13 @@
 import os, binascii
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
+from django.utils.translation import ugettext as _
 from channel2.core.response import HttpResponseXAccel
 from channel2.core.utils import paginate, get_request_ip, email_alert
-from channel2.core.views import ProtectedTemplateView, TemplateView
+from channel2.core.views import ProtectedTemplateView, TemplateView, StaffOnlyView
 from channel2.settings import VIDEO_LINK_EXPIRE
+from channel2.video.forms import VideoAddForm
 from channel2.video.models import Video, VideoLink
 
 
@@ -65,3 +68,28 @@ class VideoLinkView(TemplateView):
             return self.render_to_response({'message': self.messages['link_expired']})
 
         return HttpResponseXAccel(link.video.file, content_type='video/mp4')
+
+
+class VideoAddView(StaffOnlyView):
+
+    template_name = 'video/video-add.html'
+
+    def get(self, request):
+        video = Video.objects.latest('created_on')
+        return self.render_to_response({
+            'form': VideoAddForm(initial={
+                'name': video.name,
+                'label': video.label,
+            }),
+        })
+
+    def post(self, request):
+        form = VideoAddForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            video = form.save()
+            messages.success(request, _('{} has been added.').format(video.name))
+            return redirect('video.add')
+
+        return self.render_to_response({
+            'form': form,
+        })

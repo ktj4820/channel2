@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <form action="" method="post" enctype="multipart/form-data" class="container thin-page">
+        <h2>{% trans 'Add Video' %}</h2>
+        {% csrf_token %}
+        {% include '_components/field.html' with field=form.file %}
+        {% include '_components/field.html' with field=form.name %}
+        {% include '_components/field.html' with field=form.label %}
+        <button type="submit" class="btn">{% trans 'Add' %}</button>
+    </form>
+{% endblock %}
