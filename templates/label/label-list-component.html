@@ -1,0 +1,10 @@
+<ul class="ll">
+    {% for label in label_list %}
+        <li class="lli">
+            <a href="{% url 'label' label.id label.slug %}">
+                <span class="badge right">{{ label.count|add:label.children_count }}</span>
+                <span>{{ label.name }}</span>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

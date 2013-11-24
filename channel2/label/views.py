@@ -11,7 +11,7 @@ class LabelListView(ProtectedTemplateView):
 
     def get(self, request):
         return self.render_to_response({
-            'label_list': Label.objects.annotate(count=Count('video')),
+            'label_list': Label.objects.annotate(count=Count('video'), children_count=Count('children')),
         })
 
 
@@ -23,7 +23,7 @@ class LabelView(ProtectedTemplateView):
         label = get_object_or_404(Label.objects.select_related('parent'), id=id)
         return self.render_to_response({
             'label': label,
-            'label_children_list': label.children.annotate(count=Count('video')),
+            'label_children_list': label.children.annotate(count=Count('video'), children_count=Count('children')),
             'video_list': label.video_set.order_by('-created_on'),
         })
 

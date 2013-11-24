@@ -20,16 +20,7 @@
     {% endif %}
     {% if label_children_list %}
         <hr>
-        <ul class="ll">
-            {% for label_child in label_children_list %}
-                <li class="lli">
-                    <a href="{% url 'label' label_child.id label_child.slug %}">
-                        <span class="badge right">{{ label_child.count }}</span>
-                        <span>{{ label_child.name }}</span>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% include 'label/label-list-component.html' with label_list=label_children_list %}
     {% endif %}
     {% if video_list %}
         <hr>
