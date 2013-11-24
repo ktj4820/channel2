@@ -15,9 +15,9 @@ class LabelForm(forms.ModelForm):
 
     markdown = forms.CharField(
         label=_('Markdown'),
+        required=False,
         widget=forms.Textarea(attrs={
             'placeholder': _('Please enter markdown here.'),
-            'required': 'required',
             'rows': '10',
             'data-bind': 'value: markdown, valueUpdate: "afterkeydown"',
         })
