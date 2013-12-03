@@ -10,8 +10,8 @@
 
 .lli {
     .inline-block();
-    width: 100%;
     padding: 5px;
+    width: 100%;
 
     > a {
         .transition(ease 100ms all);
@@ -21,7 +21,15 @@
         border: 1px solid #e5e5e5;
         display: block;
         padding: 12px 18px;
+        white-space: nowrap;
+        overflow: hidden;
         &:hover { border-color: lighten(@color-accent1, 30%); }
+
+        > span {
+            display: block;
+            overflow: hidden;
+        }
+        > .badge { margin-left: 1px; }
     }
 }
 
