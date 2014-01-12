@@ -6,8 +6,8 @@ class Label(models.Model):
 
     parent      = models.ForeignKey('self', null=True, blank=True, related_name='children')
 
-    name        = models.CharField(max_length=100)
-    slug        = models.SlugField(max_length=100, editable=False)
+    name        = models.CharField(max_length=100, unique=True)
+    slug        = models.SlugField(max_length=100, editable=False, db_index=True)
 
     markdown    = models.TextField(blank=True)
     html        = models.TextField(blank=True)

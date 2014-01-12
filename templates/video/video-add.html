@@ -2,6 +2,11 @@
 {% load i18n %}
 
 {% block content %}
+    <datalist id="label-list">
+        {% for label in label_list %}
+            <option value="{{ label.name }}"></option>
+        {% endfor %}
+    </datalist>
     <form action="" method="post" enctype="multipart/form-data" class="container thin-page">
         <h2>{% trans 'Add Video' %}</h2>
         {% csrf_token %}

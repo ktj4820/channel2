@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from channel2.core.response import HttpResponseXAccel
 from channel2.core.utils import paginate, get_request_ip, email_alert
 from channel2.core.views import ProtectedTemplateView, TemplateView, StaffOnlyView
+from channel2.label.models import Label
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.forms import VideoAddForm
 from channel2.video.models import Video, VideoLink
@@ -77,9 +78,10 @@ class VideoAddView(StaffOnlyView):
     def get(self, request):
         video = Video.objects.latest('created_on')
         return self.render_to_response({
+            'label_list': Label.objects.order_by('slug'),
             'form': VideoAddForm(initial={
                 'name': video.name,
-                'label': video.label,
+                'label': video.label.name,
             }),
         })
 
@@ -91,5 +93,6 @@ class VideoAddView(StaffOnlyView):
             return redirect('video.add')
 
         return self.render_to_response({
+            'label_list': Label.objects.order_by('slug'),
             'form': form,
         })

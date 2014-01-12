@@ -20,10 +20,27 @@ class VideoAddForm(forms.ModelForm):
         }),
     )
 
-    label = forms.ModelChoiceField(
-        queryset=Label.objects.all(),
+    label = forms.CharField(
+        label=_('Label'),
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Label'),
+            'maxlength': 100,
+            'list': 'label-list',
+        })
     )
 
     class Meta:
         model = Video
-        fields = ('file', 'name', 'label',)
+        fields = ('file', 'name',)
+
+    def clean_label(self):
+        label = self.cleaned_data.get('label').strip()
+        return label
+
+    def save(self, commit=True):
+        video = super().save(commit=False)
+        video.label = Label.objects.get_or_create(name=self.cleaned_data.get('label'))[0]
+        if commit:
+            video.save()
+        return video

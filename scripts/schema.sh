@@ -1,5 +1,5 @@
 #!/bin/sh
 
-python manage.py schemamigration account --initial --update
-python manage.py schemamigration label --initial --update
-python manage.py schemamigration video --initial --update
+python manage.py schemamigration account --auto
+python manage.py schemamigration label --auto
+python manage.py schemamigration video --auto
