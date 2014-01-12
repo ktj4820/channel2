@@ -10,10 +10,16 @@
         <span class="breadcrumb-active">{% trans 'Edit' %}</span>
     </div>
     <hr>
+    <datalist id="label-list">
+        {% for label in label_list %}
+            <option value="{{ label.name }}"></option>
+        {% endfor %}
+    </datalist>
     <form action="" method="post">
         {% csrf_token %}
         <div class="container">
             {% include '_components/non-field-errors.html' %}
+            {% include '_components/field.html' with field=form.parent %}
             {% include '_components/field.html' with field=form.name %}
             {% include '_components/field.html' with field=form.markdown %}
         </div>

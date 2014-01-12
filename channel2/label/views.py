@@ -36,6 +36,7 @@ class LabelEditView(StaffOnlyView):
         label = get_object_or_404(Label.objects.select_related('parent'), id=id)
         return self.render_to_response({
             'label': label,
+            'label_list': Label.objects.order_by('slug'),
             'form': LabelForm(instance=label),
         })
 
@@ -48,5 +49,6 @@ class LabelEditView(StaffOnlyView):
 
         return self.render_to_response({
             'label': label,
+            'label_list': Label.objects.order_by('slug'),
             'form': form,
         })
