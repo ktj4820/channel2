@@ -14,7 +14,7 @@ class HttpResponseXAccel(HttpResponse):
         if X_ACCEL:
             self['X-Accel-Redirect'] = MEDIA_URL + file.name
             self['X-Accel-Buffering'] = 'no'
-            self['X-Accel-Limit-Rate'] = 1024 * 1024
+            self['X-Accel-Limit-Rate'] = 2 * 1024 * 1024
         else:
             self.status_code = 302
             self['Location'] = file.url
