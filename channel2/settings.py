@@ -12,10 +12,6 @@ TEMPLATE_DEBUG = DEBUG
 
 RESOURCE_VERSION = 'development'
 
-ADMINS = (
-    ('Derek Kwok', 'derek.kai.chun.kwok@gmail.com'),
-)
-
 ALLOWED_HOSTS = []
 INTERNAL_IPS = ['127.0.0.1',]
 

@@ -7,6 +7,8 @@ __pycache__
 .DS_Store
 .coverage
 
+channel2/localsettings.py
+
 media-test
 
 static/css/app.css
