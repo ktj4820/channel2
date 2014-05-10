@@ -83,11 +83,11 @@ class BaseTestCase(TestCase):
         User.set_password = fast_set_password
         User.check_password = fast_check_password
 
-        self.user = User.objects.get(username='testuser')
+        self.user = User.objects.get(email='testuser@example.com')
         self.user.set_password('password')
         self.user.save()
 
-        self.client.login(username='testuser', password='password')
+        self.client.login(email='testuser@example.com', password='password')
 
     def assertTemplateUsed(self, response, template_name):
         self.assertEqual(response.template_name, template_name)
