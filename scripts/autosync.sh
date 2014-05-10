@@ -9,5 +9,5 @@ rm -fr media/*
 rm -fr logs/*
 python manage.py migrate --noinput
 if [ "$1" != "--empty" ]; then
-    python brain/datacreator.py
+    python channel2/datacreator.py
 fi
