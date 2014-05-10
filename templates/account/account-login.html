@@ -5,6 +5,7 @@
     <form action="" method="post" class="account-form">
         <h2 class="account-h2">Channel2</h2>
         {% include '_include/messages.html' %}
+        {{ forms.non_field_errors(form) }}
         {{ forms.csrf_input() }}
         {{ forms.field(form.email, False) }}
         {{ forms.field(form.password, False) }}

@@ -11,9 +11,9 @@ input[type="email"], input[type="password"] {
     border: 1px solid @input-border;
     display: block;
     line-height: 24px;
-    height: 44px;
+    height: 46px;
     outline: none;
-    padding: 9px;
+    padding: 10px;
     width: 100%;
 }
 
@@ -23,4 +23,29 @@ input[type="email"], input[type="password"] {
 
 .form-field {
     margin-bottom: 10px;
+
+    &.error {
+        input[type="email"], input[type="password"] {
+            .border-radius(@border-radius @border-radius 0 0);
+        }
+    }
+}
+
+.non-field-error {
+    .border-radius(@border-radius);
+    background-color: @input-error-msg-bg;
+    color: @input-error-msg;
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding: 10px;
+
+}
+
+.error-block {
+    .border-radius(0 0 @border-radius @border-radius);
+    background-color: @input-error-msg-bg;
+    color: @input-error-msg;
+    display: block;
+    font-size: 14px;
+    padding: 5px 10px;
 }

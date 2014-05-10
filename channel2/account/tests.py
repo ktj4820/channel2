@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from channel2.core.tests import BaseTestCase
 
 
-class AccountLoginTests(BaseTestCase):
+class AccountLoginTestsAnonymous(BaseTestCase):
 
     def setUp(self):
         super().setUp()
@@ -23,3 +23,15 @@ class AccountLoginTests(BaseTestCase):
             'email': 'testuser@example.com',
             'password': 'password',
         })
+        self.assertRedirects(response, reverse('video.list'))
+
+
+class AccountLoginTestsAuthenticated(BaseTestCase):
+
+    def test_account_login_view_get(self):
+        response = self.client.get(reverse('account.login'))
+        self.assertRedirects(response, reverse('video.list'))
+
+    def test_account_login_view_post_invalid(self):
+        response = self.client.post(reverse('account.login'))
+        self.assertRedirects(response, reverse('video.list'))
