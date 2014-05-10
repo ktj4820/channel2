@@ -1,0 +1,21 @@
+language: python
+python:
+  - "3.3"
+services:
+  - elasticsearch
+notifications:
+  email:
+    recipients:
+      - derek.kai.chun.kwok@gmail.com
+branches:
+  only:
+     - 2.1
+cache:
+  directories:
+    - $HOME/.pip-cache/
+install:
+  - pip install -r requirements.txt --download-cache $HOME/.pip-cache
+script:
+  - python manage.py test --verbosity 2
+after_success:
+  - coveralls
