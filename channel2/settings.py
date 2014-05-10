@@ -12,6 +12,8 @@ TEMPLATE_DEBUG = DEBUG
 
 RESOURCE_VERSION = 'development'
 
+ADMINS = []
+
 ALLOWED_HOSTS = []
 INTERNAL_IPS = ['127.0.0.1',]
 
@@ -22,6 +24,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'channel2.account',
+    'channel2.core',
+    'channel2.flat',
+    'channel2.label',
+    'channel2.search',
+    'channel2.video',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -69,11 +78,32 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+AUTH_USER_MODEL = 'account.User'
+
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+#-------------------------------------------------------------------------------
+# local site settings
+#-------------------------------------------------------------------------------
+
+FFMPEG_PATH = ''
+
+VIDEO_LINK_EXPIRE = 6 * 60 * 60
+
+X_ACCEL = False
+
+SITE_DOMAIN = 'localhost:8000'
+SITE_SCHEME = 'http'
+
+EMAIL_HOST = ''
+EMAIL_PORT = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
 
 #-------------------------------------------------------------------------------
 # localsettings.py
