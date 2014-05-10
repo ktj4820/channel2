@@ -2,11 +2,12 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from channel2.settings import DEBUG, MEDIA_ROOT
+from channel2.video.views import VideoListView
 
 
 urlpatterns = patterns('',
 
-    # url(r'^$',                  VideoListView.as_view(), name='video.list'),
+    url(r'^$',                  VideoListView.as_view(), name='video.list'),
 
     # apps
     url(r'^account/',           include('channel2.account.urls')),

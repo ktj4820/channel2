@@ -4,6 +4,10 @@ from channel2.core.tests import BaseTestCase
 
 class AccountLoginTests(BaseTestCase):
 
+    def setUp(self):
+        super().setUp()
+        self.client.logout()
+
     def test_account_login_view_get(self):
         response = self.client.get(reverse('account.login'))
         self.assertEqual(response.status_code, 200)

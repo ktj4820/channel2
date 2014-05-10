@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from channel2.core.views import ProtectedTemplateView
 
-# Create your views here.
+
+class VideoListView(ProtectedTemplateView):
+
+    template_name = 'video/video-list.html'
+
+    def get(self, request):
+        return self.render_to_response({})
