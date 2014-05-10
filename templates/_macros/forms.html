@@ -1,0 +1,44 @@
+{% macro csrf_input() %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+{% endmacro %}
+
+{% macro non_field_errors(form) %}
+    {% for error in form.non_field_errors() %}
+        <div class="non-field-error">{{ error|safe }}</div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro simple_field_label(field) %}
+    {{ field.label_tag()|safe }}
+{% endmacro %}
+
+{% macro simple_field(field) %}
+    {{ field|safe }}
+{% endmacro %}
+
+{% macro field(field, show_label=True) %}
+    <div class="form-field{% if field.errors %} error{% endif %}">
+        {% if show_label %}
+            {{ field.label_tag()|safe }}
+        {% endif %}
+        {{ field|safe }}
+        {% for error in field.errors %}
+            <span class="error-block">{{ error|safe }}</span>
+        {% endfor %}
+        {% if field.help_text %}
+            <span class="help-block">{{ field.help_text|safe }}</span>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro field_checkbox(field) %}
+    <div class="form-field{% if field.errors %} error{% endif %}">
+        <label>{{ field|safe }}{{ field.label|safe }}</label>
+        {% for error in field.errors %}
+            <span class="error-block">{{ error|safe }}</span>
+        {% endfor %}
+        {% if field.help_text %}
+            <span class="help-block">{{ field.help_text|safe }}</span>
+        {% endif %}
+    </div>
+{% endmacro %}

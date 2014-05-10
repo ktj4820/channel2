@@ -1,0 +1,39 @@
+/* --------------------------------------------------
+    button styles
+---------------------------------------------------*/
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+
+.btn {
+    .border-radius(@border-radius);
+    .inline-block();
+    .transition(150ms ease all);
+
+    background-color: @btn-bg;
+    border: 1px solid @btn-border;
+    color: @btn-color;
+    cursor: pointer;
+    padding: 9px 15px;
+    &:hover {
+        background-color: @btn-bg-active;
+        border-color: @btn-border-active;
+    }
+}
+
+.btn-primary {
+    background-color: @btn-primary-bg;
+    border-color: @btn-primary-border;
+    color: @btn-primary-color;
+    &:hover {
+        background-color: @btn-primary-bg-active;
+        border-color: @btn-primary-border-active;
+    }
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}

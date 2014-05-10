@@ -3,12 +3,39 @@
 ---------------------------------------------------*/
 
 .account-content {
+    .flex-display();
+    .align-items(center);
+    .justify-content(center);
+
     background-color: #222;
-    display: flex;
+    padding-bottom: 60px;
 
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+}
+
+.account-form {
+    max-width: 320px;
+    padding: 10px;
+    width: 100%;
+}
+
+.account-input[type="email"], .account-input[type="password"] {
+    border: none;
+    padding: 10px 9px;
+}
+
+.account-btn {
+    border: none;
+    padding: 10px 15px;
+}
+
+.account-h2 {
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 10px;
+    text-align: center;
 }
