@@ -54,6 +54,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
+        'TEST_NAME': 'channel2_test',
     }
 }
 
@@ -85,6 +86,29 @@ LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+TEST_RUNNER = 'channel2.core.tests.Channel2TestSuiteRunner'
+
+#-------------------------------------------------------------------------------
+# template settings
+#-------------------------------------------------------------------------------
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
+    'django.contrib.messages.context_processors.messages',
+    'channel2.core.context_processors.resource_version',
+    'fufufuu.core.context_processors.site_settings',
+)
 
 #-------------------------------------------------------------------------------
 # local site settings

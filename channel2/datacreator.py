@@ -36,12 +36,10 @@ def timed(func):
 
 CONFIGURATION = {
     'default': {
-        'LABELS': 100,
         'USERS': 3,
         'VIDEOS': 100,
     },
     'test': {
-        'LABELS': 1,
         'VIDEOS': 1,
         'USERS': 0,
     }
@@ -94,12 +92,12 @@ class DataCreator:
     def create_labels(self):
         self.label_list = []
         def create_label_list(parent, label_list):
-            if not label_list: return
+            if not label_list:
+                return
             for i, (label, children) in enumerate(label_list):
                 label = Label.objects.create(name=label, parent=parent, pinned=(not parent), order=i)
                 self.label_list.append(label)
-                if len(self.label_list) < self.config['LABELS']:
-                    create_label_list(label, children)
+                create_label_list(label, children)
         create_label_list(None, LABELS)
 
     @timed
@@ -117,7 +115,7 @@ class DataCreator:
             video_dict[label.name].append(video)
 
     def run(self):
-        print('-'*80)
+        print('-'*70)
         print('datacreator.py started')
         start = datetime.datetime.now()
 
@@ -127,7 +125,7 @@ class DataCreator:
 
         finish = datetime.datetime.now()
         print('datacreator.py finished in {}'.format(finish-start))
-        print('-'*80)
+        print('-'*70)
 
 
 #-------------------------------------------------------------------------------
