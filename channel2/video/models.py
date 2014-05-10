@@ -11,6 +11,7 @@ from channel2.core.uploads import video_file_upload_to, video_cover_upload_to
 from channel2.core.utils import slugify
 from channel2.label.models import Label
 from channel2.settings import FFMPEG_PATH
+from channel2.tag.models import Tag
 
 
 class Video(models.Model):
@@ -22,6 +23,7 @@ class Video(models.Model):
     views           = models.IntegerField(default=0)
     label           = models.ForeignKey(Label, null=True, blank=True, on_delete=models.SET_NULL)
     cover           = models.FileField(upload_to=video_cover_upload_to, null=True, blank=True)
+    tags            = models.ManyToManyField(Tag, null=True, blank=True)
 
     created_on      = models.DateTimeField(auto_now_add=True)
 
@@ -68,6 +70,10 @@ class VideoLink(models.Model):
     class Meta:
         db_table = 'video_link'
 
+
+#-------------------------------------------------------------------------------
+# signals
+#-------------------------------------------------------------------------------
 
 @receiver(post_delete, sender=Video)
 def video_delete(instance, **kwargs):
