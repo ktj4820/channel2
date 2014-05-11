@@ -1,5 +1,4 @@
 import argparse
-from collections import defaultdict
 import datetime
 import os
 import random
@@ -10,7 +9,8 @@ sys.path.append(PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'channel2.settings'
 
 from channel2.account.models import User
-from channel2.label.models import Label
+from channel2.core.utils import slugify
+from channel2.tag.models import Tag
 from channel2.video.models import Video
 
 import django
@@ -36,34 +36,22 @@ def timed(func):
 
 CONFIGURATION = {
     'default': {
+        'TAGS': 100,
+        'TAGS_PINNED': 5,
+        'TAG_RELATION_FACTOR': (0, 5),
         'USERS': 3,
         'VIDEOS': 100,
+        'VIDEO_TAGS': (0, 5),
     },
     'test': {
-        'VIDEOS': 1,
+        'TAGS': 1,
+        'TAGS_PINNED': 1,
+        'TAG_RELATION_FACTOR': (1, 1),
         'USERS': 0,
+        'VIDEOS': 1,
+        'VIDEO_TAGS': (1, 1),
     }
 }
-
-LABELS = (
-    ('Anime', (
-        ('Accel World', None),
-        ('Another', None),
-        ('C3', None),
-        ('Chuunibyou demo Koi ga Shitai!', None),
-        ('Eureka 7: AO', None),
-        ('Hyouka', None),
-        ('Jormungand', None),
-        ('Kokoro Connect', None),
-        ('Magi', None),
-        ('PSYCHO-PASS', None),
-        ('Sword Art Online', None),
-        ('Usagi Drop', None),
-    )),
-    ('Movies', None),
-    ('Documentaries', None),
-    ('TV Series', None),
-)
 
 #-------------------------------------------------------------------------------
 
@@ -89,30 +77,37 @@ class DataCreator:
         return self.user
 
     @timed
-    def create_labels(self):
-        self.label_list = []
-        def create_label_list(parent, label_list):
-            if not label_list:
-                return
-            for i, (label, children) in enumerate(label_list):
-                label = Label.objects.create(name=label, parent=parent, pinned=(not parent), order=i)
-                self.label_list.append(label)
-                create_label_list(label, children)
-        create_label_list(None, LABELS)
+    def create_tags(self):
+        tag_list = []
+        for i in range(1, self.config['TAGS_PINNED']+1):
+            name = 'Pinned Tag {}'.format(i)
+            slug = slugify(name)
+            tag_list.append(Tag(name=name, slug=slug, pinned=True))
+        for i in range(1, self.config['TAGS']+1):
+            name = 'Tag {}'.format(i)
+            slug = slugify(name)
+            tag_list.append(Tag(name=name, slug=slug))
+        Tag.objects.bulk_create(tag_list)
+
+        tag_list = set(Tag.objects.all())
+        for tag in tag_list:
+            count = random.randint(*self.config['TAG_RELATION_FACTOR'])
+            tag.tags.add(*random.sample(tag_list, count))
 
     @timed
     def create_videos(self):
-        label_list = Label.objects.get(name='Anime').children.all()
-        video_dict = defaultdict(list)
+        video_list = []
+        for i in range(1, self.config['VIDEOS']+1):
+            name = 'Video {}'.format(i)
+            slug = slugify(name)
+            video_list.append(Video(name=name, slug=slug))
+        Video.objects.bulk_create(video_list)
 
-        for i in range(self.config['VIDEOS']):
-            label = random.choice(label_list)
-            episode = len(video_dict[label.name]) + 1
-            video = Video.objects.create(
-                name='{} {:02d}'.format(label.name, episode),
-                label=label,
-            )
-            video_dict[label.name].append(video)
+        tag_list = set(Tag.objects.all())
+        video_list = Video.objects.all()
+        for video in video_list:
+            count = random.randint(*self.config['VIDEO_TAGS'])
+            video.tags.add(*random.sample(tag_list, count))
 
     def run(self):
         print('-'*70)
@@ -120,7 +115,7 @@ class DataCreator:
         start = datetime.datetime.now()
 
         self.create_users()
-        self.create_labels()
+        self.create_tags()
         self.create_videos()
 
         finish = datetime.datetime.now()
