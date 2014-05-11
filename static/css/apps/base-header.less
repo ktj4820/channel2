@@ -2,8 +2,6 @@
     base header styles
 ---------------------------------------------------*/
 
-@header-height: 50px;
-
 header {
     .transform(translateZ(0));
     .flex-display();
@@ -24,7 +22,7 @@ header {
 ---------------------------------------------------*/
 
 #header-mobile-menu-icon, #header-mobile-search-icon {
-    color: #fff;
+    color: @header-color-active;
     text-align: center;
     width: @header-height;
 }
@@ -38,7 +36,7 @@ header {
 @media screen and (max-width: @screen-xs1) {
     #header-logo {
         .flex-grow(1);
-        color: #fff;
+        color: @header-color-active;
         font-size: 20px;
         text-align: center;
     }
@@ -48,11 +46,11 @@ header {
 }
 @media screen and (min-width: @screen-md) {
     #header-logo {
-        background-color: #444;
-        color: #fff;
+        background-color: @header-bg-alt;
+        color: @header-color-active;
         font-size: 18px;
         line-height: @header-height;
-        padding: 0 10px;
+        padding: 0 15px;
         width: @nav-width;
     }
 }
@@ -72,7 +70,7 @@ header {
 
 #header-logout-icon {
     text-align: center;
-    width: 48px;
+    width: @header-height;
     margin: 0 10px;
-    &:hover { color: #fff; }
+    &:hover { color: @header-color-active; }
 }

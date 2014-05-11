@@ -1,0 +1,11 @@
+<nav>
+    <a href="#" class="nav-item active"><span class="icon icon-clock"></span> {% trans %}Latest{% endtrans %}</a>
+    <hr class="nav-sep">
+    {% for tag in PINNED_TAG_LIST %}
+        <a href="#" class="nav-item"><span class="icon icon-right-dir"></span> {{ tag.name }}</a>
+    {% endfor %}
+    <hr class="nav-sep">
+    <a href="#" class="nav-item"><span class="icon icon-tag"></span> {% trans %}All Tags{% endtrans %}</a>
+    <hr class="nav-sep">
+    <a href="#" class="nav-item"><span class="icon icon-help-circled"></span> {% trans %}Help{% endtrans %}</a>
+</nav>
