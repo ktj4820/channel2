@@ -2,7 +2,7 @@
     input styles
 ---------------------------------------------------*/
 
-input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"] {
     .border-radius(@border-radius);
     -webkit-appearance: none;
 
@@ -25,7 +25,7 @@ input[type="email"], input[type="password"] {
     margin-bottom: 10px;
 
     &.error {
-        input[type="email"], input[type="password"] {
+        input[type="text"], input[type="email"], input[type="password"] {
             .border-radius(@border-radius @border-radius 0 0);
         }
     }
