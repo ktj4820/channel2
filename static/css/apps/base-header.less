@@ -8,13 +8,16 @@ header {
     .align-items(center);
 
     background-color: @header-bg;
-    color: #ccc;
+    color: @header-color;
     height: @header-height;
 
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+
+    > a { color: @header-color; }
+    > a:hover { color: @header-color-active; }
 }
 
 /* --------------------------------------------------
@@ -73,5 +76,4 @@ header {
     text-align: center;
     width: @header-height;
     margin: 0 10px;
-    &:hover { color: @header-color-active; }
 }
