@@ -1,6 +1,8 @@
 from django.contrib.auth import logout, login
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from django.views.generic.base import View
+
 from channel2.account.forms import AccountLoginForm
 from channel2.core.views import TemplateView
 
@@ -28,3 +30,13 @@ class AccountLoginView(TemplateView):
         return self.render_to_response({
             'form': form,
         })
+
+
+class AccountLogoutView(View):
+
+    def get(self, request):
+        return redirect('video.list')
+
+    def post(self, request):
+        logout(request)
+        return redirect('account.login')
