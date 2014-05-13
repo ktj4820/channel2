@@ -23,7 +23,7 @@ class Video(models.Model):
     views           = models.IntegerField(default=0)
     label           = models.ForeignKey(Label, null=True, blank=True, on_delete=models.SET_NULL)
     cover           = models.FileField(upload_to=video_cover_upload_to, null=True, blank=True)
-    tags            = models.ManyToManyField(Tag, null=True, blank=True)
+    tag             = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.SET_NULL)
 
     created_on      = models.DateTimeField(auto_now_add=True)
 

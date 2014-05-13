@@ -41,7 +41,6 @@ CONFIGURATION = {
         'TAG_RELATION_FACTOR': (0, 5),
         'USERS': 3,
         'VIDEOS': 100,
-        'VIDEO_TAGS': (0, 5),
     },
     'test': {
         'TAGS': 1,
@@ -49,7 +48,6 @@ CONFIGURATION = {
         'TAG_RELATION_FACTOR': (1, 1),
         'USERS': 0,
         'VIDEOS': 1,
-        'VIDEO_TAGS': (1, 1),
     }
 }
 
@@ -96,18 +94,13 @@ class DataCreator:
 
     @timed
     def create_videos(self):
+        tag_list = list(Tag.objects.all())
         video_list = []
         for i in range(1, self.config['VIDEOS']+1):
             name = 'Video {}'.format(i)
             slug = slugify(name)
-            video_list.append(Video(name=name, slug=slug))
+            video_list.append(Video(name=name, slug=slug, tag=random.choice(tag_list)))
         Video.objects.bulk_create(video_list)
-
-        tag_list = set(Tag.objects.all())
-        video_list = Video.objects.all()
-        for video in video_list:
-            count = random.randint(*self.config['VIDEO_TAGS'])
-            video.tags.add(*random.sample(tag_list, count))
 
     def run(self):
         print('-'*70)
