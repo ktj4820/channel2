@@ -16,6 +16,8 @@ nav {
     top: @header-height;
     left: 0;
     bottom: 0;
+
+    z-index: 500;
 }
 
 @media screen and (max-width: @screen-xs1) {
@@ -37,12 +39,8 @@ nav {
     color: @nav-color;
     padding: 6px 10px;
 
-    &.active {
-        border-left-color: @color-accent1;
-    }
-    &:hover {
-        border-left-color: @nav-border;
-    }
+    &:hover { border-left-color: @nav-border; }
+    &.active { border-left-color: @color-accent1; }
 }
 
 .nav-sep {

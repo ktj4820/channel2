@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul class="tl">
+        {% for tag in tag_list %}
+            <li class="tli-wrapper">
+                <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
+                    <span class="tli-name">{{ tag.name }}</span>
+                    <span class="badge space-left-5">{{ tag.count }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

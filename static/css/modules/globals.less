@@ -4,5 +4,26 @@
 
 a {
     cursor: pointer;
+    color: @link-color;
     text-decoration: none;
 }
+
+/* --------------------------------------------------
+    badge styles
+---------------------------------------------------*/
+
+.badge {
+    .border-radius(@border-radius);
+    background-color: @badge-bg;
+    color: @badge-color;
+    font-size: 13px;
+    line-height: 24px;
+    height: 24px;
+    padding: 0 5px;
+}
+
+/* --------------------------------------------------
+    global classes
+---------------------------------------------------*/
+
+.space-left-5 { margin-left: 5px; }

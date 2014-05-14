@@ -3,5 +3,9 @@
 ---------------------------------------------------*/
 
 .content {
-    padding-top: 50px;
+    padding-top: @header-height;
+}
+
+@media screen and (min-width: @screen-md) {
+    .content { padding-left: @nav-width; }
 }

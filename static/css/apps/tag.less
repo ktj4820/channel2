@@ -1,0 +1,34 @@
+/* --------------------------------------------------
+    tag styles
+---------------------------------------------------*/
+
+.tl {
+    .column-width(300px);
+    .column-gap(0);
+
+    padding: 5px;
+}
+.tli-wrapper {
+    .inline-block();
+
+    padding: 5px;
+    width: 100%;
+}
+.tli {
+    .align-items();
+    .border-radius(@border-radius);
+    .flex-display();
+
+    background-color: @tag-list-item-bg;
+    border: 1px solid @tag-list-item-border;
+    padding: 10px;
+
+    &:hover { border-color: @tag-list-item-border-hover; }
+}
+
+.tli-name {
+    .flex-grow(1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
