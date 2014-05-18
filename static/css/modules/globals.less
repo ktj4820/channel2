@@ -23,7 +23,30 @@ a {
 }
 
 /* --------------------------------------------------
+    standard page classes
+---------------------------------------------------*/
+
+.markdown-html {
+    > *:last-child { margin-bottom: 0; }
+}
+
+.page-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.section {
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #fff;
+    padding: 10px;
+    &:first-child { border-top: none; }
+    &:last-child { border-bottom: none; }
+    > *:last-child { margin-bottom: 0; }
+}
+
+/* --------------------------------------------------
     global classes
 ---------------------------------------------------*/
 
 .space-left-5 { margin-left: 5px; }
+.space-bottom-10 { margin-bottom: 10px; }

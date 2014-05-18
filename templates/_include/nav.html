@@ -5,7 +5,9 @@
 
 <nav>
     <a href="{{ url_video_list }}" class="nav-item {{ utils.link_active(url_video_list) }}"><span class="icon icon-clock"></span> {% trans %}Latest{% endtrans %}</a>
-    <hr class="nav-sep">
+    {% if PINNED_TAG_LIST %}
+        <hr class="nav-sep">
+    {% endif %}
     {% for tag in PINNED_TAG_LIST %}
         {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}
         <a href="{{ url_tag }}" class="nav-item {{ utils.link_active(url_tag) }}"><span class="icon icon-right-dir"></span> {{ tag.name }}</a>
