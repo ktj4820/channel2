@@ -12,6 +12,7 @@ channel2/localsettings.py
 media-test
 
 static/css/app.css
+static/js/app.js
 
 #-------------------------------------------------------------------------------
 # JetBrains
