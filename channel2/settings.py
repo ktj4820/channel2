@@ -139,3 +139,17 @@ try:
 except ImportError:
     pass
 
+#-------------------------------------------------------------------------------
+# see if we need to import debug toolbar
+#-------------------------------------------------------------------------------
+
+if DEBUG_TOOLBAR:
+    INSTALLED_APPS += (
+        'debug_toolbar',
+    )
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    DISABLE_PANELS = {
+        'INTERCEPT_REDIRECTS': False,
+    }

@@ -13,8 +13,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='tag',
-            name='tags',
-            field=models.ManyToManyField(to='tag.Tag'),
+            name='children',
+            field=models.ManyToManyField(null=True, blank=True, to='tag.Tag'),
             preserve_default=True,
         ),
     ]

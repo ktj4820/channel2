@@ -12,7 +12,7 @@ class Tag(models.Model):
     pinned      = models.BooleanField(default=False)
     order       = models.PositiveSmallIntegerField(null=True, blank=True)
 
-    tags        = models.ManyToManyField('self')
+    children    = models.ManyToManyField('self', symmetrical=False, null=True, blank=True, related_name='parents')
 
     updated_on  = models.DateTimeField(auto_now_add=True)
     updated_by  = models.ForeignKey(User, null=True, blank=True)
@@ -26,3 +26,18 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+#-------------------------------------------------------------------------------
+# Unmanaged join tables
+#-------------------------------------------------------------------------------
+
+
+class TagChildren(models.Model):
+
+    parent  = models.ForeignKey(Tag, db_column='from_tag_id', related_name='+')
+    child   = models.ForeignKey(Tag, db_column='to_tag_id', related_name='+')
+
+    class Meta:
+        db_table = 'tag_children'
+        managed = False

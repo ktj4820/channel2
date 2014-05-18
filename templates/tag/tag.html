@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ tag.name }}</h2>
+    <ul class="tl">
+        {% for tag in tag_list %}
+            <li class="tli-wrapper">
+                <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
+                    <span class="tli-name">{{ tag.name }}</span>
+{#                    {% set r_tag_list = tag.tags.all() %}#}
+{#                    {% if r_tag_list %}#}
+{#                        <ul>#}
+{#                            {% for r_tag in r_tag_list %}#}
+{#                                <li>{{ r_tag.name }}</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    {% endif %}#}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

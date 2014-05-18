@@ -90,7 +90,7 @@ class DataCreator:
         tag_list = set(Tag.objects.all())
         for tag in tag_list:
             count = random.randint(*self.config['TAG_RELATION_FACTOR'])
-            tag.tags.add(*random.sample(tag_list, count))
+            tag.children.add(*random.sample(tag_list, count))
 
     @timed
     def create_videos(self):
