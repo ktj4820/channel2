@@ -73,7 +73,7 @@
     responsive styles (sm to md)
 ---------------------------------------------------*/
 
-@media screen and (min-width: @screen-sm) and (max-width: @screen-md1) {
+@media screen and (min-width: @screen-sm) and (max-width: @screen-lg1) {
     .vli-cover {
         height: 180 + 2px;
         width: 320 + 1px;
@@ -102,7 +102,11 @@
         right: 0;
         left: 0;
     }
-    .vli-title { color: @vli-title-color-sm; }
+    .vli-title {
+        color: @vli-title-color-sm;
+        font-weight: @font-weight-bold;
+        margin-bottom: 0;
+    }
     .vli-help-text { color: @vli-help-text-color-sm; }
 }
 
