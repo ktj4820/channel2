@@ -37,17 +37,16 @@ img {
 
 .page-title {
     font-size: 20px;
-    margin-bottom: 10px;
 }
 
-.section {
+section {
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #fff;
     overflow: auto;
     padding: 10px;
 
-    &:first-child { border-top: none; }
-    &:last-child  { border-bottom: none; }
+    &:first-of-type { border-top: none; }
+    &:last-of-type  { border-bottom: none; }
 
     > *:last-child { margin-bottom: 0; }
 }
@@ -55,6 +54,8 @@ img {
 /* --------------------------------------------------
     global classes
 ---------------------------------------------------*/
+
+.flex-grow-1        { .flex-grow(1); }
 
 .space-left-5       { margin-left: 5px; }
 

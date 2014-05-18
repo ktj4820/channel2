@@ -1,0 +1,20 @@
+{% if video_list %}
+    <section class="vl">
+        {% for video in video_list %}
+            <div class="vli-wrapper">
+                <div class="vli">
+                    {% if video.cover %}
+                        <a href="#" class="vli-cover"><img src="{{ video.cover.url }}"></a>
+                    {% endif %}
+                    <div class="vli-info">
+                        <span class="vli-title">{{ video.name }}</span><br>
+                        <p class="vli-help-text space-bottom-0">{% trans added_on=video.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
+                        <p class="vli-help-text">{{ video.size|filesizeformat }}</p>
+                        <a href="#" class="btn btn-small space-right-5"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>
+                        <a href="#" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}
