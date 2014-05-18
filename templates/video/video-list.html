@@ -2,15 +2,6 @@
 {% import '_macros/widgets.html' as widgets with context %}
 
 {% block content %}
-    <div class="filter-bar filter-bar-top">
-        <div class="flex-grow-1"></div>
-        <form action="" method="get">
-            {{ widgets.pagination(video_list) }}
-            {% for key, val in (request.GET|exclude_keys('p')).items() %}
-                <input type="hidden" name="{{ key }}" value="{{ val }}">
-            {% endfor %}
-        </form>
-    </div>
     {% if video_list %}
         <section class="vl">
             {% for video in video_list %}
