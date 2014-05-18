@@ -24,10 +24,11 @@
 {% endmacro %}
 
 {% macro video(obj, tl=None) %}
+    {% set url_video = url('video', args=[obj.id, obj.slug]) %}
     <div class="vli-wrapper">
         <div class="vli">
             {% if obj.cover %}
-                <a href="#" class="vli-cover">
+                <a href="{{ url_video }}" class="vli-cover" target="_blank">
                     <img src="{{ obj.cover.url }}">
                 </a>
             {% endif %}
@@ -40,8 +41,8 @@
                 {% endif %}
                 <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
                 <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
-                <a href="#" class="btn btn-small space-right-5"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>
-                <a href="#" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>
+                <a href="{{ url_video }}" class="btn btn-small space-right-5" target="_blank"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>
+                <a href="{{ url_video }}?download=true" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>
             </div>
         </div>
     </div>
