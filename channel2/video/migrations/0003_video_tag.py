@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tag', '0002_tag_children'),
+        ('tag', '0002_tag_children_users'),
         ('video', '0002_videolink'),
     ]
 

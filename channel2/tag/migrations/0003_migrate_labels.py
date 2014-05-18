@@ -10,7 +10,7 @@ def migrate_labels(apps, schema_editor):
 
     label_list = Label.objects.all()
     for label in label_list:
-        tag = Tag.objects.create(name=label.name, slug=label.slug, markdown=label.markdown, html=label.html)
+        tag = Tag.objects.create(name=label.name, slug=label.slug, markdown=label.markdown, html=label.html, pinned=label.pinned)
         for video in label.video_set.all():
             video.tag = tag
             video.save()
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('label', '0002_label_parent'),
-        ('tag', '0002_tag_children'),
+        ('tag', '0002_tag_children_users'),
         ('video', '0003_video_tag'),
     ]
 

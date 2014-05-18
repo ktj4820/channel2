@@ -10,7 +10,7 @@
     {% endif %}
     {% for tag in PINNED_TAG_LIST %}
         {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}
-        <a href="{{ url_tag }}" class="nav-item {{ utils.link_active(url_tag) }}"><span class="icon icon-right-dir"></span> {{ tag.name }}</a>
+        <a href="{{ url_tag }}" class="nav-item {{ utils.link_active(url_tag) }}"><span class="icon icon-right-open"></span> {{ tag.name }}</a>
     {% endfor %}
     <hr class="nav-sep">
     <a href="{{ url_tag_list }}" class="nav-item {{ utils.link_active(url_tag_list) }}"><span class="icon icon-tag"></span> {% trans %}All Tags{% endtrans %}</a>

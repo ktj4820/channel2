@@ -13,6 +13,7 @@ class Tag(models.Model):
     order       = models.PositiveSmallIntegerField(null=True, blank=True)
 
     children    = models.ManyToManyField('self', symmetrical=False, null=True, blank=True, related_name='parents')
+    users       = models.ManyToManyField(User, null=True, blank=True, related_name='pinned_tags')
 
     updated_on  = models.DateTimeField(auto_now_add=True)
     updated_by  = models.ForeignKey(User, null=True, blank=True)
