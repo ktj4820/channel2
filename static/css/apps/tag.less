@@ -6,6 +6,7 @@
     .column-width(300px);
     .column-gap(0);
 
+    list-style-type: none;
     padding: 5px;
 }
 .tli-wrapper {
@@ -39,12 +40,14 @@
 
 .tl-simple {
     .flex-display();
+
+    list-style-type: none;
     margin: -2px;
 }
 .tli-simple {
     .border-radius(@border-radius);
-    background-color: #666;
-    color: #fff;
+    background-color: @tag-simple-bg;
+    color: @tag-simple-color;
     font-size: 13px;
     line-height: 24px;
     padding: 0 5px;

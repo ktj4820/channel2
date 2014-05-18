@@ -14,21 +14,43 @@
             </div>
         {% endif %}
     </div>
-    <ul class="section tl">
-        {% for tag_p in tag_parent_list %}
-            <li class="tli-wrapper">
-                <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" class="tli" title="{{ tag_p.name }}">
-                    <span class="tli-name">{{ tag_p.name }}</span>
-                    <span class="badge space-left-5">{{ tag_p.count }}</span>
-                    {% if tag_p.children_list %}
-                        <div class="tl-simple">
-                            {% for tag_c in tag_p.children_list %}
-                                <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tli-simple">{{ tag_c.name }}</a>
-                            {% endfor %}
+    {% if tag_parent_list %}
+        <ul class="section tl">
+            {% for tag_p in tag_parent_list %}
+                <li class="tli-wrapper">
+                    <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" class="tli" title="{{ tag_p.name }}">
+                        <span class="tli-name">{{ tag_p.name }}</span>
+                        <span class="badge space-left-5">{{ tag_p.count }}</span>
+                        {% if tag_p.children_list %}
+                            <div class="tl-simple">
+                                {% for tag_c in tag_p.children_list %}
+                                    <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tli-simple">{{ tag_c.name }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if video_list %}
+        <ul class="section vl">
+            {% for video in video_list %}
+                <li class="vli-wrapper">
+                    <div class="vli">
+                        {% if video.cover %}
+                            <a href="#" class="vli-cover"><img src="{{ video.cover.url }}"></a>
+                        {% endif %}
+                        <div class="vli-info">
+                            <span class="vli-title">{{ video.name }}</span><br>
+                            <p class="vli-help-text space-bottom-0">{% trans added_on=video.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
+                            <p class="vli-help-text">{{ video.size|filesizeformat }}</p>
+                            <a href="#" class="btn btn-small space-right-5"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>
+                            <a href="#" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>
                         </div>
-                    {% endif %}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

@@ -57,6 +57,12 @@ class Video(models.Model):
                 self.cover.delete()
                 self.cover.save('', File(open(cover_path, 'rb')), save=True)
 
+    @property
+    def size(self):
+        if self.file and os.path.exists(self.file.path):
+            return self.file.size
+        return 0
+
 
 class VideoLink(models.Model):
 

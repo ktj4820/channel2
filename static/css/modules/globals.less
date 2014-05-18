@@ -8,6 +8,11 @@ a {
     text-decoration: none;
 }
 
+img {
+    display: block;
+    max-width: 100%;
+}
+
 /* --------------------------------------------------
     badge styles
 ---------------------------------------------------*/
@@ -38,9 +43,12 @@ a {
 .section {
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #fff;
+    overflow: auto;
     padding: 10px;
+
     &:first-child { border-top: none; }
-    &:last-child { border-bottom: none; }
+    &:last-child  { border-bottom: none; }
+
     > *:last-child { margin-bottom: 0; }
 }
 
@@ -48,5 +56,10 @@ a {
     global classes
 ---------------------------------------------------*/
 
-.space-left-5 { margin-left: 5px; }
-.space-bottom-10 { margin-bottom: 10px; }
+.space-left-5       { margin-left: 5px; }
+
+.space-bottom-0     { margin-bottom: 0; }
+.space-bottom-10    { margin-bottom: 10px; }
+
+.space-right-5      { margin-right: 5px; }
+.space-right-10     { margin-right: 10px; }

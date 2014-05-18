@@ -38,4 +38,5 @@ class TagView(ProtectedTemplateView):
             'tag': tag,
             'tag_children_list': tag_children_list,
             'tag_parent_list': tag_parent_list,
+            'video_list': tag.video_set.order_by('-created_on'),
         })
