@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import '_macros/widgets.html' as widgets with context %}
 
 {% block content %}
     <section>
@@ -7,11 +8,7 @@
             <div>{{ tag.html|safe }}</div>
         {% endif %}
         {% if tag_children_list %}
-            <div class="tl-simple">
-                {% for tag_c in tag_children_list %}
-                    <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tli-simple">{{ tag_c.name }}</a>
-                {% endfor %}
-            </div>
+            <div class="tl-simple">{{ widgets.tag_list(tag_children_list) }}</div>
         {% endif %}
     </section>
     {% if tag_parent_list %}
@@ -22,16 +19,18 @@
                         <span class="tli-name">{{ tag_p.name }}</span>
                         <span class="badge space-left-5">{{ tag_p.count }}</span>
                         {% if tag_p.children_list %}
-                            <div class="tl-simple">
-                                {% for tag_c in tag_p.children_list %}
-                                    <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tli-simple">{{ tag_c.name }}</a>
-                                {% endfor %}
-                            </div>
+                            <div class="tl-simple">{{ widgets.tag_list(tag_p.children_list) }}</div>
                         {% endif %}
                     </a>
                 </div>
             {% endfor %}
         </section>
     {% endif %}
-    {% include 'video/video-list-component.html' %}
+    {% if video_list %}
+        <section class="vl">
+            {% for video in video_list %}
+                {{ widgets.video(video) }}
+            {% endfor %}
+        </section>
+    {% endif %}
 {% endblock %}

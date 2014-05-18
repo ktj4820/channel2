@@ -16,3 +16,33 @@
         {% endif %}
     </div>
 {% endmacro %}
+
+{% macro tag_list(tl) %}
+    {% for tag in tl %}
+        <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli-simple" title="{{ tag.name }}">{{ tag.name }}</a>
+    {% endfor %}
+{% endmacro %}
+
+{% macro video(obj, tl=None) %}
+    <div class="vli-wrapper">
+        <div class="vli">
+            {% if obj.cover %}
+                <a href="#" class="vli-cover">
+                    <img src="{{ obj.cover.url }}">
+                </a>
+            {% endif %}
+            <div class="vli-info">
+                <p class="vli-title">{{ obj.name }}</p>
+                {% if tl %}
+                    <div class="space-bottom-10 min-xs">
+                        <div class="tl-simple">{{ tag_list(tl) }}</div>
+                    </div>
+                {% endif %}
+                <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
+                <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
+                <a href="#" class="btn btn-small space-right-5"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>
+                <a href="#" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

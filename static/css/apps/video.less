@@ -29,7 +29,6 @@
 
 .vli-info {
     .border-radius(0 @border-radius @border-radius 0);
-    .flex-grow(1);
     background-color: @vli-info-bg;
     border: @vli-border;
     padding: 10px;
@@ -37,18 +36,56 @@
 
 .vli-help-text { font-size: 13px; }
 
+/* --------------------------------------------------
+    responsive styles (min-xs)
+---------------------------------------------------*/
+
 @media screen and (min-width: @screen-xs) {
     .vli {
         .flex-display();
-        height: 137px;
     }
     .vli-cover {
         border-right: none;
-        height: 137px;
-        width: 241px;
+        height: 135 + 2px;
+        width: 240 + 1px;
+    }
+    .vli-info {
+        width: ~"calc(100% - 241px)";
     }
     .vli-help-text { color: @vli-help-text-color-lg; }
 }
+
+/* --------------------------------------------------
+    responsive styles (min-1600)
+---------------------------------------------------*/
+
+@media screen and (min-width: 1600px) {
+    .vli-cover {
+        height: 180 + 2px;
+        width: 320 + 1px;
+    }
+    .vli-info {
+        width: ~"calc(100% - 321px)";
+    }
+}
+
+/* --------------------------------------------------
+    responsive styles (sm to md)
+---------------------------------------------------*/
+
+@media screen and (min-width: @screen-sm) and (max-width: @screen-md1) {
+    .vli-cover {
+        height: 180 + 2px;
+        width: 320 + 1px;
+    }
+    .vli-info {
+        width: ~"calc(100% - 321px)";
+    }
+}
+
+/* --------------------------------------------------
+    mobile phones
+---------------------------------------------------*/
 
 @media screen and (max-width: @screen-xs1) {
     .vli-cover {
