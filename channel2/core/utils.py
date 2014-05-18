@@ -2,7 +2,9 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Page
 from django.template import loader
 from django.utils.text import slugify as django_slugify
+import markdown
 from unidecode import unidecode
+
 from channel2.settings import EMAIL_HOST_USER, DEBUG, ADMINS
 
 
@@ -65,3 +67,29 @@ def email_alert(subject, template, context):
         from_email=EMAIL_HOST_USER,
         recipient_list=recipient_list
     )
+
+
+class MarkdownExtension(markdown.Extension):
+    """
+    Taken from http://blog.magicalhobo.com/2011/05/05/disabling-images-in-python-markdown/
+    """
+
+    def extendMarkdown(self, md, md_globals):
+        del md.inlinePatterns['image_link']
+        del md.inlinePatterns['image_reference']
+
+
+markdown_extension = MarkdownExtension()
+
+
+def convert_markdown(markdown_text):
+    """
+    returns the markdown converted into HTML.
+    """
+
+    markdown_text = markdown_text.strip()
+    if not markdown_text:
+        return ''
+
+    html = markdown.markdown(markdown_text, [markdown_extension], safe_mode='escape').strip()
+    return html

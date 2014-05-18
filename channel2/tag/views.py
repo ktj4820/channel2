@@ -1,8 +1,9 @@
 from collections import defaultdict
 from django.db.models.aggregates import Count
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView
+from channel2.tag.forms import TagForm
 from channel2.tag.models import Tag, TagChildren
 
 
@@ -39,4 +40,26 @@ class TagView(ProtectedTemplateView):
             'tag_children_list': tag_children_list,
             'tag_parent_list': tag_parent_list,
             'video_list': tag.video_set.order_by('-created_on'),
+        })
+
+
+class TagEditView(ProtectedTemplateView):
+
+    template_name = 'tag/tag-edit.html'
+
+    def get(self, request, id, slug):
+        tag = get_object_or_404(Tag, id=id)
+        return self.render_to_response({
+            'form': TagForm(instance=tag),
+        })
+
+    def post(self, request, id, slug):
+        tag = get_object_or_404(Tag, id=id)
+        form = TagForm(instance=tag, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('tag', id=id, slug=slug)
+
+        return self.render_to_response({
+            'form': form,
         })

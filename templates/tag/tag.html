@@ -3,12 +3,19 @@
 
 {% block content %}
     <section>
-        <h2 class="page-title">{{ tag.name }}</h2>
+        <div class="flex">
+            <h2 class="page-title space-right-10">{{ tag.name }}</h2>
+{#            <button class="btn btn-small"><span class="icon icon-star"></span> {% trans %}Pin{% endtrans %}</button>#}
+            <span class="flex-grow-1"></span>
+            <a href="{{ url('tag.edit', args=[tag.id, tag.slug]) }}" class="btn btn-primary btn-small min-xs"><span class="icon icon-pencil"></span> {% trans %}Edit Tag{% endtrans %}</a>
+        </div>
         {% if tag.html %}
             <div>{{ tag.html|safe }}</div>
         {% endif %}
         {% if tag_children_list %}
-            <div class="tl-simple">{{ widgets.tag_list(tag_children_list) }}</div>
+            <div class="space-top-10">
+                <div class="tl-simple">{{ widgets.tag_list(tag_children_list) }}</div>
+            </div>
         {% endif %}
     </section>
     {% if tag_parent_list %}

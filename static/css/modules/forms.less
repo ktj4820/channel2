@@ -1,8 +1,17 @@
 /* --------------------------------------------------
+    label styles
+---------------------------------------------------*/
+
+label {
+    cursor: pointer;
+    display: block;
+}
+
+/* --------------------------------------------------
     input styles
 ---------------------------------------------------*/
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
     .border-radius(@border-radius);
     -webkit-appearance: none;
 
@@ -12,6 +21,27 @@ input[type="text"], input[type="email"], input[type="password"] {
     display: block;
     line-height: 24px;
     height: 46px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+}
+
+/* --------------------------------------------------
+    textarea
+---------------------------------------------------*/
+
+textarea {
+    .border-radius(@border-radius);
+    -webkit-appearance: none;
+
+    background: none;
+    background-color: @input-bg;
+    border: 1px solid @input-border;
+    display: block;
+    font-family: @font-family-monospace;
+    line-height: 1.5;
+    max-width: 100%;
+    min-width: 100%;
     outline: none;
     padding: 10px;
     width: 100%;
