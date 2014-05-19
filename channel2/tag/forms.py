@@ -1,4 +1,6 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from channel2.core.forms import BlankLabelSuffixMixin
 from channel2.core.utils import convert_markdown
 from channel2.tag.models import Tag
@@ -6,7 +8,13 @@ from channel2.tag.models import Tag
 
 class TagForm(BlankLabelSuffixMixin, forms.ModelForm):
 
-    children = forms.CharField(required=False)
+    children = forms.CharField(
+        label=_('Tags'),
+        required=False,
+        help_text=_('Enter a comma separated list of tags.'),
+    )
+
+    pinned = forms.BooleanField(required=False)
 
     markdown = forms.CharField(
         required=False,
@@ -22,17 +30,32 @@ class TagForm(BlankLabelSuffixMixin, forms.ModelForm):
         fields = ('name', 'pinned', 'markdown')
 
     def __init__(self, *args, **kwargs):
+        if 'instance' not in kwargs:
+            raise RuntimeError('TagForm must be used with an instance.')
         super().__init__(*args, **kwargs)
+
+        tag = kwargs['instance']
+        self.fields['children'].initial = ', '.join(tag.children.values_list('name', flat=True))
         self.html = ''
+        self.children_list = []
 
     def clean_markdown(self):
         markdown = self.cleaned_data.get('markdown')
         self.html = convert_markdown(markdown)
         return markdown
 
+    def clean_children(self):
+        children = self.cleaned_data.get('children')
+        self.children_list = filter(None, map(str.strip, children.split(',')))
+        return children
+
     def save(self, commit=True):
         tag =  super().save(commit=False)
         tag.html = self.html
+
+        children_list = [Tag.objects.get_or_create(name=name)[0] for name in self.children_list]
+        tag.children.add(*children_list)
+
         if commit:
             tag.save()
         return tag

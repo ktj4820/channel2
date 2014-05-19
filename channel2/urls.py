@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
 
 from channel2.settings import DEBUG, MEDIA_ROOT
 from channel2.video.views import VideoListView

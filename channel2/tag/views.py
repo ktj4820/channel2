@@ -1,6 +1,10 @@
 from collections import defaultdict
+import json
 from django.db.models.aggregates import Count
+from django.contrib import messages
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.translation import ugettext_lazy as _
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.forms import TagForm
@@ -16,6 +20,14 @@ class TagListView(ProtectedTemplateView):
         return self.render_to_response({
             'tag_list': tag_list,
         })
+
+
+class TagAutocompleteJsonView(ProtectedTemplateView):
+
+    def get(self, request):
+        tag_list = Tag.objects.order_by('slug').values_list('name', flat=True)
+        content = json.dumps(list(tag_list), ensure_ascii=False)
+        return HttpResponse(content=content, content_type='application/json')
 
 
 class TagView(ProtectedTemplateView):
@@ -51,15 +63,19 @@ class TagEditView(ProtectedTemplateView):
         tag = get_object_or_404(Tag, id=id)
         return self.render_to_response({
             'form': TagForm(instance=tag),
+            'tag': tag,
         })
 
     def post(self, request, id, slug):
         tag = get_object_or_404(Tag, id=id)
         form = TagForm(instance=tag, data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('tag', id=id, slug=slug)
+            tag = form.save()
+            messages.success(request, _('Tag has been successfully updated.'))
+            return redirect('tag.edit', id=tag.id, slug=tag.slug)
 
+        messages.error(request, _('There was an error with your input, the tag has not been saved.'))
         return self.render_to_response({
             'form': form,
+            'tag': tag,
         })
