@@ -22,13 +22,16 @@
         <section class="tl">
             {% for tag_p in tag_parent_list %}
                 <div class="tli-wrapper">
-                    <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="tli">
-                        <span class="tli-name">{{ tag_p.name }}</span>
-                        <span class="badge space-left-5">{{ tag_p.count }}</span>
-                    </a>
-                    {% if tag_p.children_list %}
-                        <div class="tl-simple">{{ widgets.tag_list(tag_p.children_list) }}</div>
-                    {% endif %}
+                    <div class="tli-inner">
+                        <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="tli">
+                            <span class="tli-name">{{ tag_p.name }}</span>
+                            <span class="badge space-left-5">{{ tag_p.count }}</span>
+                        </a>
+                        {% if tag_p.children_list %}
+                            <div class="space-top-5"></div>
+                            <div class="tl-simple">{{ widgets.tag_list(tag_p.children_list) }}</div>
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         </section>
