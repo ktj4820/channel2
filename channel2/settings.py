@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'channel2.flat',
     'channel2.label',
     'channel2.search',
+    'channel2.staff',
     'channel2.tag',
     'channel2.video',
 )
