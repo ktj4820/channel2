@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 from django.template.context import get_standard_processors
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View
@@ -34,4 +34,16 @@ class ProtectedTemplateView(TemplateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class StaffTemplateView(ProtectedTemplateView):
+    """
+    User must be a staff to view this page
+    """
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise Http404
         return super().dispatch(request, *args, **kwargs)

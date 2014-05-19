@@ -40,3 +40,7 @@ class AccountLogoutView(View):
     def post(self, request):
         logout(request)
         return redirect('account.login')
+
+
+class AccountActivateView(TemplateView):
+    pass
