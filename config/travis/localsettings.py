@@ -12,5 +12,4 @@ DATABASES = {
     }
 }
 
-FFMPEG_PATH = '/usr/local/bin/ffmpeg'
 VIDEO_DIR = os.getcwd()
