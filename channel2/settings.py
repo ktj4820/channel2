@@ -115,12 +115,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # local site settings
 #-------------------------------------------------------------------------------
 
-FFMPEG_PATH = ''
-
-VIDEO_LINK_EXPIRE = 6 * 60 * 60
-
-X_ACCEL = False
-
 SITE_DOMAIN = 'localhost:8000'
 SITE_SCHEME = 'http'
 
@@ -129,6 +123,11 @@ EMAIL_PORT = ''
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
+
+FFMPEG_PATH = ''
+VIDEO_DIR = ''
+VIDEO_LINK_EXPIRE = 6 * 60 * 60
+X_ACCEL = False
 
 #-------------------------------------------------------------------------------
 # localsettings.py

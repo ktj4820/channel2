@@ -1,5 +1,6 @@
 from django import forms
 from django.core.mail import send_mail
+from django.forms.formsets import BaseFormSet
 from django.forms.widgets import EmailInput
 from django.utils.translation import ugettext_lazy as _
 from channel2.account.models import User
@@ -44,3 +45,16 @@ class StaffAccountCreateForm(forms.Form):
         )
 
         return user
+
+
+class StaffVideoAddForm(forms.Form):
+
+    filename = forms.CharField(widget=forms.HiddenInput)
+    name = forms.CharField()
+    label = forms.CharField(widget=forms.TextInput(attrs={
+        'list': 'tags',
+    }))
+
+
+class StaffVideoAddFormSet(BaseFormSet):
+    pass

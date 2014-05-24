@@ -43,3 +43,20 @@ class StaffUserAddViewTests(BaseTestCase):
         })
         self.assertRedirects(response, reverse('staff.user.add'))
         self.assertTrue(User.objects.filter(email='newuser@example.com').exists())
+
+
+class StaffVideoAddViewTests(BaseTestCase):
+
+    def test_staff_video_add_view_get(self):
+        response = self.client.get(reverse('staff.video.add'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-video-add.html')
+
+    # def test_staff_video_add_view_post_invalid(self):
+    #     response = self.client.post(reverse('staff.video.add'), {})
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'staff/staff-video-add.html')
+    #
+    # def test_staff_video_add_view_post(self):
+    #     response = self.client.post(reverse('staff.video.add'), {})
+    #     self.assertRedirects(response, reverse('staff.video.add'))

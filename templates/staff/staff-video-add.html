@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <section>
+        <h2 class="page-title">{% trans %}Add Videos{% endtrans %}</h2>
+    </section>
+    <section>
+        <form action="" method="post">
+            {{ forms.csrf_input() }}
+            {{ formset.management_forms }}
+            <table class="staff-video-add-table">
+                <thead>
+                    <tr>
+                        <th width="50%">{% trans %}File name{% endtrans %}</th>
+                        <th width="25%">{% trans %}Name{% endtrans %}</th>
+                        <th width="25%">{% trans %}Label{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset %}
+                        <tr>
+                            <td>
+                                <span>{{ form.filename.value() }}</span>
+                                {{ forms.simple_field(form.filename) }}
+                            </td>
+                            <td>{{ forms.simple_field(form.name) }}</td>
+                            <td>{{ forms.simple_field(form.label) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <button type="submit" class="btn btn-primary">{% trans %}Add Videos{% endtrans %}</button>
+        </form>
+    </section>
+    <datalist id="tags">
+        {% for tag in tag_list %}
+            <option value="{{ tag }}"></option>
+        {% endfor %}
+    </datalist>
+{% endblock %}

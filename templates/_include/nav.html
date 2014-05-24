@@ -1,6 +1,7 @@
 {% import '_macros/utils.html' as utils with context %}
 
 {% set url_staff_user_add = url('staff.user.add') %}
+{% set url_staff_video_add = url('staff.video.add') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_video_list = url('video.list') %}
 
@@ -14,7 +15,7 @@
     <hr class="nav-sep">
     {% if user.is_staff %}
         <a href="{{ url_staff_user_add }}" class="nav-item {{ utils.link_active(url_staff_user_add) }}"><span class="icon icon-user-add"></span> {% trans %}Add User{% endtrans %}</a>
-        <a href="#" class="nav-item"><span class="icon icon-plus-squared"></span> {% trans %}Add Video{% endtrans %}</a>
+        <a href="{{ url_staff_video_add }}" class="nav-item {{ utils.link_active(url_staff_video_add) }}"><span class="icon icon-plus-squared"></span> {% trans %}Add Videos{% endtrans %}</a>
         <hr class="nav-sep">
     {% endif %}
     <a href="#" class="nav-item max-sm"><span class="icon icon-cog"></span> {% trans %}Preferences{% endtrans %}</a>

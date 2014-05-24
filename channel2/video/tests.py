@@ -10,6 +10,7 @@ from django.utils import timezone
 from channel2.core.tests import BaseTestCase
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
+from channel2.video.utils import extract_name, guess_label
 from channel2.video.views import VideoLinkView
 
 
@@ -117,3 +118,33 @@ class VideoLinkViewTests(BaseTestCase):
         self.assertEqual(self.video.file.url, actual_path)
 
 
+class VideoUtilTests(BaseTestCase):
+    
+    def test_extract_name(self):
+        TEST_CASES = (
+            ('[HorribleSubs] Mekakucity Actors - 07 [1080p].mp4', 'Mekakucity Actors - 07'),
+            ('[Doki] Saki - 06 (848x480 h264 DVD AAC) [EAE93A6F].mp4', 'Saki - 06'),
+            ('[Underwater-FFF] Saki Zenkoku-hen 03 - Start (TV 720p) [A1BE086A].mp4', 'Saki Zenkoku-hen 03 - Start'),
+            ('[Doki] Freezing Vibration - 06 (1280x720 h264 AAC) [B6D45C62].mp4', 'Freezing Vibration - 06')
+        )
+
+        for source, output in TEST_CASES:
+            self.assertEqual(extract_name(source), output)
+
+    def test_guess_label(self):
+        tag_list = [
+            'Mekakucity Actors',
+            'Saki',
+            'Saki Zenkoku-hen',
+            'Freezing Vibration',
+        ]
+
+        TEST_CASES = (
+            ('Mekakucity Actors - 07', 'Mekakucity Actors'),
+            ('Saki - 06', 'Saki'),
+            ('Saki Zenkoku-hen 03 - Start', 'Saki Zenkoku-hen'),
+            ('Freezing Vibration - 06', 'Freezing Vibration'),
+        )
+
+        for source, output in TEST_CASES:
+            self.assertEqual(guess_label(source, tag_list), output)
