@@ -25,21 +25,21 @@ class StaffAccountCreateFormTests(BaseTestCase):
         self.assertEqual(form.errors['email'], ['That email address is already registered.'])
 
 
-class StaffUserListViewTests(BaseTestCase):
+class StaffUserAddViewTests(BaseTestCase):
 
-    def test_staff_user_list_view_get(self):
-        response = self.client.get(reverse('staff.user.list'))
+    def test_staff_user_add_view_get(self):
+        response = self.client.get(reverse('staff.user.add'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'staff/staff-user-list.html')
+        self.assertTemplateUsed(response, 'staff/staff-user-add.html')
 
-    def test_staff_user_list_view_post_invalid(self):
-        response = self.client.post(reverse('staff.user.list'))
+    def test_staff_user_add_view_post_invalid(self):
+        response = self.client.post(reverse('staff.user.add'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'staff/staff-user-list.html')
+        self.assertTemplateUsed(response, 'staff/staff-user-add.html')
 
-    def test_staff_user_list_view_post(self):
-        response = self.client.post(reverse('staff.user.list'), {
+    def test_staff_user_add_view_post(self):
+        response = self.client.post(reverse('staff.user.add'), {
             'email': 'newuser@example.com',
         })
-        self.assertRedirects(response, reverse('staff.user.list'))
+        self.assertRedirects(response, reverse('staff.user.add'))
         self.assertTrue(User.objects.filter(email='newuser@example.com').exists())

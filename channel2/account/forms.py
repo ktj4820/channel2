@@ -40,3 +40,51 @@ class AccountLoginForm(forms.Form):
 
     def get_user(self):
         return self.user_cache
+
+
+class AccountActivateForm(forms.Form):
+
+    password1 = forms.CharField(
+        label=_('Password'),
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Password',
+            'class': 'account-input',
+        })
+    )
+
+    password2 = forms.CharField(
+        label=_('Confirm Password'),
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Confirm Password',
+            'class': 'account-input',
+        })
+    )
+
+    error_messages = {
+        'password_mismatch': "The two password fields did not match.",
+    }
+
+    def __init__(self, user, *args, **kwargs):
+        super(AccountActivateForm, self).__init__(*args, **kwargs)
+        self.user = user
+
+    def clean(self):
+        cd = self.cleaned_data
+        password1 = cd.get('password1')
+        password2 = cd.get('password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'])
+        return cd
+
+    def save(self):
+        raw_password = self.cleaned_data.get('password1')
+
+        self.user.token = None
+        self.user.is_active = True
+        self.user.set_password(raw_password)
+        self.user.save()
+
+        user = authenticate(email=self.user.email, password=raw_password)
+        return user

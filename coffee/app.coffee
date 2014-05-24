@@ -62,7 +62,18 @@ $ ->
             }
 
         success = (data) -> $('#id_children').bind('keydown', bindAutocompleteKeydown).autocomplete(autocompleteParams(data))
-
-#        data = ['tag1', 'tag2', 'tag3']
         $.get '/tag/autocomplete.json', success
 
+    #---------------------------------------------------------------------------
+    # messages
+    #---------------------------------------------------------------------------
+
+    $('.message .icon-cancel').click ->
+        self = $(this).parent()
+        self.slideUp 200, ->
+            self.remove()
+            messageList = self.parent().parent()
+            if not messageList.length
+                messageList.remove()
+
+    return

@@ -45,7 +45,7 @@ class TagView(ProtectedTemplateView):
         for tpc in tpc_list:
             tpc_dict[tpc.parent_id].append(tpc.child)
         for tag_parent in tag_parent_list:
-            tag_parent.children_list = tpc_dict.get(tag_parent.id)
+            tag_parent.children_list = sorted(tpc_dict.get(tag_parent.id, []), key=lambda p: p.slug)
 
         return self.render_to_response({
             'tag': tag,

@@ -1,0 +1,11 @@
+Your account for Channel 2 has been created. Please activate your account at:
+
+{{ scheme }}://{{ domain }}{{ url ('account.activate', args=[user.token]) }}
+
+Cheers,
+Derek
+
+-----
+
+Channel 2
+http://channel2.derekkwok.net

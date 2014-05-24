@@ -5,6 +5,6 @@ from channel2.staff.views import *
 
 urlpatterns = patterns('',
 
-    url('^users/$',         StaffUserListView.as_view(), name='staff.user.list'),
+    url('^user/add/$',         StaffUserAddView.as_view(), name='staff.user.add'),
 
 )

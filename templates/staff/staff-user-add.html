@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <section>
+        <h2 class="page-title">{% trans %}Add User{% endtrans %}</h2>
+    </section>
+    <section>
+        <form action="" method="post" class="width-400">
+            {{ forms.csrf_input() }}
+            {{ forms.field(form.email, show_label=False) }}
+            <button type="submit" class="btn btn-primary">{% trans %}Add User{% endtrans %}</button>
+        </form>
+    </section>
+{% endblock %}

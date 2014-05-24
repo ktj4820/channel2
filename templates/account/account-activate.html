@@ -1,0 +1,14 @@
+{% extends 'account/account-base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <form action="" method="post" class="account-form">
+        <h2 class="account-h2">Channel 2</h2>
+        {% include '_include/messages.html' %}
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        {{ forms.field(form.password1, False) }}
+        {{ forms.field(form.password2, False) }}
+        <button type="submit" class="btn btn-primary btn-block account-btn">{% trans %}Set Password{% endtrans %}</button>
+    </form>
+{% endblock %}
