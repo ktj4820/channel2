@@ -1,3 +1,5 @@
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -9,3 +11,6 @@ DATABASES = {
         'TEST_NAME': 'channel2_test',
     }
 }
+
+FFMPEG_PATH = '/usr/local/bin/ffmpeg'
+VIDEO_DIR = os.getcwd()
