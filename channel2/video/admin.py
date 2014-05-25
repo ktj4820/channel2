@@ -1,5 +1,5 @@
 from django.contrib import admin
-from channel2.video.models import Video
+from channel2.video.models import Video, VideoLink
 
 
 class VideoAdmin(admin.ModelAdmin):
@@ -16,4 +16,12 @@ class VideoAdmin(admin.ModelAdmin):
         return Video.objects.all().select_related('tag')
 
 
+class VideoLinkAdmin(admin.ModelAdmin):
+
+    list_display = ('video', 'created_by', 'created_on', 'ip_address')
+    search_fields = ('video__name', 'created_by__email')
+    ordering = ('-created_on',)
+
+
 admin.site.register(Video, VideoAdmin)
+admin.site.register(VideoLink, VideoLinkAdmin)

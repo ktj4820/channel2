@@ -30,7 +30,7 @@ class Video(models.Model):
     class Meta:
         db_table = 'video'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
