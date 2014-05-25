@@ -8,24 +8,26 @@
     <section>
         <form action="" method="post">
             {{ forms.csrf_input() }}
-            {{ formset.management_forms }}
+            {{ formset.management_form|safe }}
             <table class="staff-video-add-table">
                 <thead>
                     <tr>
-                        <th width="50%">{% trans %}File name{% endtrans %}</th>
+                        <th width="25"></th>
+                        <th>{% trans %}File name{% endtrans %}</th>
                         <th width="25%">{% trans %}Name{% endtrans %}</th>
-                        <th width="25%">{% trans %}Label{% endtrans %}</th>
+                        <th width="25%">{% trans %}Tag{% endtrans %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for form in formset %}
                         <tr>
+                            <td>{{ forms.simple_field(form.select) }}</td>
                             <td>
-                                <span>{{ form.filename.value() }}</span>
+                                <label for="{{ form.select.auto_id }}">{{ form.filename.value() }}</label>
                                 {{ forms.simple_field(form.filename) }}
                             </td>
                             <td>{{ forms.simple_field(form.name) }}</td>
-                            <td>{{ forms.simple_field(form.label) }}</td>
+                            <td>{{ forms.simple_field(form.tag) }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

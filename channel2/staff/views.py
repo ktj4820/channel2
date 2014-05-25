@@ -9,7 +9,7 @@ from channel2.core.views import StaffTemplateView
 from channel2.settings import VIDEO_DIR
 from channel2.staff.forms import StaffAccountCreateForm, StaffVideoAddForm, StaffVideoAddFormSet
 from channel2.tag.models import Tag
-from channel2.video.utils import extract_name, guess_label
+from channel2.video.utils import extract_name, guess_tag
 
 
 class StaffUserAddView(StaffTemplateView):
@@ -49,9 +49,7 @@ class StaffVideoAddView(StaffTemplateView):
 
     def get_context_data(self):
         tag_list = Tag.objects.order_by('slug').values_list('name', flat=True)
-        return {
-            'tag_list': tag_list,
-        }
+        return {'tag_list': tag_list}
 
     def get(self, request):
         context = self.get_context_data()
@@ -64,12 +62,12 @@ class StaffVideoAddView(StaffTemplateView):
                 continue
 
             name = extract_name(filename)
-            label = name and guess_label(name, context['tag_list'])
+            tag = name and guess_tag(name, context['tag_list'])
 
             initial.append({
                 'filename': filename,
                 'name': name,
-                'label': label,
+                'tag': tag,
             })
 
         formset = self.get_formset_cls()(initial=initial)
@@ -78,6 +76,11 @@ class StaffVideoAddView(StaffTemplateView):
 
     def post(self, request):
         formset = self.get_formset_cls()(data=request.POST)
+        if formset.is_valid():
+            count = formset.save()
+            messages.success(request, _('{} videos have been added successfully.'.format(count)))
+            return redirect('staff.video.add')
+
         context = self.get_context_data()
         context['formset'] = formset
         return self.render_to_response(context)

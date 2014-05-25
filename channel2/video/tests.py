@@ -10,7 +10,7 @@ from django.utils import timezone
 from channel2.core.tests import BaseTestCase
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
-from channel2.video.utils import extract_name, guess_label
+from channel2.video.utils import extract_name, guess_tag
 from channel2.video.views import VideoLinkView
 
 
@@ -131,7 +131,7 @@ class VideoUtilTests(BaseTestCase):
         for source, output in TEST_CASES:
             self.assertEqual(extract_name(source), output)
 
-    def test_guess_label(self):
+    def test_guess_tag(self):
         tag_list = [
             'Mekakucity Actors',
             'Saki',
@@ -147,4 +147,4 @@ class VideoUtilTests(BaseTestCase):
         )
 
         for source, output in TEST_CASES:
-            self.assertEqual(guess_label(source, tag_list), output)
+            self.assertEqual(guess_tag(source, tag_list), output)

@@ -6,22 +6,25 @@ from Levenshtein import distance
 def extract_name(filename):
     """
     Attempts to guess the name that should be used for a given filename.
-    Returns a blank name if it fails. See video/tests.py for examples.
+    See video/tests.py for examples.
     """
 
-    match = re.search(r'\](.*?)[\(\[\.]', filename)
-    if not match:
-        return ''
+    REGEX_LIST = (
+        r'\](.*?)[\(\[\.]',
+        r'(.*?).mp4',
+    )
 
-    name = match.group(1)
-    name = name.strip()
-    return name
+    for regex in REGEX_LIST:
+        match = re.search(regex, filename)
+        if match: return match.group(1).strip()
+
+    return ''
 
 
-def guess_label(name, tag_list):
+def guess_tag(name, tag_list):
     """
-    Use the name to guess the label that should be applied. Returns a blank
-    label if the guessing fails.
+    Use the name to guess the tag that should be applied. Returns a blank
+    tag if the guessing fails.
     """
 
     r = {}
