@@ -10,6 +10,7 @@ https://www.djangoproject.com/download/1.7.b4/tarball/
 
 django-debug-toolbar==1.2
 django-haystack==2.1.0
+django-suit==0.2.8
 Jinja2==2.7.2
 Markdown==2.4
 Pillow==2.4.0

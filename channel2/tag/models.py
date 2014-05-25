@@ -12,11 +12,11 @@ class Tag(models.Model):
     pinned      = models.BooleanField(default=False)
     order       = models.PositiveSmallIntegerField(null=True, blank=True)
 
-    children    = models.ManyToManyField('self', symmetrical=False, null=True, blank=True, related_name='parents')
-    users       = models.ManyToManyField(User, null=True, blank=True, related_name='pinned_tags')
+    children    = models.ManyToManyField('self', symmetrical=False, null=True, blank=True, related_name='parents', editable=False)
+    users       = models.ManyToManyField(User, null=True, blank=True, related_name='pinned_tags', editable=False)
 
     updated_on  = models.DateTimeField(auto_now_add=True)
-    updated_by  = models.ForeignKey(User, null=True, blank=True)
+    updated_by  = models.ForeignKey(User, null=True, blank=True, editable=False)
 
     class Meta:
         db_table = 'tag'
@@ -25,7 +25,7 @@ class Tag(models.Model):
         self.slug = slugify(self.name)[:100] or '-'
         super().save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -42,3 +42,4 @@ class TagChildren(models.Model):
     class Meta:
         db_table = 'tag_children'
         managed = False
+        verbose_name_plural = 'Tag children'

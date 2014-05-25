@@ -1,8 +1,11 @@
 from django.conf.urls import patterns, include, url
+from django.contrib import admin
 
 from channel2.settings import DEBUG, MEDIA_ROOT
 from channel2.video.views import VideoListView
 
+
+admin.autodiscover()
 
 urlpatterns = patterns('',
 
@@ -10,8 +13,9 @@ urlpatterns = patterns('',
 
     # apps
     url(r'^account/',           include('channel2.account.urls')),
-    url(r'^tag/',               include('channel2.tag.urls')),
+    url(r'^admin/',             include(admin.site.urls)),
     # url(r'^search/',            include('channel2.search.urls')),
+    url(r'^tag/',               include('channel2.tag.urls')),
     url(r'^staff/',             include('channel2.staff.urls')),
     url(r'^videos/',            include('channel2.video.urls')),
 
