@@ -48,11 +48,12 @@ class Video(models.Model):
 
         if self.file and FFMPEG_PATH:
             cover_path = '/tmp/{}.jpg'.format(self.slug)
-            subprocess.call([
-                FFMPEG_PATH, '-ss', '00:00:05', '-t', '1',
-                '-i', self.file.path,
-                '-s', '960x540', '-f', 'image2', cover_path
-            ])
+            command = [
+                FFMPEG_PATH, '-ss', '00:00:05', '-t', '1', '-i',
+                self.file.path, '-s', '960x540', '-f', 'image2',
+                cover_path
+            ]
+            subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             if os.path.exists(cover_path):
                 self.cover.delete()
                 self.cover.save('', File(open(cover_path, 'rb')), save=True)

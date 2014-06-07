@@ -12,10 +12,10 @@
     padding: 5px;
 }
 
-@media screen and (min-width: @screen-lg) {
+@media screen and (min-width: 1560px) {
     .vli-wrapper { width: 50%; }
 }
-@media screen and (max-width: @screen-lg1) {
+@media screen and (max-width: 1559px) {
     .vli-wrapper { width: 100%; }
 }
 
@@ -56,24 +56,10 @@
 }
 
 /* --------------------------------------------------
-    responsive styles (min-1600)
+    responsive styles (sm+)
 ---------------------------------------------------*/
 
-@media screen and (min-width: 1600px) {
-    .vli-cover {
-        height: 180 + 2px;
-        width: 320 + 1px;
-    }
-    .vli-info {
-        width: ~"calc(100% - 321px)";
-    }
-}
-
-/* --------------------------------------------------
-    responsive styles (sm to md)
----------------------------------------------------*/
-
-@media screen and (min-width: @screen-sm) and (max-width: @screen-lg1) {
+@media screen and (min-width: @screen-sm) {
     .vli-cover {
         height: 180 + 2px;
         width: 320 + 1px;
