@@ -7,7 +7,7 @@
         {% include '_include/messages.html' %}
         {{ forms.non_field_errors(form) }}
         {{ forms.csrf_input() }}
-        <div class="space-bottom-10">
+        <div class="form-group">
             {{ forms.simple_field(form.email) }}
             {{ forms.simple_field(form.password) }}
         </div>
