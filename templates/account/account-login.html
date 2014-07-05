@@ -7,8 +7,10 @@
         {% include '_include/messages.html' %}
         {{ forms.non_field_errors(form) }}
         {{ forms.csrf_input() }}
-        {{ forms.field(form.email, False) }}
-        {{ forms.field(form.password, False) }}
+        <div class="space-bottom-10">
+            {{ forms.simple_field(form.email) }}
+            {{ forms.simple_field(form.password) }}
+        </div>
         <button type="submit" class="btn btn-primary btn-block account-btn">{% trans %}Login{% endtrans %}</button>
     </form>
 {% endblock %}
