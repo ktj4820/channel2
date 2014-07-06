@@ -55,7 +55,8 @@ http {
             try_files /var/www/channel2/static/maintenance.html @django;
         }
         location @django {
-            proxy_pass_request_headers on;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
             proxy_redirect off;
             proxy_pass http://channel2;
         }
