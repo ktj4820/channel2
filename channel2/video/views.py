@@ -14,8 +14,8 @@ from channel2.video.models import Video, VideoLink
 
 class VideoListView(ProtectedTemplateView):
 
-    template_name = 'video/video-list.html'
     page_size = 20
+    template_name = 'video/video-list.html'
 
     def get(self, request):
         video_list = Video.objects.order_by('-created_on').select_related('tag').prefetch_related('tag__children')

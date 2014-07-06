@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
+    {% if blog_post %}
+        <h2 class="tag-heading space-bottom-15">{{ blog_post.title }}</h2>
+    {% else %}
+        <h2 class="tag-heading space-bottom-15">{% trans %}Create New Post{% endtrans %}</h2>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ forms.csrf_input() }}
+        {{ forms.field(form.title) }}
+        {{ forms.field(form.markdown, show_label=False) }}
+        <div class="markdown markdown-preview" data-for="id_markdown"></div>
+        <div class="space-top-15">
+            <button class="btn btn-primary" name="action" value="save">{% trans %}Save{% endtrans %}</button>
+            <button class="btn btn-error space-left-10" name="action" value="delete">{% trans %}Delete{% endtrans %}</button>
+        </div>
+    </form>
 {% endblock %}
