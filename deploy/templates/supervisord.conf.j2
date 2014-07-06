@@ -15,6 +15,8 @@ command=/var/www/channel2/venv/bin/gunicorn channel2.wsgi:application
     --workers 2
     --max-requests 5000
     --timeout 30
+    --env CHANNEL2_DB_PASSWORD={{ db_user_password }}
+    --env CHANNEL2_EMAIL_PASSWORD={{ email_password }}
     --error-logfile /var/www/channel2/logs/gunicorn-error.log
 directory=/var/www/channel2/django
 user=www-data

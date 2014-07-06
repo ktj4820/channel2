@@ -96,6 +96,7 @@
     - file: state=directory path={{ item }} owner=www-data group=www-data
       with_items:
         - "{{ django_path }}"
+        - "{{ download_path }}"
         - "{{ log_path }}"
         - "{{ media_path }}"
         - "{{ static_path }}"

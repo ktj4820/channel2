@@ -11,13 +11,12 @@
 #   fab qa deploy       # this deploys the master branch to QA server
 #-------------------------------------------------------------------------------
 
-import datetime
 from contextlib import contextmanager
 
 from fabric.context_managers import prefix
 from fabric.contrib.files import exists
 from fabric.contrib.project import rsync_project
-from fabric.operations import local, run, get, prompt, put, sudo
+from fabric.operations import local, get, sudo
 from fabric.api import cd, env, run
 
 
@@ -89,11 +88,12 @@ def deploy(tag):
 
     _checkout(tag)
     _compile_static()
-    _fabric_marker()
+    _fabric_marker(tag)
     stop()
     _rsync()
     _install_requirements()
     _syncdb_migrate()
+    _cleanup()
     start()
 
 
@@ -120,14 +120,22 @@ def _compile_static():
     """
 
     local('cd {checkout_path} && lessc -x static/css/app.less > static/css/app.css'.format(**env))
+    local('cd {checkout_path} && ./scripts/coffee.sh --no-watch'.format(**env))
+
+    # minify js
+    js_path = '{checkout_path}/static/js/app.js'.format(**env)
+    minified_js = local('uglifyjs {}'.format(js_path), capture=True)
+    f = open(js_path, 'w')
+    f.write(minified_js)
+    f.close()
 
 
-def _fabric_marker():
+def _fabric_marker(tag):
     """
     Set a resource-version string to use for resource files
     """
 
-    env.resource_version = datetime.datetime.now().strftime('%Y%m%d%H%M')
+    env.resource_version = tag
     local('sed -ire "s/fabric:resource-version/{resource_version}/g" {checkout_path}/config/{config}/localsettings.py'.format(**env))
 
 
@@ -148,8 +156,6 @@ def _rsync():
     )
 
     run('ln -s {django_path}/config/{config}/localsettings.py {django_path}/channel2/localsettings.py'.format(**env))
-    run('chown -R www-data:www-data {django_path}'.format(**env))
-    run('chown www-data:www-data {deploy_path}'.format(**env))
 
 
 def _install_requirements():
@@ -171,7 +177,17 @@ def _syncdb_migrate():
     with virtualenv():
         with cd('{django_path}'.format(**env)):
             run('python manage.py migrate')
-            sudo('python manage.py collectstatic --noinput', user='www-data')
+            run('python manage.py collectstatic --noinput')
+
+
+def _cleanup():
+    """
+    restore ownership of directories to www-data
+    """
+
+    run('chown -R www-data:www-data {django_path}'.format(**env))
+    run('chown -R www-data:www-data {deploy_path}/logs'.format(**env))
+    run('chown www-data:www-data {deploy_path}'.format(**env))
 
 
 #-------------------------------------------------------------------------------
