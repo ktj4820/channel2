@@ -9,6 +9,8 @@ __pycache__
 
 channel2/localsettings.py
 
+deploy/vars/main.yml
+
 media-test
 
 static/css/app.css

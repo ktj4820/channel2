@@ -2,26 +2,26 @@
 # Django
 #-------------------------------------------------------------------------------
 
-https://www.djangoproject.com/download/1.7.b4/tarball/
+https://www.djangoproject.com/download/1.7c1/tarball/
 
 #-------------------------------------------------------------------------------
 # Packages
 #-------------------------------------------------------------------------------
 
-django-debug-toolbar==1.2
+django-debug-toolbar==1.2.1
 django-haystack==2.1.0
-django-suit==0.2.8
-Jinja2==2.7.2
-Markdown==2.4
-Pillow==2.4.0
-psycopg2==2.5.2
+django-suit==0.2.9
+Jinja2==2.7.3
+Markdown==2.4.1
+Pillow==2.5.0
+psycopg2==2.5.3
 pyelasticsearch==0.6.1
 python-Levenshtein==0.11.2
-Unidecode==0.04.14
-watchdog==0.7.1
+Unidecode==0.04.16
+watchdog==0.8.0
 
 #-------------------------------------------------------------------------------
 # Deployment
 #-------------------------------------------------------------------------------
 
-uWSGI==2.0.4
+gunicorn==19.0.0
