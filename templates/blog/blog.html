@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{{ url('blog.post.add') }}" class="min-xs tag-edit-link">{% trans %}New Post{% endtrans %}</a>
+    <h2 class="tag-heading">{% trans %}Blog{% endtrans %}</h2>
+{% endblock %}
