@@ -2,19 +2,16 @@
 {% import '_macros/widgets.html' as widgets with context %}
 
 {% block content %}
-{#    {% if video_list %}#}
-{#        <section class="vl">#}
-{#            {% for video in video_list %}#}
-{#                {{ widgets.video(video, [video.tag] + video.tag.children.all()[:]) }}#}
-{#            {% endfor %}#}
-{#        </section>#}
-{#    {% endif %}#}
-{#    <div class="filter-bar filter-bar-bottom">#}
-{#        <div class="flex-grow-1">#}
-{#            <span class="btn back-to-top"><span class="icon icon-up-circled space-right"></span>{% trans %}Back to Top{% endtrans %}</span>#}
-{#        </div>#}
-{#        <form action="" method="get">#}
-{#            {{ widgets.pagination(video_list) }}#}
-{#        </form>#}
-{#    </div>#}
+    <h2 class="tag-heading">{% trans %}Latest{% endtrans %}</h2>
+    {% for video in video_list %}
+        {{ widgets.video(video, [video.tag] + video.tag.children.all()[:]) }}
+    {% endfor %}
+    <div class="filter-bar filter-bar-bottom">
+        <div class="flex-grow-1">
+            <span class="btn back-to-top"><span class="icon icon-up-circled space-right"></span>{% trans %}Back to Top{% endtrans %}</span>
+        </div>
+        <form action="" method="get">
+            {{ widgets.pagination(video_list) }}
+        </form>
+    </div>
 {% endblock %}

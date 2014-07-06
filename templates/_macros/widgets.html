@@ -25,25 +25,25 @@
 
 {% macro video(obj, tl=None) %}
     {% set url_video = url('video', args=[obj.id, obj.slug]) %}
-    <div class="vli-wrapper">
-        <div class="vli">
+    <div class="vli">
+        <a href="{{ url_video }}" class="vli-cover" target="_blank">
             {% if obj.cover %}
-                <a href="{{ url_video }}" class="vli-cover" target="_blank">
-                    <img src="{{ obj.cover.url }}">
-                </a>
+                <img src="{{ obj.cover.url }}">
+            {% else %}
+                <img src="{{ STATIC_URL }}images/no-preview.png">
             {% endif %}
-            <div class="vli-info">
-                <p class="vli-title space-bottom-0">{{ obj.name }}</p>
-                {% if tl %}
-                    <div class="space-top-10 space-bottom-10 min-xs">
-                        <div class="tl-simple">{{ tag_list(tl) }}</div>
-                    </div>
-                {% endif %}
-                <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
-                <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
-                <a href="{{ url_video }}" class="btn btn-small space-right-5" target="_blank"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>
-                <a href="{{ url_video }}?download=true" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>
-            </div>
+        </a>
+        <div class="vli-info">
+            <h3 class="vli-title">{{ obj.name }}</h3>
+{#            {% if tl %}#}
+{#                <div class="space-top-10 space-bottom-10 min-xs">#}
+{#                    <div class="tl-simple">{{ tag_list(tl) }}</div>#}
+{#                </div>#}
+{#            {% endif %}#}
+            <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
+            <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
+{#            <a href="{{ url_video }}" class="btn btn-small space-right-5" target="_blank"><span class="icon icon-play"></span>{% trans %}Play{% endtrans %}</a>#}
+{#            <a href="{{ url_video }}?download=true" class="btn btn-warning btn-small"><span class="icon icon-down-circled"></span>{% trans %}Download{% endtrans %}</a>#}
         </div>
     </div>
 {% endmacro %}

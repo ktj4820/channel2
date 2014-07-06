@@ -1,0 +1,33 @@
+/* --------------------------------------------------
+    tag styles
+---------------------------------------------------*/
+
+.tag-edit-link {
+    .inline-block();
+
+    float: right;
+    line-height: 38px;
+    vertical-align: bottom;
+}
+
+.tag-heading {
+    border-bottom: 1px solid #999;
+    font-size: 24px;
+    font-weight: @font-weight-bold;
+}
+
+.tag-html {
+    padding: 15px 0;
+}
+
+.tli {
+    border-top: 1px solid #ddd;
+    display: block;
+    padding: 10px 0;
+}
+
+.tag-heading + .tli { border-top: none; }
+
+@media screen and (min-width: @screen-md) {
+    .tli { padding: 5px 0; }
+}

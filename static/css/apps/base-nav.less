@@ -5,6 +5,7 @@
 nav {
     background-color: #333;
     overflow: auto;
+    padding: 0 0 15px;
     width: @nav-width;
 
     position: fixed;
@@ -12,7 +13,11 @@ nav {
     bottom: 0;
 }
 
-@media screen and (max-width: @screen-md1) {
+@media screen and (min-width: @screen-sm) {
+    nav { .transform(translateZ(0); )}
+}
+
+@media screen and (max-width: @screen-sm1) {
     nav {
         .transition(300ms ease all);
         .transform(translate3d(-100%, 0, 0));
@@ -36,13 +41,9 @@ nav {
 
     position: fixed;
     top: 15px;
-    left: 15px;
+    right: 15px;
 
     z-index: 1000;
-
-    &:hover {
-        .transparent(100);
-    }
 }
 
 /* --------------------------------------------------
@@ -78,8 +79,11 @@ nav {
 .nav-item {
     color: #fff;
     display: block;
-    padding: 5px 15px;
-    &:hover { background-color: #444; }
+    padding: 6px 15px;
+    &:hover {
+        background-color: #444;
+        text-decoration: none;
+    }
 }
 
 .nav-sep {

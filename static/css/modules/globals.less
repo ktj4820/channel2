@@ -3,8 +3,13 @@
 ---------------------------------------------------*/
 
 a {
+    color: @color-accent1;
     cursor: pointer;
     text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 hr {
@@ -17,24 +22,55 @@ hr {
 }
 
 img {
-    width: 100%;
+    display: block;
     max-width: 100%;
+    width: 100%;
 }
 
 /* --------------------------------------------------
-    global classes
+    markdown
 ---------------------------------------------------*/
 
+.markdown {
+    p { margin-bottom: 15px; }
+
+    > :last-child { margin-bottom: 0; }
+}
+
+/* --------------------------------------------------
+    badge
+---------------------------------------------------*/
+
+.badge {
+    .inline-block();
+
+    background-color: #666;
+    color: #fff;
+    font-size: 13px;
+    line-height: 24px;
+    padding: 0 3px;
+}
+
+/* --------------------------------------------------
+    spacing classes
+---------------------------------------------------*/
+
+.space-top-0        { margin-top: 0px; }
 .space-top-5        { margin-top: 5px; }
 .space-top-10       { margin-top: 10px; }
+.space-top-15       { margin-top: 15px; }
 
+.space-right-0      { margin-right: 0px; }
 .space-right-5      { margin-right: 5px; }
 .space-right-10     { margin-right: 10px; }
+.space-right-15     { margin-right: 15px; }
 
 .space-bottom-0     { margin-bottom: 0px; }
 .space-bottom-5     { margin-bottom: 5px; }
 .space-bottom-10    { margin-bottom: 10px; }
 .space-bottom-15    { margin-bottom: 15px; }
 
+.space-left-0       { margin-left: 0px; }
 .space-left-5       { margin-left: 5px; }
 .space-left-10      { margin-left: 10px; }
+.space-left-15      { margin-left: 15px; }
