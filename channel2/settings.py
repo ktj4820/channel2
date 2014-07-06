@@ -28,9 +28,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'channel2.account',
+    'channel2.blog',
     'channel2.core',
     'channel2.flat',
-    'channel2.label',
     'channel2.search',
     'channel2.staff',
     'channel2.tag',

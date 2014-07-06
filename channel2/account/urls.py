@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url
-from channel2.account.views import *
+from channel2.account.views import AccountLoginView, AccountLogoutView, \
+    AccountActivateView
+
 
 urlpatterns = patterns('',
 

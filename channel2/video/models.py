@@ -9,7 +9,6 @@ from django.dispatch.dispatcher import receiver
 from channel2.account.models import User
 from channel2.core.uploads import video_file_upload_to, video_cover_upload_to
 from channel2.core.utils import slugify
-from channel2.label.models import Label
 from channel2.settings import FFMPEG_PATH
 from channel2.tag.models import Tag
 
@@ -21,7 +20,6 @@ class Video(models.Model):
     name            = models.CharField(max_length=100)
     slug            = models.SlugField(max_length=100, editable=False)
     views           = models.IntegerField(default=0)
-    label           = models.ForeignKey(Label, null=True, blank=True, on_delete=models.SET_NULL)
     cover           = models.FileField(upload_to=video_cover_upload_to, null=True, blank=True)
     tag             = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.SET_NULL)
 
