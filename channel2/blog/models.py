@@ -17,7 +17,7 @@ class BlogPost(models.Model):
         db_table = 'blog_post'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)[:200] or '-'
+        self.slug = slugify(self.title)[:200] or '-'
         super().save(*args, **kwargs)
 
     def __str__(self):
