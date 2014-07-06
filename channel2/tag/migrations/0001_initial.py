@@ -15,17 +15,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('name', models.CharField(max_length=100, unique=True)),
                 ('slug', models.SlugField(max_length=100)),
                 ('markdown', models.TextField(blank=True)),
                 ('html', models.TextField(blank=True)),
                 ('pinned', models.BooleanField(default=False)),
-                ('order', models.PositiveSmallIntegerField(blank=True, null=True)),
-                ('updated_on', models.DateTimeField(auto_now_add=True)),
-                ('children', models.ManyToManyField(editable=False, blank=True, to='tag.Tag', null=True)),
-                ('updated_by', models.ForeignKey(editable=False, null=True, to=settings.AUTH_USER_MODEL, blank=True)),
-                ('users', models.ManyToManyField(editable=False, blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('order', models.PositiveSmallIntegerField(null=True, blank=True)),
+                ('updated_on', models.DateTimeField(auto_now=True)),
+                ('children', models.ManyToManyField(editable=False, null=True, blank=True, to='tag.Tag')),
+                ('updated_by', models.ForeignKey(editable=False, to=settings.AUTH_USER_MODEL, blank=True, null=True)),
+                ('users', models.ManyToManyField(editable=False, null=True, blank=True, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'db_table': 'tag',

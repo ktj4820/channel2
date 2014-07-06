@@ -15,7 +15,7 @@ class Tag(models.Model):
     children    = models.ManyToManyField('self', symmetrical=False, null=True, blank=True, related_name='parents', editable=False)
     users       = models.ManyToManyField(User, null=True, blank=True, related_name='pinned_tags', editable=False)
 
-    updated_on  = models.DateTimeField(auto_now_add=True)
+    updated_on  = models.DateTimeField(auto_now=True)
     updated_by  = models.ForeignKey(User, null=True, blank=True, editable=False)
 
     class Meta:
