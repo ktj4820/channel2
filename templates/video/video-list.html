@@ -6,12 +6,10 @@
     {% for video in video_list %}
         {{ widgets.video(video, [video.tag] + video.tag.children.all()[:]) }}
     {% endfor %}
-    <div class="filter-bar filter-bar-bottom">
-        <div class="flex-grow-1">
-            <span class="btn back-to-top"><span class="icon icon-up-circled space-right"></span>{% trans %}Back to Top{% endtrans %}</span>
-        </div>
-        <form action="" method="get">
+    <div class="filter-bar">
+        <form action="" method="get" class="right">
             {{ widgets.pagination(video_list) }}
         </form>
+        <span class="btn back-to-top"><span class="icon icon-up-circled space-right"></span>{% trans %}Back to Top{% endtrans %}</span>
     </div>
 {% endblock %}

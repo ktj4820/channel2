@@ -11,7 +11,8 @@
 .tag-heading + .vli { border-top: none; }
 
 .vli-cover {
-    width: 242px;
+    min-width: 242px;
+    max-width: 242px;
     > img { border: 1px solid #ddd; }
 }
 
@@ -27,3 +28,26 @@
     font-size: 13px;
     color: #666;
 }
+
+@media screen and (max-width: @screen-xs1) {
+    .vli {
+        .flex-display();
+        .flex-wrap(wrap);
+    }
+    .vli-title {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+    .vli-cover {
+        min-width: 100/3%;
+        max-width: 100/3%;
+        width: 100/3%;
+    }
+    .vli-info {
+        min-width: 200/3%;
+        max-width: 200/3%;
+        width: 200/3%;
+    }
+}
+

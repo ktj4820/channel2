@@ -1,0 +1,46 @@
+/* --------------------------------------------------
+    pagination styles
+---------------------------------------------------*/
+
+.pagination {
+    .flex-display();
+
+    background-color: @bg;
+    border: 1px solid @border;
+    height: 46px;
+}
+
+.pagination-prev, .pagination-next {
+    .flex-display();
+    .justify-content(center);
+    .align-items(center);
+
+    height: 100%;
+    text-align: center;
+    width: 36px;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+@media screen and (min-width: @screen-xs) {
+    .pagination-next {
+        border-left: 1px solid @border;
+    }
+}
+
+.pagination-control {
+    .flex-display();
+    .align-items(center);
+
+    > input {
+        border: 1px solid @border;
+        padding: 0 1px;
+        text-align: center;
+        width: 40px;
+    }
+    > span {
+        padding: 0 10px;
+    }
+}
