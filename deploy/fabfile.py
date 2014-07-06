@@ -159,6 +159,7 @@ def _install_requirements():
 
     with virtualenv():
         with cd('{django_path}'.format(**env)):
+            run('rm -fr {venv_path}/build')
             run('pip install -r requirements.txt')
 
 
