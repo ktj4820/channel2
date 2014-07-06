@@ -2,28 +2,17 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
+    <h2 class="tag-heading space-bottom-15">{{ tag.name }}</h2>
     <form action="" method="post" enctype="multipart/form-data">
         {{ forms.csrf_input() }}
-        <section>
-            <h2 class="page-title">{{ tag.name }}</h2>
-        </section>
-        <section class="flex">
-            <div class="flex-grow-1">
-                {{ forms.field(form.name, show_label=False) }}
-                {{ forms.field(form.children, show_label=False) }}
-                <hr>
-                {{ forms.field(form.markdown, show_label=False) }}
-                <div class="markdown markdown-preview" data-for="id_markdown"></div>
-            </div>
-            <div class="space-left-10 width-180">
-                <div class="tag-edit-sidebar-action">
-                    <button class="btn btn-block btn-primary space-bottom-10">{% trans %}Save{% endtrans %}</button>
-                    <button class="btn btn-block btn-error">{% trans %}Delete{% endtrans %}</button>
-                </div>
-                <div class="tag-edit-sidebar-action">
-                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="btn btn-block">{% trans %}Back{% endtrans %}</a>
-                </div>
-            </div>
-        </section>
+        {{ forms.field(form.name) }}
+        {{ forms.field(form.children) }}
+        {{ forms.field_checkbox(form.pinned) }}
+        {{ forms.field(form.markdown, show_label=False) }}
+        <div class="markdown markdown-preview" data-for="id_markdown"></div>
+        <div class="space-top-15">
+            <button class="btn btn-primary" name="action" value="save">{% trans %}Save{% endtrans %}</button>
+            <button class="btn btn-error space-left-10" name="action" value="delete">{% trans %}Delete{% endtrans %}</button>
+        </div>
     </form>
 {% endblock %}

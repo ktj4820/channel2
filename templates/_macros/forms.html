@@ -18,10 +18,12 @@
 
 {% macro field(field, show_label=True) %}
     <div class="form-field{% if field.errors %} error{% endif %}">
-        {% if show_label %}
-            {{ field.label_tag()|safe }}
-        {% endif %}
-        {{ field|safe }}
+        <div class="form-label-input-unit">
+            {% if show_label %}
+                {{ field.label_tag()|safe }}
+            {% endif %}
+            <div class="form-input-grow">{{ field|safe }}</div>
+        </div>
         {% for error in field.errors %}
             <span class="error-block">{{ error|safe }}</span>
         {% endfor %}
@@ -33,7 +35,10 @@
 
 {% macro field_checkbox(field) %}
     <div class="form-field{% if field.errors %} error{% endif %}">
-        <label>{{ field|safe }}{{ field.label|safe }}</label>
+        <div class="form-label-input-unit">
+            {{ field.label_tag()|safe }}
+            <div class="form-checkbox">{{ field|safe }}</div>
+        </div>
         {% for error in field.errors %}
             <span class="error-block">{{ error|safe }}</span>
         {% endfor %}

@@ -2,8 +2,8 @@
     <ul id="message-list">
         {% for message in messages %}
             <li class="message message-{{ message.tags }}">
-                <span class="flex-grow-1">{{ message }}</span>
-                <span class="icon icon-cancel"></span>
+                <span>{{ message }}</span>
+                <span class="icon icon-cancel right"></span>
             </li>
         {% endfor %}
     </ul>

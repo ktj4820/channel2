@@ -56,8 +56,13 @@ class StaffVideoAddForm(forms.Form):
 
     select = forms.BooleanField(required=False, initial=True)
     filename = forms.CharField(widget=forms.HiddenInput)
-    name = forms.CharField()
-    tag = forms.CharField(widget=forms.TextInput(attrs={'list': 'tags'}))
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'staff-input',
+    }))
+    tag = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'staff-input',
+        'list': 'tags'
+    }))
 
 
 class StaffVideoAddFormSet(BaseFormSet):

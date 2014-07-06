@@ -2,40 +2,35 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
-    <section>
-        <h2 class="page-title">{% trans %}Add Videos{% endtrans %}</h2>
-    </section>
-    <section>
-        <form action="" method="post">
-            {{ forms.csrf_input() }}
-            {{ formset.management_form|safe }}
-            <table class="staff-video-add-table">
-                <thead>
+    <h2 class="tag-heading space-bottom-15">{% trans %}Add Videos{% endtrans %}</h2>
+    <form action="" method="post">
+        {{ forms.csrf_input() }}
+        {{ formset.management_form|safe }}
+        <table class="space-bottom-15">
+            <thead>
+                <tr>
+                    <th width="25"></th>
+                    <th>{% trans %}File name{% endtrans %}</th>
+                    <th width="25%">{% trans %}Name{% endtrans %}</th>
+                    <th width="25%">{% trans %}Tag{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
                     <tr>
-                        <th width="25"></th>
-                        <th>{% trans %}File name{% endtrans %}</th>
-                        <th width="25%">{% trans %}Name{% endtrans %}</th>
-                        <th width="25%">{% trans %}Tag{% endtrans %}</th>
+                        <td>{{ forms.simple_field(form.select) }}</td>
+                        <td>
+                            <label for="{{ form.select.auto_id }}" class="staff-video-add-label">{{ form.filename.value() }}</label>
+                            {{ forms.simple_field(form.filename) }}
+                        </td>
+                        <td>{{ forms.simple_field(form.name) }}</td>
+                        <td>{{ forms.simple_field(form.tag) }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for form in formset %}
-                        <tr>
-                            <td>{{ forms.simple_field(form.select) }}</td>
-                            <td>
-                                <label for="{{ form.select.auto_id }}">{{ form.filename.value() }}</label>
-                                {{ forms.simple_field(form.filename) }}
-                            </td>
-                            <td>{{ forms.simple_field(form.name) }}</td>
-                            <td>{{ forms.simple_field(form.tag) }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <hr>
-            <button type="submit" class="btn btn-primary">{% trans %}Add Videos{% endtrans %}</button>
-        </form>
-    </section>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">{% trans %}Add Videos{% endtrans %}</button>
+    </form>
     <datalist id="tags">
         {% for tag in tag_list %}
             <option value="{{ tag }}"></option>

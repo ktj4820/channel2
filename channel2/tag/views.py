@@ -72,7 +72,7 @@ class TagEditView(ProtectedTemplateView):
         if form.is_valid():
             tag = form.save()
             messages.success(request, _('Tag has been successfully updated.'))
-            return redirect('tag.edit', id=tag.id, slug=tag.slug)
+            return redirect('tag', id=tag.id, slug=tag.slug)
 
         messages.error(request, _('There was an error with your input, the tag has not been saved.'))
         return self.render_to_response({

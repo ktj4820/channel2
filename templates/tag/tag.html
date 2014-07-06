@@ -7,25 +7,9 @@
     {% if tag.html %}
         <div class="tag-html markdown">{{ tag.html|safe }}</div>
     {% endif %}
-{#    {% if tag_children_list %}#}
-{#        <div class="space-top-10">#}
-{#            <div class="tl-simple">{{ widgets.tag_list(tag_children_list) }}</div>#}
-{#        </div>#}
-{#    {% endif %}#}
-{#    <section>#}
-{#        <div class="flex">#}
-{#            <h2 class="space-right-10">{{ tag.name }}</h2>#}
-{#            <button class="btn btn-small"><span class="icon icon-star"></span> {% trans %}Pin{% endtrans %}</button>#}
-{#            <span class="flex-grow-1"></span>#}
-{#        </div>#}
-{#    </section>#}
     {% for tag_p in tag_parent_list %}
         <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="tli">{{ tag_p.name }}</a>
     {% endfor %}
-{#                {% if tag_p.children_list %}#}
-{#                    <div class="space-top-5"></div>#}
-{#                    <div class="tl-simple">{{ widgets.tag_list(tag_p.children_list) }}</div>#}
-{#                {% endif %}#}
     {% for video in video_list %}
         {{ widgets.video(video) }}
     {% endfor %}

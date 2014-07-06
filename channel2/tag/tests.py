@@ -48,7 +48,7 @@ class TagEditViewTests(BaseTestCase):
         })
 
         tag = Tag.objects.get(id=self.tag.id)
-        self.assertRedirects(response, reverse('tag.edit', args=[tag.id, tag.slug]))
+        self.assertRedirects(response, reverse('tag', args=[tag.id, tag.slug]))
         self.assertEqual(tag.name, 'Updated Name')
         self.assertEqual(tag.markdown, 'Sample markdown')
         self.assertEqual(tag.html, '<p>Sample markdown</p>')
