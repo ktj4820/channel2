@@ -27,6 +27,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'haystack',
+
     'channel2.account',
     'channel2.blog',
     'channel2.core',
