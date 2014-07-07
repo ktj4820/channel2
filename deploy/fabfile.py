@@ -93,6 +93,7 @@ def deploy(tag):
     _rsync()
     _install_requirements()
     _syncdb_migrate()
+    _install_crontab
     _cleanup()
     start()
 
@@ -178,6 +179,14 @@ def _syncdb_migrate():
         with cd('{django_path}'.format(**env)):
             run('python manage.py migrate')
             run('python manage.py collectstatic --noinput')
+
+
+def _install_crontab():
+    """
+    update the crontab
+    """
+
+    run('crontab {django_path}/config/{config}/crontab.txt'.format(**env))
 
 
 def _cleanup():
