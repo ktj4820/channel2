@@ -6,7 +6,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext_lazy as _
 
-from channel2.core.views import ProtectedTemplateView
+from channel2.core.views import ProtectedTemplateView, StaffTemplateView
 from channel2.tag.forms import TagForm
 from channel2.tag.models import Tag, TagChildren
 
@@ -55,7 +55,7 @@ class TagView(ProtectedTemplateView):
         })
 
 
-class TagEditView(ProtectedTemplateView):
+class TagEditView(StaffTemplateView):
 
     template_name = 'tag/tag-edit.html'
 

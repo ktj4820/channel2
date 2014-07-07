@@ -2,7 +2,9 @@
 {% import '_macros/widgets.html' as widgets with context %}
 
 {% block content %}
-    <a href="{{ url('tag.edit', args=[tag.id, tag.slug]) }}" class="min-xs tag-edit-link">{% trans %}Edit{% endtrans %}</a>
+    {% if user.is_staff %}
+        <a href="{{ url('tag.edit', args=[tag.id, tag.slug]) }}" class="min-xs tag-edit-link">{% trans %}Edit{% endtrans %}</a>
+    {% endif %}
     <h2 class="tag-heading">{{ tag.name }}</h2>
     {% if tag.html %}
         <div class="tag-html markdown">{{ tag.html|safe }}</div>
