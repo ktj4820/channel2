@@ -11,6 +11,9 @@
             {{ forms.simple_field(form.email) }}
             {{ forms.simple_field(form.password) }}
         </div>
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
         <button type="submit" class="btn btn-primary btn-block account-btn">{% trans %}Login{% endtrans %}</button>
         <div class="space-top-15 text-center">
             <a href="{{ url('account.password.reset') }}">{% trans %}Doh! I forgot my password{% endtrans %}</a>

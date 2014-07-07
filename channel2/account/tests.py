@@ -26,6 +26,14 @@ class AccountLoginViewTestsAnonymous(BaseTestCase):
         })
         self.assertRedirects(response, reverse('video.list'))
 
+    def test_account_login_view_post_next(self):
+        response = self.client.post(reverse('account.login'), {
+            'email': 'testuser@example.com',
+            'password': 'password',
+            'next': reverse('blog'),
+        })
+        self.assertRedirects(response, reverse('blog'))
+
 
 class AccountLoginViewTestsAuthenticated(BaseTestCase):
 
