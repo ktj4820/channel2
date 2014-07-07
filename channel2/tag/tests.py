@@ -68,7 +68,10 @@ class TagFormTests(BaseTestCase):
         self.tag = Tag.objects.create(name='Test Tag')
 
     def test_tag_form_children(self):
+        tag0 = Tag.objects.create(name='tag0')
         tag1 = Tag.objects.create(name='tag1')
+
+        self.tag.children.add(tag0)
 
         form = TagForm(instance=self.tag, data={
             'name': 'Test Tag',
@@ -80,6 +83,7 @@ class TagFormTests(BaseTestCase):
         tag2 = Tag.objects.get(name='tag2')
 
         tag_children_list = tag.children.all()
+        self.assertFalse(tag0 in tag_children_list)
         self.assertTrue(tag1 in tag_children_list)
         self.assertTrue(tag2 in tag_children_list)
 

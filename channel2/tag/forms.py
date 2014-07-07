@@ -50,14 +50,13 @@ class TagForm(BlankLabelSuffixMixin, forms.ModelForm):
         self.children_list = filter(None, map(str.strip, children.split(',')))
         return children
 
-    def save(self, commit=True):
+    def save(self):
         tag =  super().save(commit=False)
         tag.html = self.html
+        tag.save()
 
         children_list = [Tag.objects.get_or_create(name=name)[0] for name in self.children_list]
+        tag.children.clear()
         tag.children.add(*children_list)
 
-        if commit:
-            tag.save()
         return tag
-
