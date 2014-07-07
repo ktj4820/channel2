@@ -53,6 +53,13 @@ class TagEditViewTests(BaseTestCase):
         self.assertEqual(tag.markdown, 'Sample markdown')
         self.assertEqual(tag.html, '<p>Sample markdown</p>')
 
+    def test_tag_edit_view_post_delete(self):
+        response = self.client.post(reverse('tag.edit', args=[self.tag.id, self.tag.slug]), {
+            'action': 'delete',
+        })
+        self.assertRedirects(response, reverse('tag.list'))
+        self.assertFalse(Tag.objects.filter(id=self.tag.id).exists())
+
 
 class TagFormTests(BaseTestCase):
 

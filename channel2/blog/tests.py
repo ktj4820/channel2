@@ -64,3 +64,10 @@ class BLogPostEditViewTests(BaseTestCase):
         blog_post = BlogPost.objects.get(id=self.blog_post.id)
         self.assertEqual(blog_post.markdown, 'This is some sample markdown for the blog post')
         self.assertEqual(blog_post.html, '<p>This is some sample markdown for the blog post</p>')
+
+    def test_blog_post_edit_view_post_delete(self):
+        response = self.client.post(reverse('blog.post.edit', args=[self.blog_post.id, self.blog_post.slug]), {
+            'action': 'delete',
+        })
+        self.assertRedirects(response, reverse('blog'))
+        self.assertFalse(BlogPost.objects.filter(id=self.blog_post.id).exists())

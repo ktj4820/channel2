@@ -33,6 +33,12 @@ class BlogPostEditView(StaffTemplateView):
 
     def post(self, request, id=None, slug=None):
         blog_post = id and get_object_or_404(BlogPost, id=id)
+
+        if blog_post and request.POST.get('action') == 'delete':
+            blog_post.delete()
+            messages.error(request, _('The blog post has been successfully deleted.'))
+            return redirect('blog')
+
         form = BlogPostForm(instance=blog_post, data=request.POST)
         if form.is_valid():
             form.save(request)

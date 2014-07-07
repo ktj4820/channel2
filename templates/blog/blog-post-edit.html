@@ -14,7 +14,9 @@
         <div class="markdown markdown-preview" data-for="id_markdown"></div>
         <div class="space-top-15">
             <button class="btn btn-primary" name="action" value="save">{% trans %}Save{% endtrans %}</button>
-            <button class="btn btn-error space-left-10" name="action" value="delete">{% trans %}Delete{% endtrans %}</button>
+            {% if blog_post %}
+                <button class="btn btn-error space-left-10" name="action" value="delete">{% trans %}Delete{% endtrans %}</button>
+            {% endif %}
         </div>
     </form>
 {% endblock %}

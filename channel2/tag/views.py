@@ -68,6 +68,13 @@ class TagEditView(ProtectedTemplateView):
 
     def post(self, request, id, slug):
         tag = get_object_or_404(Tag, id=id)
+
+        if tag and request.POST.get('action') == 'delete':
+            tag.delete()
+            messages.error(request, _('The tag has been successfully deleted.'))
+            return redirect('tag.list')
+
+
         form = TagForm(instance=tag, data=request.POST, files=request.FILES)
         if form.is_valid():
             tag = form.save()
