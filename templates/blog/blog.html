@@ -8,7 +8,7 @@
         <div class="bp{% if loop.last %} bp-last{% endif %}">
             <a href="{{ url('blog.post.edit', args=[blog_post.id, blog_post.slug]) }}" class="min-xs tag-edit-link">{% trans %}Edit{% endtrans %}</a>
             <h3 class="bp-title">{{ blog_post.title }}</h3>
-            <p class="bp-date">{{ blog_post.created_on }}</p>
+            <p class="bp-date">{% trans posted_on=blog_post.created_on|date %}Posted {{ posted_on }}{% endtrans %}</p>
             <div class="markdown bp-html">{{ blog_post.html|safe }}</div>
         </div>
     {% endfor %}

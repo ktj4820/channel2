@@ -1,13 +1,12 @@
 import re
 
-from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ungettext
 from jinja2 import nodes
 from jinja2.environment import Environment
 from jinja2.ext import Extension
 from jinja2.loaders import FileSystemLoader
-from channel2.core.filters import startswith, exclude_keys
+from channel2.core.filters import startswith, exclude_keys, date
 
 from channel2.settings import DEBUG, TEMPLATE_DIRS
 
@@ -62,7 +61,7 @@ TEMPLATE_ENV.globals.update(**{
     'url':                          reverse,
 })
 TEMPLATE_ENV.filters.update(**{
+    'date':                         date,
     'exclude_keys':                 exclude_keys,
-    'naturaltime':                  naturaltime,
     'startswith':                   startswith,
 })

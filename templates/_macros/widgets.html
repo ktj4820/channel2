@@ -36,11 +36,11 @@
         </a>
         <div class="vli-info">
             <h3 class="vli-title min-xs">{{ obj.name }}</h3>
-            <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|naturaltime %}Added {{ added_on }}{% endtrans %}</p>
+            <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|date %}Added {{ added_on }}{% endtrans %}</p>
             <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
-{#            <div class="space-top-15">#}
-{#                <a href="{{ url_video }}?download=true">{% trans %}Download{% endtrans %}<span class="icon icon-down-circled space-left-5"></span></a>#}
-{#            </div>#}
+            <div class="space-top-10">
+                <a href="{{ url_video }}?download=true">{% trans %}Download{% endtrans %}<span class="icon icon-down-circled"></span></a>
+            </div>
         </div>
     </div>
 {% endmacro %}

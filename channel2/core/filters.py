@@ -1,4 +1,7 @@
+import datetime
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.http.request import QueryDict
+import pytz
 
 
 def startswith(value, s):
@@ -23,3 +26,11 @@ def exclude_keys(value, *exclude):
     for key in exclude:
         if key in value: del value[key]
     return value
+
+
+def date(value, format='%Y/%m/%d %H:%M'):
+    now = datetime.datetime.now(tz=pytz.UTC)
+    if now - value > datetime.timedelta(days=7):
+        return 'on {}'.format(value.strftime(format))
+
+    return naturaltime(value)
