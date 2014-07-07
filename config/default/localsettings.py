@@ -36,7 +36,7 @@ EMAIL_HOST_USER = 'derek.kai.chun.kwok@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('CHANNEL2_EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
 
-FFMPEG_PATH = '/usr/local/bin/ffmpeg'
+FFMPEG_PATH = '/usr/bin/ffmpeg'
 VIDEO_DIR = '/var/www/channel2/downloads/'
 X_ACCEL = True
 
