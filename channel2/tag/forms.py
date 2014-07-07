@@ -15,6 +15,7 @@ class TagForm(BlankLabelSuffixMixin, forms.ModelForm):
     )
 
     pinned = forms.BooleanField(required=False)
+    order = forms.IntegerField(required=False, label=_('Order'))
 
     markdown = forms.CharField(
         required=False,
@@ -27,7 +28,7 @@ class TagForm(BlankLabelSuffixMixin, forms.ModelForm):
 
     class Meta:
         model = Tag
-        fields = ('name', 'pinned', 'markdown')
+        fields = ('name', 'pinned', 'order', 'markdown')
 
     def __init__(self, *args, **kwargs):
         if 'instance' not in kwargs:
