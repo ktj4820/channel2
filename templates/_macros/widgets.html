@@ -40,6 +40,8 @@
             <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
             <div class="space-top-10">
                 <a href="{{ url_video }}?download=true">{% trans %}Download{% endtrans %}<span class="icon icon-down-circled"></span></a>
+                <br>
+                <a href="{{ url('video.html5', args=[obj.id, obj.slug]) }}">{% trans %}Play in Browser{% endtrans %}<span class="icon icon-play"></span></a>
             </div>
         </div>
     </div>

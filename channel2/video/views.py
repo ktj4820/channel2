@@ -25,9 +25,9 @@ class VideoListView(ProtectedTemplateView):
         })
 
 
-class VideoView(ProtectedTemplateView):
+class BaseVideoView(ProtectedTemplateView):
 
-    def get(self, request, id, slug):
+    def get_video_link(self, request, id):
         video = get_object_or_404(Video, id=id)
         video.views += 1
         video.save()
@@ -38,7 +38,13 @@ class VideoView(ProtectedTemplateView):
             ip_address=get_ip_address(request),
             created_by=request.user,
         )
+        return video, link
 
+
+class VideoView(BaseVideoView):
+
+    def get(self, request, id, slug):
+        video, link = self.get_video_link(request, id)
         url = '{}?{}'.format(reverse('video.link', args=[link.key, video.slug]), request.META.get('QUERY_STRING'))
         return redirect(url)
 
@@ -71,3 +77,15 @@ class VideoLinkView(TemplateView):
 
         download = 'download' in request.GET
         return HttpResponseXAccel(link.video.file, content_type='video/mp4', attachment=download)
+
+
+class VideoHtml5View(BaseVideoView):
+
+    template_name = 'video/video-html5.html'
+
+    def get(self, request, id, slug):
+        video, link = self.get_video_link(request, id)
+        return self.render_to_response({
+            'link': link,
+            'video': video,
+        })

@@ -62,6 +62,15 @@ class VideoViewTests(BaseTestCase):
         self.assertEqual(video.views+1, Video.objects.get(id=video.id).views)
 
 
+class VideoHtml5ViewTests(BaseTestCase):
+
+    def test_video_html5_view_get(self):
+        video = Video.objects.all()[0]
+        response = self.client.get(reverse('video.html5', args=[video.id, video.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'video/video-html5.html')
+
+
 class VideoLinkViewTests(BaseTestCase):
 
     def setUp(self):
