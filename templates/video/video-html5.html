@@ -3,7 +3,7 @@
         <title>{{ video.name }}</title>
     </head>
     <body>
-        <video>
+        <video controls>
             <source src="{{ url('video.link', args=[link.key, video.slug]) }}" type="video/mp4">
             <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
         </video>
