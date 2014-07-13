@@ -1,11 +1,21 @@
-<html>
-    <head>
-        <title>{{ video.name }}</title>
-    </head>
-    <body>
-        <video controls>
-            <source src="{{ url('video.link', args=[link.key, video.slug]) }}" type="video/mp4">
-            <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
-        </video>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% if video.cover %}
+    {% set poster_url = video.cover.url %}
+{% else %}
+    {% set poster_url = "{{ STATIC_URL }}images/no-preview.png" %}
+{% endif %}
+
+{% block content %}
+    <h2 class="tag-heading space-bottom-15">{{ video.name }}</h2>
+    <video controls autoplay poster="{{ poster_url }}">
+        <source src="{{ url('video.link', args=[link.key, video.slug]) }}" type="video/mp4">
+        <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
+    </video>
+    {% if prev %}
+        <a href="{{ url('video.html5', args=[prev.id, prev.slug]) }}">{{ prev.name }}</a>
+    {% endif %}
+    {% if next %}
+        <a href="{{ url('video.html5', args=[next.id, next.slug]) }}">{{ next.name }}</a>
+    {% endif %}
+{% endblock %}
