@@ -9,6 +9,8 @@ __pycache__
 
 channel2/localsettings.py
 
+deploy/dump.sql
+deploy/dump.sql.gz
 deploy/vars/main.yml
 
 media-test

@@ -250,3 +250,5 @@ def dump_db():
     run('rm -f dump.sql.gz')
     run('gzip dump.sql')
     get('dump.sql.gz', 'dump.sql.gz')
+    local('rm -f dump.sql')
+    local('gunzip dump.sql.gz')
