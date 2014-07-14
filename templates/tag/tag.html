@@ -19,7 +19,12 @@
         <div class="tag-html markdown">{{ tag.html|safe }}</div>
     {% endif %}
     {% for tag_p in tag_parent_list %}
-        <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="tli">{{ tag_p.name }}</a>
+        <div class="tli">
+            <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
+            {% for tag_c in tag_p.children_list %}
+                <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="page-tag">{{ tag_c.name }}</a>
+            {% endfor %}
+        </div>
     {% endfor %}
     {% for video in video_list %}
         {{ widgets.video(video) }}

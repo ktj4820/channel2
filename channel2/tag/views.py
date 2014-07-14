@@ -1,5 +1,6 @@
 from collections import defaultdict
 import json
+
 from django.db.models.aggregates import Count
 from django.contrib import messages
 from django.http.response import HttpResponse
