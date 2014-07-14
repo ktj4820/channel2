@@ -36,7 +36,7 @@ class TagForm(BlankLabelSuffixMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         tag = kwargs['instance']
-        self.fields['children'].initial = ', '.join(tag.children.values_list('name', flat=True))
+        self.fields['children'].initial = ', '.join(sorted(tag.children.values_list('name', flat=True)))
         self.html = ''
         self.children_list = []
 

@@ -1,7 +1,6 @@
 from collections import defaultdict
 import json
 
-from django.db.models.aggregates import Count
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -17,7 +16,7 @@ class TagListView(ProtectedTemplateView):
     template_name = 'tag/tag-list.html'
 
     def get(self, request):
-        tag_list = Tag.objects.order_by('slug').annotate(count=Count('video'))
+        tag_list = Tag.objects.order_by('slug')
         return self.render_to_response({
             'tag_list': tag_list,
         })
@@ -37,8 +36,8 @@ class TagView(ProtectedTemplateView):
 
     def get(self, request, id, slug):
         tag = get_object_or_404(Tag, id=id)
-        tag_children_list = tag.children.all()
-        tag_parent_list = tag.parents.order_by('slug').annotate(count=Count('video'))
+        tag_children_list = tag.children.order_by('slug')
+        tag_parent_list = tag.parents.order_by('slug')
 
         # get the children list for each parent, but exclude the current tag
         tpc_dict = defaultdict(list)

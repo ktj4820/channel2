@@ -9,11 +9,23 @@
 .tli {
     border-top: 1px solid #ddd;
     display: block;
-    padding: 10px 0;
+    padding: 10px 0px;
+
+    &:hover {
+        background-color: #f6f6f6;
+    }
 }
 
 .page-header + .tli { border-top: none; }
 
 @media screen and (min-width: @screen-md) {
-    .tli { padding: 6px 0; }
+    .tli {
+        padding: 6px 0 6px 6px;
+
+    }
+}
+
+@media screen and (min-width: @screen-xs) {
+    .tli { text-align: right; }
+    .tli-main { float: left; }
 }
