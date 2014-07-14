@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2 class="tag-heading">{% trans %}All Tags{% endtrans %}</h2>
+    <div class="page-header">
+        <h2 class="page-title">{% trans %}All Tags{% endtrans %}</h2>
+    </div>
     {% for tag in tag_list %}
         <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">{{ tag.name }}</a>
     {% endfor %}

@@ -2,7 +2,9 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
-    <h2 class="tag-heading space-bottom-15">{{ tag.name }}</h2>
+    <div class="page-header space-bottom-15">
+        <h2 class="page-title">{{ tag.name }}</h2>
+    </div>
     <form action="" method="post" enctype="multipart/form-data">
         {{ forms.csrf_input() }}
         {{ forms.field(form.name) }}

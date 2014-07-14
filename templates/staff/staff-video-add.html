@@ -2,7 +2,9 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
-    <h2 class="tag-heading space-bottom-15">{% trans %}Add Videos{% endtrans %}</h2>
+    <div class="page-header space-bottom-15">
+        <h2 class="page-title">{% trans %}Add Videos{% endtrans %}</h2>
+    </div>
     <form action="" method="post">
         {{ forms.csrf_input() }}
         {{ formset.management_form|safe }}

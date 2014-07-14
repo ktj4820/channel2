@@ -2,10 +2,19 @@
 {% import '_macros/widgets.html' as widgets with context %}
 
 {% block content %}
-    {% if user.is_staff %}
-        <a href="{{ url('tag.edit', args=[tag.id, tag.slug]) }}" class="min-xs tag-edit-link">{% trans %}Edit{% endtrans %}</a>
-    {% endif %}
-    <h2 class="tag-heading">{{ tag.name }}</h2>
+    <div class="page-header">
+        {% if user.is_staff %}
+            <a href="{{ url('tag.edit', args=[tag.id, tag.slug]) }}" class="min-xs page-edit-link">{% trans %}Edit Tag{% endtrans %}</a>
+        {% endif %}
+        <h2 class="page-title">{{ tag.name }}</h2>
+        {% if tag_children_list %}
+            <div class="page-tag-list">
+                {% for tag_c in tag_children_list %}
+                    <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="page-tag">{{ tag_c.name }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
     {% if tag.html %}
         <div class="tag-html markdown">{{ tag.html|safe }}</div>
     {% endif %}

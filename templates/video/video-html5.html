@@ -7,7 +7,12 @@
 {% endif %}
 
 {% block content %}
-    <h2 class="tag-heading space-bottom-15">{{ video.name }}</h2>
+    <div class="page-header space-bottom-15">
+        <h2 class="page-title">{{ video.name }}</h2>
+        <div class="page-tag-list">
+            <a href="{{ url('tag', args=[video.tag.id, video.tag.slug]) }}" class="page-tag">{{ video.tag.name }}</a>
+        </div>
+    </div>
     <video controls autoplay poster="{{ poster_url }}">
         <source src="{{ url('video.link', args=[link.key, video.slug]) }}" type="video/mp4">
         <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>

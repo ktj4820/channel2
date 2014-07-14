@@ -2,11 +2,13 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
-    {% if blog_post %}
-        <h2 class="tag-heading space-bottom-15">{{ blog_post.title }}</h2>
-    {% else %}
-        <h2 class="tag-heading space-bottom-15">{% trans %}Create New Post{% endtrans %}</h2>
-    {% endif %}
+    <div class="page-header space-bottom-15">
+        {% if blog_post %}
+            <h2 class="page-title">{{ blog_post.title }}</h2>
+        {% else %}
+            <h2 class="page-title">{% trans %}Create New Post{% endtrans %}</h2>
+        {% endif %}
+    </div>
     <form action="" method="post" enctype="multipart/form-data">
         {{ forms.csrf_input() }}
         {{ forms.field(form.title) }}

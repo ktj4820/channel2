@@ -2,7 +2,9 @@
 {% import '_macros/widgets.html' as widgets with context %}
 
 {% block content %}
-    <h2 class="tag-heading">{% trans %}Latest{% endtrans %}</h2>
+    <div class="page-header">
+        <h2 class="page-title">{% trans %}Latest{% endtrans %}</h2>
+    </div>
     {% for video in video_list %}
         {{ widgets.video(video) }}
     {% endfor %}
