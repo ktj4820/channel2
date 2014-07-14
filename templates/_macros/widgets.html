@@ -27,8 +27,12 @@
     {% set url_video = url('video', args=[obj.id, obj.slug]) %}
     {% set url_video_html5 = url('video.html5', args=[obj.id, obj.slug]) %}
     <div class="vli">
-        <h3 class="vli-title max-xs space-bottom-5">{{ obj.name }}</h3>
-        <a href="{{ url_video_html5 }}" class="vli-cover">
+        <a href="{{ url_video }}" class="vli-cover">
+            <div class="vli-mobile max-xs">
+                <h3 class="vli-title">{{ obj.name }}</h3>
+                <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|date %}Added {{ added_on }}{% endtrans %}</p>
+                <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
+            </div>
             {% if obj.cover %}
                 <img src="{{ obj.cover.url }}">
             {% else %}
@@ -37,12 +41,12 @@
         </a>
         <div class="vli-info">
             <h3 class="vli-title min-xs">{{ obj.name }}</h3>
-            <p class="vli-help-text space-bottom-0">{% trans added_on=obj.created_on|date %}Added {{ added_on }}{% endtrans %}</p>
-            <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
-            <div class="space-top-10">
+            <p class="vli-help-text space-bottom-0 min-xs">{% trans added_on=obj.created_on|date %}Added {{ added_on }}{% endtrans %}</p>
+            <p class="vli-help-text min-xs">{{ obj.size|filesizeformat }}</p>
+            <div class="vli-action">
                 <a href="{{ url_video }}?download=true">{% trans %}Download{% endtrans %}<span class="icon icon-down-circled"></span></a>
                 <span class="icon icon-dot text-secondary"></span>
-                <a href="{{ url_video }}">{% trans %}Direct Play{% endtrans %}<span class="icon icon-play"></span></a>
+                <a href="{{ url_video_html5 }}">{% trans %}HTML5 Player{% endtrans %}<span class="icon icon-play"></span></a>
             </div>
         </div>
     </div>
