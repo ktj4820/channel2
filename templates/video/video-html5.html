@@ -17,10 +17,14 @@
         <source src="{{ url('video.link', args=[link.key, video.slug]) }}" type="video/mp4">
         <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
     </video>
-    {% if prev %}
-        <a href="{{ url('video.html5', args=[prev.id, prev.slug]) }}">{{ prev.name }}</a>
-    {% endif %}
-    {% if next %}
-        <a href="{{ url('video.html5', args=[next.id, next.slug]) }}">{{ next.name }}</a>
+    {% if prev or next %}
+        <div class="video-html5-related">
+            {% if prev %}
+                <a href="{{ url('video.html5', args=[prev.id, prev.slug]) }}" class="video-html5-prev"><span class="icon icon-left"></span>{{ prev.name }}</a>
+            {% endif %}
+            {% if next %}
+                <a href="{{ url('video.html5', args=[next.id, next.slug]) }}" class="video-html5-next">{{ next.name }}<span class="icon icon-right"></span></a>
+            {% endif %}
+        </div>
     {% endif %}
 {% endblock %}

@@ -25,9 +25,10 @@
 
 {% macro video(obj, tl=None) %}
     {% set url_video = url('video', args=[obj.id, obj.slug]) %}
+    {% set url_video_html5 = url('video.html5', args=[obj.id, obj.slug]) %}
     <div class="vli">
         <h3 class="vli-title max-xs space-bottom-5">{{ obj.name }}</h3>
-        <a href="{{ url_video }}" class="vli-cover" target="_blank">
+        <a href="{{ url_video_html5 }}" class="vli-cover">
             {% if obj.cover %}
                 <img src="{{ obj.cover.url }}">
             {% else %}
@@ -40,8 +41,8 @@
             <p class="vli-help-text">{{ obj.size|filesizeformat }}</p>
             <div class="space-top-10">
                 <a href="{{ url_video }}?download=true">{% trans %}Download{% endtrans %}<span class="icon icon-down-circled"></span></a>
-                <br>
-                <a href="{{ url('video.html5', args=[obj.id, obj.slug]) }}">{% trans %}Play in Browser{% endtrans %}<span class="icon icon-play"></span></a>
+                <span class="icon icon-dot text-secondary"></span>
+                <a href="{{ url_video }}">{% trans %}Direct Play{% endtrans %}<span class="icon icon-play"></span></a>
             </div>
         </div>
     </div>

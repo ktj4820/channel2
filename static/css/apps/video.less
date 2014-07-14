@@ -2,6 +2,8 @@
     video styles
 ---------------------------------------------------*/
 
+@video-cover-width: 242px;
+
 .vli {
     .flex-display();
     border-top: 1px solid #ddd;
@@ -11,8 +13,8 @@
 .page-header + .vli { border-top: none; }
 
 .vli-cover {
-    min-width: 242px;
-    max-width: 242px;
+    min-width: @video-cover-width;
+    max-width: @video-cover-width;
     > img { border: 1px solid #ddd; }
 }
 
@@ -29,26 +31,42 @@
     color: #666;
 }
 
-@media screen and (max-width: @screen-xs1) {
-    .vli {
-        .flex-display();
-        .flex-wrap(wrap);
-    }
-    .vli-title {
-        min-width: 100%;
-        max-width: 100%;
-        width: 100%;
-    }
-    .vli-cover {
-        min-width: 40%;
-        max-width: 40%;
-        width: 40%;
-    }
-    .vli-info {
-        min-width: 60%;
-        max-width: 60%;
-        width: 60%;
-        padding-left: 10px;
-    }
+//@media screen and (max-width: @screen-xs1) {
+//    .vli {
+//        .flex-display();
+//        .flex-wrap(wrap);
+//    }
+//    .vli-title {
+//        min-width: 100%;
+//        max-width: 100%;
+//        width: 100%;
+//    }
+//    .vli-cover {
+//        min-width: 40%;
+//        max-width: 40%;
+//        width: 40%;
+//    }
+//    .vli-info {
+//        min-width: 60%;
+//        max-width: 60%;
+//        width: 60%;
+//        padding-left: 10px;
+//    }
+//}
+
+/* --------------------------------------------------
+    video html5 styles
+---------------------------------------------------*/
+
+.video-html5-related {
+    border-top: 1px solid #999;
+    margin-top: 15px;
+    padding: 15px 0;
 }
 
+.video-html5-prev {
+    float: left;
+}
+.video-html5-next {
+    float: right;
+}
