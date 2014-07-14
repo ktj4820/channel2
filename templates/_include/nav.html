@@ -4,7 +4,7 @@
 {% set url_blog = url('blog') %}
 {% set url_search = url('search') %}
 {% set url_staff_user_add = url('staff.user.add') %}
-{% set url_staff_video_add = url('staff.video.add') %}
+{% set url_staff_video_import = url('staff.video.import') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_video_list = url('video.list') %}
 
@@ -25,7 +25,8 @@
     <hr class="nav-sep">
     {% if user.is_staff %}
         <a href="{{ url_staff_user_add }}" class="nav-item {{ utils.link_active(url_staff_user_add) }}"><span class="icon icon-user-add"></span> {% trans %}Add User{% endtrans %}</a>
-        <a href="{{ url_staff_video_add }}" class="nav-item {{ utils.link_active(url_staff_video_add) }}"><span class="icon icon-plus-squared"></span> {% trans %}Add Videos{% endtrans %}</a>
+        <a href="#" class="nav-item"><span class="icon icon-plus-squared"></span> {% trans %}Add Video{% endtrans %}</a>
+        <a href="{{ url_staff_video_import }}" class="nav-item {{ utils.link_active(url_staff_video_import) }}"><span class="icon icon-publish"></span> {% trans %}Import Videos{% endtrans %}</a>
         <hr class="nav-sep">
     {% endif %}
     <a href="{{ url_blog }}" class="nav-item {{ utils.link_active_starts_with(url_blog) }}"><span class="icon icon-newspaper"></span> {% trans %}News & Blog{% endtrans %}</a>

@@ -36,7 +36,6 @@ $ ->
     #---------------------------------------------------------------------------
 
     if ('#template-tag-edit').length
-
         split = (val) -> val.split(/,\s*/)
         extractLast = (term) -> split(term).pop()
 
@@ -62,6 +61,23 @@ $ ->
 
         success = (data) -> $('#id_children').bind('keydown', bindAutocompleteKeydown).autocomplete(autocompleteParams(data))
         $.get '/tag/autocomplete.json', success
+
+    #---------------------------------------------------------------------------
+    # staff video import ordering
+    #---------------------------------------------------------------------------
+
+    if ('#template-staff-video-import').length
+    # upload-images sorting
+        $videoList = $('tbody')
+        if $videoList.length
+            $videoList.sortable()
+            $videoOrderInput = $videoList.find('input[id$="ORDER"]')
+            $videoOrderInput.attr('readonly', 'readonly')
+            $videoOrderInput.attr('type', 'text')
+            $videoList.bind 'sortstop', (event, ui) ->
+                for item, i in $('tbody tr')
+                    $(item).find('input[id$="ORDER"]').attr('value', i+1)
+
 
     #---------------------------------------------------------------------------
     # messages

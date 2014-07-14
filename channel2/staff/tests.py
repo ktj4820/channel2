@@ -45,9 +45,9 @@ class StaffUserAddViewTests(BaseTestCase):
         self.assertTrue(User.objects.filter(email='newuser@example.com').exists())
 
 
-class StaffVideoAddViewTests(BaseTestCase):
+class StaffVideoImportViewTests(BaseTestCase):
 
-    def test_staff_video_add_view_get(self):
-        response = self.client.get(reverse('staff.video.add'))
+    def test_staff_video_import_view_get(self):
+        response = self.client.get(reverse('staff.video.import'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'staff/staff-video-add.html')
+        self.assertTemplateUsed(response, 'staff/staff-video-import.html')

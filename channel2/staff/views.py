@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from channel2.core.views import StaffTemplateView
 from channel2.settings import VIDEO_DIR
-from channel2.staff.forms import StaffAccountCreateForm, StaffVideoAddForm, StaffVideoAddFormSet
+from channel2.staff.forms import StaffAccountCreateForm, StaffVideoImportForm, StaffVideoImportFormSet
 from channel2.tag.models import Tag
 from channel2.video.utils import extract_name, guess_tag
 
@@ -33,17 +33,17 @@ class StaffUserAddView(StaffTemplateView):
         })
 
 
-class StaffVideoAddView(StaffTemplateView):
+class StaffVideoImportView(StaffTemplateView):
 
-    template_name = 'staff/staff-video-add.html'
+    template_name = 'staff/staff-video-import.html'
 
     @classmethod
     def get_formset_cls(cls):
         return formset_factory(
-            form=StaffVideoAddForm,
-            formset=StaffVideoAddFormSet,
+            form=StaffVideoImportForm,
+            formset=StaffVideoImportFormSet,
             extra=0,
-            can_order=False,
+            can_order=True,
             max_num=1000,
         )
 
@@ -70,6 +70,7 @@ class StaffVideoAddView(StaffTemplateView):
                 'tag': tag,
             })
 
+        initial = sorted(initial, key=lambda i: i['filename'])
         formset = self.get_formset_cls()(initial=initial)
         context['formset'] = formset
         return self.render_to_response(context)
@@ -78,8 +79,8 @@ class StaffVideoAddView(StaffTemplateView):
         formset = self.get_formset_cls()(data=request.POST)
         if formset.is_valid():
             count = formset.save()
-            messages.success(request, _('{} videos have been added successfully.'.format(count)))
-            return redirect('staff.video.add')
+            messages.success(request, _('{} videos have been improted successfully.'.format(count)))
+            return redirect('staff.video.import')
 
         context = self.get_context_data()
         context['formset'] = formset

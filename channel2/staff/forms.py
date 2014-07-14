@@ -52,7 +52,7 @@ class StaffAccountCreateForm(forms.Form):
         return user
 
 
-class StaffVideoAddForm(forms.Form):
+class StaffVideoImportForm(forms.Form):
 
     select = forms.BooleanField(required=False, initial=True)
     filename = forms.CharField(widget=forms.HiddenInput)
@@ -65,19 +65,15 @@ class StaffVideoAddForm(forms.Form):
     }))
 
 
-class StaffVideoAddFormSet(BaseFormSet):
-
-    @property
-    def selected_forms(self):
-        if hasattr(self, '_selected_forms'):
-            return self._selected_forms
-
-        def _selected(form): return form.cleaned_data.get('select')
-        self._selected_forms = list(filter(_selected, self.forms))
-        return self._selected_forms
+class StaffVideoImportFormSet(BaseFormSet):
 
     def save(self):
-        for form in self.selected_forms:
+        count = 0
+        for form in self.ordered_forms:
+            if not form.cleaned_data.get('select'):
+                continue
+
+            count += 1
             data = form.cleaned_data
             file_path = os.path.join(VIDEO_DIR, data.get('filename'))
             file = open(file_path, 'rb')
@@ -88,4 +84,4 @@ class StaffVideoAddFormSet(BaseFormSet):
             )
             os.remove(file_path)
 
-        return len(self.selected_forms)
+        return count
