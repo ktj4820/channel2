@@ -35,6 +35,7 @@ class StaffUserAddView(StaffTemplateView):
 
 class StaffVideoImportView(StaffTemplateView):
 
+    select_count_default = 10
     template_name = 'staff/staff-video-import.html'
 
     @classmethod
@@ -68,9 +69,14 @@ class StaffVideoImportView(StaffTemplateView):
                 'filename': filename,
                 'name': name,
                 'tag': tag,
+                'select': False,
             })
 
+
         initial = sorted(initial, key=lambda i: i['filename'])
+        for i in range(min(len(initial), self.select_count_default)):
+            initial[i]['select'] = True
+
         formset = self.get_formset_cls()(initial=initial)
         context['formset'] = formset
         return self.render_to_response(context)
