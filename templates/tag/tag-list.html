@@ -5,6 +5,9 @@
         <h2 class="page-title">{% trans %}All Tags{% endtrans %}</h2>
     </div>
     {% for tag in tag_list %}
-        <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">{{ tag.name }}</a>
+        <div class="tli">
+            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli-main" title="{{ tag.name }}">{{ tag.name }}</a>
+            <div class="clear"></div>
+        </div>
     {% endfor %}
 {% endblock %}
