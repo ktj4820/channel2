@@ -27,14 +27,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'haystack',
 
     'channel2.account',
     'channel2.blog',
     'channel2.core',
-    'channel2.flat',
-    'channel2.search',
-    'channel2.staff',
     'channel2.tag',
     'channel2.video',
 )
@@ -113,7 +109,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
     'channel2.core.context_processors.resource_version',
-    'channel2.tag.context_processors.pinned_tags',
 )
 
 #-------------------------------------------------------------------------------
