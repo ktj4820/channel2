@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>{{ tag.name }}</h2>
+        {% if tag_children_list %}
+            <div class="tag-item-list">
+                {% for tag_c in tag_children_list %}
+                    <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tag-item">{{ tag_c.name }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if tag.html %}
+            <div class="tag-html markdown">{{ tag.html|safe }}</div>
+        {% endif %}
+        {% for tag_p in tag_parent_list %}
+            <div class="tli2">
+                <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
+            </div>
+        {% endfor %}
+        {% if video_list %}
+            <hr class="tag-video-separator">
+        {% endif %}
+        {% for video in video_list %}
+            <a href="" class="tag-video-item">{{ video.name }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}

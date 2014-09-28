@@ -2,17 +2,17 @@
 
 {% block content %}
     <div class="container">
-        <h2>Recently Watched</h2>
-        <h2>Newly Added</h2>
-        <ul class="tl">
-            {% for tag in tag_list %}
-                <li class="tli">
-                    <a href="" class="block">
-                        <img src="{% if tag.cover %}{{ tag.cover.url }}{% else %}{{ STATIC_URL }}images/no-preview-tag.png{% endif %}">
-                        <span class="tli-title">{{ tag.name }}</span>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+{#        <h2>Recently Watched</h2>#}
+{#        <h2>Newly Added</h2>#}
+{#        <ul class="tl">#}
+{#            {% for tag in tag_list %}#}
+{#                <li class="tli">#}
+{#                    <a href="" class="block">#}
+{#                        <img src="{% if tag.cover %}{{ tag.cover.url }}{% else %}{{ STATIC_URL }}images/no-preview-tag.png{% endif %}">#}
+{#                        <span class="tli-title">{{ tag.name }}</span>#}
+{#                    </a>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
     </div>
 {% endblock %}

@@ -1,11 +1,14 @@
+{% set url_home = url('home') %}
+{% set url_tag_list = url('tag.list') %}
+
 <nav>
     <span class="nav-header">Guide</span>
-    <a href="" class="nav-link">
+    <a href="{{ url_home }}" class="nav-link">
         <span class="icon icon-home"></span>
         <span>Home</span>
     </a>
     {% for tag in PINNED_TAG_LIST %}
-{#        {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}#}
+        {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}
         <a href="{{ url_tag }}" class="nav-link">
             <span class="icon icon-right-open"></span>
             <span>{{ tag.name }}</span>
