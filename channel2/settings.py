@@ -109,6 +109,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
     'channel2.core.context_processors.resource_version',
+    'channel2.tag.context_processors.pinned_tags',
 )
 
 #-------------------------------------------------------------------------------

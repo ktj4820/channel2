@@ -1,3 +1,5 @@
+{% import '_macros/forms.html' as forms with context %}
+
 {% set url_home = url('home') %}
 {% set url_search = '' %}
 
@@ -11,8 +13,11 @@
         <img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=60" id="header-gravatar">
         <span>Settings</span>
     </a>
-    <a href="" class="header-link">
-        <span class="icon icon-logout"></span>
+    <a class="header-link" onclick="document.getElementById('header-logout-form').submit();">
+        <span class="icon icon-logout space-right-5"></span>
         <span>Logout</span>
     </a>
 </header>
+<form action="{{ url('account.logout') }}" method="post" id="header-logout-form">
+    {{ forms.csrf_input() }}
+</form>

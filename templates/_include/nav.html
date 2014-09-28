@@ -4,6 +4,27 @@
         <span class="icon icon-clock"></span>
         <span>Latest</span>
     </a>
+    {% for tag in PINNED_TAG_LIST %}
+{#        {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}#}
+        <a href="{{ url_tag }}" class="nav-link">
+            <span class="icon icon-right-open"></span>
+            <span>{{ tag.name }}</span>
+        </a>
+    {% endfor %}
     <span class="nav-header">Pinned</span>
-    <span class="nav-header">Admin</span>
+    {% if user.is_staff %}
+        <span class="nav-header">Admin</span>
+        <a href="{{ url_staff_user_add }}" class="nav-link">
+            <span class="icon icon-user-add"></span>
+            <span>Add User</span>
+        </a>
+        <a href="#" class="nav-link">
+            <span class="icon icon-plus-squared"></span>
+            <span>Add Video</span>
+        </a>
+        <a href="{{ url_staff_video_import }}" class="nav-link">
+            <span class="icon icon-publish"></span>
+            <span>Import Videos</span>
+        </a>
+    {% endif %}
 </nav>
