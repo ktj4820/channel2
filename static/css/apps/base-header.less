@@ -18,7 +18,21 @@ header {
     z-index: 1000;
 }
 
-.header-logo {
+#header-mobile-menu {
+    border-right: 1px solid #ddd;
+    color: #333;
+    font-size: 24px;
+    height: 50px;
+    text-align: center;
+    width: 50px;
+
+    &.active {
+        background-color: #222;
+        color: #fff;
+    }
+}
+
+#header-logo {
     border-right: 1px solid #ddd;
     color: #333;
     display: block;
@@ -51,6 +65,12 @@ header {
     }
 }
 
+
+.header-link {
+    border-left: 1px solid #ddd;
+    padding: 0 15px;
+}
+
 #header-gravatar {
     display: block;
     float: left;
@@ -68,9 +88,4 @@ header {
     #header-gravatar {
         margin: 0 -5px;
     }
-}
-
-.header-link {
-    border-left: 1px solid #ddd;
-    padding: 0 15px;
 }
