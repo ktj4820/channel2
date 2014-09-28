@@ -1,0 +1,24 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="msapplication-TileImage" content="{{ STATIC_URL }}images/touch.png">
+    <meta name="msapplication-TileColor" content="#222222">
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
+    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/touch.png">
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
+    <title>Channel 2 | {% block title %}{% endblock %}</title>
+    {% include '_include/analytics.html' %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/app.js"></script>
+    {% block javascript %}{% endblock %}
+</body>
+</html>
+{% endspaceless %}

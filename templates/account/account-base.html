@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div id="template-{{ TEMPLATE_NAME }}" class="account-content">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}

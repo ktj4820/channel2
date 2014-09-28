@@ -1,0 +1,33 @@
+/* -----------------------------------------------------------------------------
+    button styles
+----------------------------------------------------------------------------- */
+
+@default-bg: #2a2a2a;
+@default-border: #222;
+@default-color: #eee;
+@default-bg-hover: @default-border;
+@default-border-hover: #000;
+
+.button {
+    .inline-block();
+    .transition(150ms ease all);
+    .border-radius(@border-radius);
+
+    background: @default-bg;
+    border: none;
+    border-bottom: 2px solid @default-border;
+    color: @default-color;
+    cursor: pointer;
+    line-height: @base-line-height;
+    padding: 10px 15px;
+
+    &:hover {
+        background-color: @default-bg-hover;
+        border-color: @default-border-hover;
+    }
+}
+
+.button-block {
+    display: block;
+    width: 100%;
+}

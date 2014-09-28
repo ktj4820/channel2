@@ -1,0 +1,58 @@
+/* --------------------------------------------------
+    grid breakpoints
+---------------------------------------------------*/
+
+@screen-xs1:                599px;
+@screen-xs:                 600px;
+
+@screen-sm1:                767px;
+@screen-sm:                 768px;
+
+@screen-md1:                959px;
+@screen-md:                 960px;
+
+@screen-lg1:                1279px;
+@screen-lg:                 1280px;
+
+/* -----------------------------------------------------------------------------
+    grid
+----------------------------------------------------------------------------- */
+
+.container {
+    margin: 0 auto;
+    padding: 15px;
+    width: 100%;
+}
+
+@media screen and (min-width: @screen-lg) {
+    .container { max-width: 1200px; }
+}
+@media screen and (min-width: @screen-md) and (max-width: @screen-lg1) {
+    .container { max-width: 960px; }
+}
+
+/* -----------------------------------------------------------------------------
+    screen size classes
+----------------------------------------------------------------------------- */
+
+@media screen and (max-width: @screen-xs1) {
+    .min-xs { display: none !important; }
+    .container { padding: 10px; }
+}
+@media screen and (min-width: @screen-xs) {
+    .max-xs { display: none !important; }
+}
+
+@media screen and (max-width: @screen-sm1) {
+    .min-sm { display: none !important; }
+}
+@media screen and (min-width: @screen-sm) {
+    .max-sm { display: none !important; }
+}
+
+@media screen and (max-width: @screen-md1) {
+    .min-md { display: none !important; }
+}
+@media screen and (min-width: @screen-md) {
+    .max-md { display: none !important; }
+}

@@ -149,7 +149,7 @@ class AccountPasswordResetForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         try:
-            self.user = User.objects.get(email=email)
+            self.user = User.objects.get(email=email, is_active=True)
         except User.DoesNotExist:
             raise forms.ValidationError('This email is not registered at Channel2.')
         return email

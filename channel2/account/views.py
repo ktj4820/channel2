@@ -47,14 +47,14 @@ class AccountActivateView(TemplateView):
     template_name = 'account/account-activate.html'
 
     def get(self, request, token):
-        user = get_object_or_404(User, token=token)
+        user = get_object_or_404(User, token=token, is_active=False)
         messages.warning(request, 'Please set a password')
         return self.render_to_response({
             'form': AccountActivateForm(user=user)
         })
 
     def post(self, request, token):
-        user = get_object_or_404(User, token=token)
+        user = get_object_or_404(User, token=token, is_active=False)
         form = AccountActivateForm(user=user, data=request.POST)
         if form.is_valid():
             user = form.save()
@@ -92,14 +92,14 @@ class AccountPasswordSetView(TemplateView):
     template_name = 'account/account-password-set.html'
 
     def get(self, request, token):
-        user = get_object_or_404(User, token=token)
+        user = get_object_or_404(User, token=token, is_active=True)
         messages.warning(request, 'Please set a password')
         return self.render_to_response({
             'form': AccountPasswordSetForm(user=user),
         })
 
     def post(self, request, token):
-        user = get_object_or_404(User, token=token)
+        user = get_object_or_404(User, token=token, is_active=True)
         form = AccountPasswordSetForm(user=user, data=request.POST)
         if form.is_valid():
             user = form.save()

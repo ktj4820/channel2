@@ -1,0 +1,20 @@
+{% extends 'account/account-base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <form action="" method="post" class="account-form">
+        <h2 class="account-h2">Channel 2</h2>
+        {% include '_include/messages.html' %}
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        {{ forms.field(form.email, show_label=False) }}
+        {{ forms.field(form.password, show_label=False) }}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+        <button type="submit" class="button button-block">Login</button>
+        <div class="space-top-30 text-center">
+            <a href="{{ url('account.password.reset') }}">Doh! I forgot my password</a>
+        </div>
+    </form>
+{% endblock %}

@@ -30,13 +30,13 @@ class AccountLoginViewTestsAnonymous(BaseTestCase):
         })
         self.assertRedirects(response, reverse('home'))
 
-    def test_account_login_view_post_next(self):
-        response = self.client.post(reverse('account.login'), {
-            'email': 'testuser@example.com',
-            'password': 'password',
-            'next': reverse('blog'),
-        })
-        self.assertRedirects(response, reverse('blog'))
+    # def test_account_login_view_post_next(self):
+    #     response = self.client.post(reverse('account.login'), {
+    #         'email': 'testuser@example.com',
+    #         'password': 'password',
+    #         'next': reverse('blog'),
+    #     })
+    #     self.assertRedirects(response, reverse('blog'))
 
 
 class AccountLoginViewTestsAuthenticated(BaseTestCase):
@@ -116,16 +116,25 @@ class AccountActivateViewTests(BaseTestCase):
         self.client.logout()
 
     def test_account_activate_view_get(self):
+        self.user.is_active = False
+        self.user.save()
+
         response = self.client.get(reverse('account.activate', args=[self.user.token]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-activate.html')
 
     def test_account_activate_view_post_invalid(self):
+        self.user.is_active = False
+        self.user.save()
+
         response = self.client.post(reverse('account.activate', args=[self.user.token]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-activate.html')
 
     def test_account_activate_view_post(self):
+        self.user.is_active = False
+        self.user.save()
+
         response = self.client.post(reverse('account.activate', args=[self.user.token]), {
             'password1': 'Pa55w0rD',
             'password2': 'Pa55w0rD',
@@ -135,6 +144,14 @@ class AccountActivateViewTests(BaseTestCase):
         user = User.objects.get(id=self.user.id)
         self.assertTrue(user.check_password('Pa55w0rD'))
         self.assertIsNone(user.token)
+
+    def test_account_activate_view_get_is_active(self):
+        response = self.client.get(reverse('account.activate', args=[self.user.token]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_account_activate_view_post_is_active(self):
+        response = self.client.post(reverse('account.activate', args=[self.user.token]))
+        self.assertEqual(response.status_code, 404)
 
 
 class AccountPasswordResetViewTests(BaseTestCase):
@@ -198,3 +215,17 @@ class AccountPasswordSetViewTests(BaseTestCase):
 
         user = User.objects.get(id=self.user.id)
         self.assertTrue(user.check_password('pass'))
+
+    def test_account_password_set_view_get_inactive(self):
+        self.user.is_active = False
+        self.user.save()
+
+        response = self.client.get(reverse('account.password.set', args=[self.user.token]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_account_password_set_view_post_inactive(self):
+        self.user.is_active = False
+        self.user.save()
+
+        response = self.client.post(reverse('account.password.set', args=[self.user.token]))
+        self.assertEqual(response.status_code, 404)
