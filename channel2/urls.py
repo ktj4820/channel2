@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     # apps
     url(r'^account/',           include('channel2.account.urls')),
     url(r'^admin/',             include(admin.site.urls)),
+    url(r'^captcha/',           include('captcha.urls')),
     # url(r'^blog/',              include('channel2.blog.urls')),
     # url(r'^search/',            include('channel2.search.urls')),
     # url(r'^tag/',               include('channel2.tag.urls')),

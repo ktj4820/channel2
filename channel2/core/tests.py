@@ -1,3 +1,4 @@
+from collections import namedtuple
 import os
 import sys
 import shutil
@@ -86,6 +87,10 @@ class BaseTestCase(TestCase):
         self.user = User.objects.get(email='testuser@example.com')
         self.user.set_password('password')
         self.user.save()
+
+        self.request = namedtuple('Request', 'user')
+        self.request.user = self.user
+        self.request.META = {'REMOTE_ADDR': '127.0.0.1'}
 
         self.client.login(email='testuser@example.com', password='password')
 
