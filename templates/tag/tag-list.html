@@ -3,10 +3,16 @@
 {% block content %}
     <div class="container">
         <h2>All Tags</h2>
-        {% for tag in tag_list %}
-            <div class="tli2">
-                <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" title="{{ tag.name }}" class="space-right-10">{{ tag.name }}</a>
-            </div>
-        {% endfor %}
+        <table>
+            <tbody>
+                {% for tag in tag_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" title="{{ tag.name }}" class="space-right-10">{{ tag.name }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

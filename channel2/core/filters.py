@@ -29,8 +29,4 @@ def exclude_keys(value, *exclude):
 
 
 def date(value, format='%Y/%m/%d %H:%M'):
-    now = datetime.datetime.now(tz=pytz.UTC)
-    if now - value > datetime.timedelta(days=7):
-        return 'on {}'.format(value.strftime(format))
-
-    return naturaltime(value)
+    return value.strftime(format)

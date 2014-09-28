@@ -13,16 +13,37 @@
         {% if tag.html %}
             <div class="tag-html markdown">{{ tag.html|safe }}</div>
         {% endif %}
-        {% for tag_p in tag_parent_list %}
-            <div class="tli2">
-                <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
-            </div>
-        {% endfor %}
+        <table>
+            <tbody>
+            {% for tag_p in tag_parent_list %}
+                <tr>
+                    <td>
+                        <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
         {% if video_list %}
-            <hr class="tag-video-separator">
+            <table>
+                <tbody>
+                    {% for video in video_list %}
+                        {% set url_video = url('video', args=[video.id, video.slug]) %}
+                        {% set url_video_html5 = url('video.html5', args=[video.id, video.slug]) %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
+                                <span class="icon icon-dot video-action-separator"></span>
+                                <a href="{{ url_video_html5 }}">{{ video.name }}</a>
+                            </td>
+                            <td width="90px" class="min-md">
+                                <span>{{ video.size|filesizeformat }}</span>
+                            </td>
+                            <td width="150px" class="min-xs">{{ video.created_on|date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
-        {% for video in video_list %}
-            <a href="" class="tag-video-item">{{ video.name }}</a>
-        {% endfor %}
     </div>
 {% endblock %}
