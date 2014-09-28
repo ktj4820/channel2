@@ -11,12 +11,13 @@
     <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/touch.png">
     <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
-    <title>Channel 2</title>
+    <title>{% block title %}Channel 2{% endblock %}</title>
     {% include '_include/analytics.html' %}
 </head>
 <body>
     {% block body %}
-        <div id="template-{{ TEMPLATE_NAME }}" class="container">
+        <div id="template-{{ TEMPLATE_NAME }}">
+            {% include '_include/header.html' %}
             {% include '_include/nav.html' %}
             <div class="content">
                 {% include '_include/messages.html' %}

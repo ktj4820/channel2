@@ -1,0 +1,18 @@
+{% set url_home = url('home') %}
+{% set url_search = '' %}
+
+<header>
+    <a href="{{ url_home }}" class="header-logo">Channel 2</a>
+    <form action="{{ url_search }}" method="get" id="header-search-form">
+        <span class="icon icon-search"></span>
+        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search">
+    </form>
+    <a href="" class="header-link">
+        <img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=60" id="header-gravatar">
+        <span>Settings</span>
+    </a>
+    <a href="" class="header-link">
+        <span class="icon icon-logout"></span>
+        <span>Logout</span>
+    </a>
+</header>

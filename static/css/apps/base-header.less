@@ -1,0 +1,64 @@
+/* --------------------------------------------------
+    header styles
+---------------------------------------------------*/
+
+header {
+    .flex-display();
+
+    background-color: #eee;
+    height: 50px;
+    line-height: 50px;
+    padding-right: 10px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.header-logo {
+    border-right: 1px solid #ddd;
+    color: #333;
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    width: @nav-width;
+}
+
+#header-search-form {
+    .flex-grow(1);
+    .flex-display();
+
+    height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+    > span, > input {
+        font-size: 18px;
+    }
+    > span {
+        color: #999;
+    }
+    > input {
+        border: none;
+        background-color: transparent;
+        color: #333;
+    }
+}
+
+#header-gravatar {
+    .border-radius(1000px);
+    border: 1px solid #ddd;
+    float: left;
+    height: 30px;
+    margin: 10px 10px 10px 0px;
+    width: 30px;
+}
+
+.header-link {
+    border-left: 1px solid #ddd;
+    display: block;
+    padding: 0 15px;
+}
