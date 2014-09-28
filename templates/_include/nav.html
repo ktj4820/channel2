@@ -1,8 +1,8 @@
 <nav>
     <span class="nav-header">Guide</span>
     <a href="" class="nav-link">
-        <span class="icon icon-clock"></span>
-        <span>Latest</span>
+        <span class="icon icon-home"></span>
+        <span>Home</span>
     </a>
     {% for tag in PINNED_TAG_LIST %}
 {#        {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}#}
@@ -11,16 +11,16 @@
             <span>{{ tag.name }}</span>
         </a>
     {% endfor %}
+    <a href="{{ url_tag_list }}" class="nav-link">
+        <span class="icon icon-tag"></span>
+        <span>All Tags</span>
+    </a>
     <span class="nav-header">Pinned</span>
     {% if user.is_staff %}
         <span class="nav-header">Admin</span>
         <a href="{{ url_staff_user_add }}" class="nav-link">
             <span class="icon icon-user-add"></span>
             <span>Add User</span>
-        </a>
-        <a href="#" class="nav-link">
-            <span class="icon icon-plus-squared"></span>
-            <span>Add Video</span>
         </a>
         <a href="{{ url_staff_video_import }}" class="nav-link">
             <span class="icon icon-publish"></span>

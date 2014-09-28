@@ -1,5 +1,7 @@
 from django.db import models
+
 from channel2.account.models import User
+from channel2.core.uploads import tag_cover_upload_to
 from channel2.core.utils import slugify
 
 
@@ -11,6 +13,8 @@ class Tag(models.Model):
     html        = models.TextField(blank=True)
     pinned      = models.BooleanField(default=False)
     order       = models.PositiveSmallIntegerField(null=True, blank=True)
+    cover       = models.FileField(upload_to=tag_cover_upload_to, null=True, blank=True)
+    sort_date   = models.DateTimeField(null=True)
 
     children    = models.ManyToManyField('self', symmetrical=False, null=True, blank=True, related_name='parents', editable=False)
     users       = models.ManyToManyField(User, null=True, blank=True, related_name='pinned_tags', editable=False)

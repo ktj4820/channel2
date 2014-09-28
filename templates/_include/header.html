@@ -4,18 +4,18 @@
 {% set url_search = '' %}
 
 <header>
-    <a href="{{ url_home }}" class="header-logo">Channel 2</a>
+    <a href="{{ url_home }}" class="header-logo min-md">Channel 2</a>
     <form action="{{ url_search }}" method="get" id="header-search-form">
         <span class="icon icon-search"></span>
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search">
     </form>
     <a href="" class="header-link">
         <img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=60" id="header-gravatar">
-        <span>Settings</span>
+        <span class="min-sm">Settings</span>
     </a>
     <a class="header-link" onclick="document.getElementById('header-logout-form').submit();">
         <span class="icon icon-logout space-right-5"></span>
-        <span>Logout</span>
+        <span class="min-sm">Logout</span>
     </a>
 </header>
 <form action="{{ url('account.logout') }}" method="post" id="header-logout-form">

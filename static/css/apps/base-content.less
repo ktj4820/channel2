@@ -3,6 +3,13 @@
 ---------------------------------------------------*/
 
 .content {
+    color: #eee;
     margin-top: 50px;
     margin-left: @nav-width;
+}
+
+@media screen and (max-width: @screen-sm1) {
+    .content {
+        margin-left: 0;
+    }
 }

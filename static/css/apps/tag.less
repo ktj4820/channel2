@@ -1,0 +1,70 @@
+/* -----------------------------------------------------------------------------
+    tag styles
+----------------------------------------------------------------------------- */
+
+@tli-padding: 10px;
+
+.tl {
+    .flex-display();
+    .flex-wrap(wrap);
+    list-style-type: none;
+    margin: -1 * @tli-padding;
+}
+
+.tli {
+    padding: @tli-padding;
+    position: relative;
+}
+
+
+@media screen and (max-width: 399px) {
+    .tl {
+        display: block;
+        padding: 0 20px;
+        margin-left: -25px;
+        margin-right: -25px;
+        overflow: auto;
+        white-space: nowrap;
+    }
+    .tli {
+        .inline-block();
+        padding: 5px;
+        width: 40%;
+    }
+}
+@media screen and (min-width: 400px) and (max-width: 767px) {
+    .tl { margin: -5px; }
+    .tli {
+        padding: 5px;
+        width: 100/3%;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .tli { width: 100/3%; }
+}
+@media screen and (min-width: 1024px) and (max-width: 1199px) {
+    .tli { width: 100/4%; }
+}
+@media screen and (min-width: 1200px) and (max-width: 1559px) {
+    .tli { width: 100/6%; }
+}
+@media screen and (min-width: 1560px) {
+    .tli { width: 100/8%; }
+}
+@media screen and (min-width: 1800px) {
+    .tli { width: 100/10%; }
+}
+
+.tli-title {
+    background-color: #2a2a2a;
+    color: #eee;
+    display: block;
+    overflow: hidden;
+    padding: 10px;
+//    white-space: nowrap;
+
+//    position: absolute;
+//    top: @tli-padding;
+//    right: @tli-padding;
+//    left: @tli-padding;
+}
