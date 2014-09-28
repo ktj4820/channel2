@@ -41,6 +41,7 @@
         - libjpeg8-dev
         - libpng12-dev
         - libpq-dev
+        - memcached
         - newrelic-sysmond
         - nginx
         - ntp
@@ -81,7 +82,7 @@
     - template: src=templates/nrsysmond.cfg.j2 dest=/etc/newrelic/nrsysmond.cfg
 
     # python packages
-    - pip: name=psycopg2 state=present version=2.5.3
+    - pip: name=psycopg2 state=present version=2.5.4
     - pip: name=supervisor version=3.0
     - pip: name=virtualenv state=present
 
@@ -110,6 +111,10 @@
     # environment variables
     - lineinfile: dest=/etc/environment state=present line=CHANNEL2_DB_PASSWORD=\"{{ db_user_password }}\"
     - lineinfile: dest=/etc/environment state=present line=CHANNEL2_EMAIL_PASSWORD=\"{{ email_password }}\"
+
+    # memcached setup
+    - template: src=templates/memcached.conf.j2 dest=/etc/memcached.conf
+      notify: restart memcached
 
     # nginx setup
     - file: path=/etc/nginx/sites-enabled/default state=absent
@@ -144,6 +149,9 @@
 
     - name: restart postgres
       service: name=postgresql state=restarted
+
+    - name: restart memcached
+      service: name=memcached state=restarted
 
     - name: restart fail2ban
       service: name=fail2ban state=restarted

@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     # url(r'^search/',            include('channel2.search.urls')),
     # url(r'^tag/',               include('channel2.tag.urls')),
     # url(r'^staff/',             include('channel2.staff.urls')),
-    # url(r'^videos/',            include('channel2.video.urls')),
+    url(r'^videos/',            include('channel2.video.urls')),
 
     # flat urls
     # url(r'',                    include('channel2.flat.urls')),
