@@ -10,12 +10,12 @@
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search">
     </form>
     <a href="" class="header-link">
-        <img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=60" id="header-gravatar">
-        <span class="min-sm">Settings</span>
+        <span id="header-gravatar"><img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=102"></span>
+        <span class="space-left-10 min-sm">Settings</span>
     </a>
     <a class="header-link" onclick="document.getElementById('header-logout-form').submit();">
-        <span class="icon icon-logout space-right-5"></span>
-        <span class="min-sm">Logout</span>
+        <span class="icon icon-logout"></span>
+        <span class="space-left-5 min-sm">Logout</span>
     </a>
 </header>
 <form action="{{ url('account.logout') }}" method="post" id="header-logout-form">

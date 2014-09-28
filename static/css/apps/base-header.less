@@ -4,10 +4,12 @@
 
 header {
     .flex-display();
+    .justify-content(center);
 
     background-color: #eee;
     height: 50px;
     line-height: 50px;
+    overflow: hidden;
 
     position: fixed;
     top: 0;
@@ -34,6 +36,8 @@ header {
     height: 50px;
     line-height: 50px;
     padding: 0 15px;
+    width: 100px;
+
     > span, > input {
         font-size: 18px;
     }
@@ -48,16 +52,25 @@ header {
 }
 
 #header-gravatar {
-    .border-radius(1000px);
-    border: 1px solid #ddd;
+    display: block;
     float: left;
-    height: 36px;
     width: 36px;
-    margin: 7px 10px 7px 0;
+    padding: 7px 0;
+    > img {
+        .border-radius(1000px);
+        border: 1px solid #ddd;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media screen and (max-width: @screen-xs1) {
+    #header-gravatar {
+        margin: 0 -5px;
+    }
 }
 
 .header-link {
     border-left: 1px solid #ddd;
-    display: block;
     padding: 0 15px;
 }

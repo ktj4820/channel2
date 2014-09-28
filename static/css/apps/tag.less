@@ -17,27 +17,26 @@
 }
 
 
-@media screen and (max-width: 399px) {
+@media screen and (max-width: 767px) {
     .tl {
         display: block;
-        padding: 0 20px;
-        margin-left: -25px;
-        margin-right: -25px;
-        overflow: auto;
+        padding: 0 15px;
+        margin: 0 -20px;
         white-space: nowrap;
+        overflow: auto;
     }
     .tli {
         .inline-block();
         padding: 5px;
-        width: 40%;
+        white-space: normal;
     }
 }
+
+@media screen and (max-width: 399px) {
+    .tli { width: 140px; }
+}
 @media screen and (min-width: 400px) and (max-width: 767px) {
-    .tl { margin: -5px; }
-    .tli {
-        padding: 5px;
-        width: 100/3%;
-    }
+    .tli { width: 200px; }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .tli { width: 100/3%; }
