@@ -1,8 +1,13 @@
-from django.contrib.auth import login
-from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
+from django.contrib import messages
 
-from channel2.account.forms import AccountLoginForm
+from django.contrib.auth import login, logout
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic.base import View
+
+from channel2.account.forms import AccountLoginForm, AccountActivateForm, \
+    AccountPasswordResetForm, AccountPasswordSetForm
+from channel2.account.models import User
 from channel2.core.views import TemplateView
 
 
@@ -25,3 +30,82 @@ class AccountLoginView(TemplateView):
             return redirect(request.POST.get('next', reverse('home')))
 
         return self.render_to_response({'form': form})
+
+
+class AccountLogoutView(View):
+
+    def get(self, request):
+        return redirect('home')
+
+    def post(self, request):
+        logout(request)
+        return redirect('account.login')
+
+
+class AccountActivateView(TemplateView):
+
+    template_name = 'account/account-activate.html'
+
+    def get(self, request, token):
+        user = get_object_or_404(User, token=token)
+        messages.warning(request, 'Please set a password')
+        return self.render_to_response({
+            'form': AccountActivateForm(user=user)
+        })
+
+    def post(self, request, token):
+        user = get_object_or_404(User, token=token)
+        form = AccountActivateForm(user=user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+
+        return self.render_to_response({
+            'form': form,
+        })
+
+
+class AccountPasswordResetView(TemplateView):
+
+    template_name = 'account/account-password-reset.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'form': AccountPasswordResetForm(),
+        })
+
+    def post(self, request):
+        form = AccountPasswordResetForm(data=request.POST)
+        if form.is_valid():
+            form.reset_password()
+            messages.warning(request, 'An email with a link to reset password has been sent to you.')
+            return redirect('account.login')
+
+        return self.render_to_response({
+            'form': form,
+        })
+
+
+class AccountPasswordSetView(TemplateView):
+
+    template_name = 'account/account-password-set.html'
+
+    def get(self, request, token):
+        user = get_object_or_404(User, token=token)
+        messages.warning(request, 'Please set a password')
+        return self.render_to_response({
+            'form': AccountPasswordSetForm(user=user),
+        })
+
+    def post(self, request, token):
+        user = get_object_or_404(User, token=token)
+        form = AccountPasswordSetForm(user=user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+
+        return self.render_to_response({
+            'form': form,
+        })

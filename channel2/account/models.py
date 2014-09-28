@@ -25,7 +25,7 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     def generate_token(self):
-        self.token = binascii.hexlify(os.urandom(32))
+        self.token = binascii.hexlify(os.urandom(32)).decode('utf-8')
 
     def get_full_name(self): return self.email
     def get_short_name(self): return self.email
