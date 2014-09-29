@@ -27,19 +27,21 @@
                 <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
                 <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
             </video>
+            <hr class="tag-video-separator">
         {% endif %}
-        <hr class="tag-video-separator">
-        <table>
-            <tbody>
-            {% for tag_p in tag_parent_list %}
-                <tr>
-                    <td>
-                        <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% if tag_parent_list %}
+            <table>
+                <tbody>
+                {% for tag_p in tag_parent_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
         {% if video_list %}
             <table>
                 <tbody>
@@ -52,7 +54,7 @@
                                 <span class="icon icon-dot video-action-separator"></span>
                                 <a href="{{ url_tag_video }}">{{ item.name }}</a>
                                 {% if item == video %}
-                                    <span> (currently playing)</span>
+                                    <span> (currently viewing)</span>
                                 {% endif %}
                             </td>
                             <td width="90px" class="min-md">
