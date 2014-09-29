@@ -9,62 +9,60 @@
 {% endif %}
 
 {% block content %}
-    <div class="container">
-        <h2>{{ tag.name }}</h2>
-        {% if tag_children_list %}
-            <div class="tag-item-list">
-                {% for tag_c in tag_children_list %}
-                    <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tag-item">{{ tag_c.name }}</a>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% if tag.html %}
-            <div class="tag-html markdown">{{ tag.html|safe }}</div>
-        {% endif %}
-        {% if video %}
-            <hr class="tag-video-separator">
-            <video controls preload="none" poster="{{ poster_url }}">
-                <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
-                <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
-            </video>
-            <hr class="tag-video-separator">
-        {% endif %}
-        {% if tag_parent_list %}
-            <table>
-                <tbody>
-                {% for tag_p in tag_parent_list %}
-                    <tr>
+    <h2>{{ tag.name }}</h2>
+    {% if tag_children_list %}
+        <div class="tag-item-list">
+            {% for tag_c in tag_children_list %}
+                <a href="{{ url('tag', args=[tag_c.id, tag_c.slug]) }}" class="tag-item">{{ tag_c.name }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if tag.html %}
+        <div class="tag-html markdown">{{ tag.html|safe }}</div>
+    {% endif %}
+    {% if video %}
+        <hr class="tag-video-separator">
+        <video controls preload="none" poster="{{ poster_url }}">
+            <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
+            <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
+        </video>
+        <hr class="tag-video-separator">
+    {% endif %}
+    {% if tag_parent_list %}
+        <table>
+            <tbody>
+            {% for tag_p in tag_parent_list %}
+                <tr>
+                    <td>
+                        <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% if video_list %}
+        <table>
+            <tbody>
+                {% for item in video_list %}
+                    {% set url_video = url('video', args=[item.id, item.slug]) %}
+                    {% set url_tag_video = url('tag', args=[tag.id, tag.slug, item.id]) %}
+                    <tr{% if item == video %} class="active"{% endif %}>
                         <td>
-                            <a href="{{ url('tag', args=[tag_p.id, tag_p.slug]) }}" title="{{ tag_p.name }}" class="space-right-10">{{ tag_p.name }}</a>
+                            <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
+                            <span class="icon icon-dot video-action-separator"></span>
+                            <a href="{{ url_tag_video }}">{{ item.name }}</a>
+                            {% if item == video %}
+                                <span> (currently viewing)</span>
+                            {% endif %}
                         </td>
+                        <td width="90px" class="min-md">
+                            <span>{{ item.size|filesizeformat }}</span>
+                        </td>
+                        <td width="150px" class="min-xs">{{ item.created_on|date }}</td>
                     </tr>
                 {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-        {% if video_list %}
-            <table>
-                <tbody>
-                    {% for item in video_list %}
-                        {% set url_video = url('video', args=[item.id, item.slug]) %}
-                        {% set url_tag_video = url('tag', args=[tag.id, tag.slug, item.id]) %}
-                        <tr{% if item == video %} class="active"{% endif %}>
-                            <td>
-                                <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
-                                <span class="icon icon-dot video-action-separator"></span>
-                                <a href="{{ url_tag_video }}">{{ item.name }}</a>
-                                {% if item == video %}
-                                    <span> (currently viewing)</span>
-                                {% endif %}
-                            </td>
-                            <td width="90px" class="min-md">
-                                <span>{{ item.size|filesizeformat }}</span>
-                            </td>
-                            <td width="150px" class="min-xs">{{ item.created_on|date }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </div>
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
