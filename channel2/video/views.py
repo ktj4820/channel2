@@ -86,22 +86,12 @@ class VideoHtml5View(BaseVideoView):
     def get(self, request, id, slug):
         video, link = self.get_video_link(request, id)
 
-        video_list = list(Video.objects.filter(tag=video.tag).order_by('created_on'))
+        video_list = list(Video.objects.filter(tag=video.tag).order_by('-created_on'))
         index = video_list.index(video)
 
-        if index > 0:
-            prev_video = video_list[index-1]
-        else:
-            prev_video = None
-
-        if len(video_list)-1 > index:
-            next_video = video_list[index+1]
-        else:
-            next_video = None
-
         return self.render_to_response({
+            'index': index,
             'link': link,
-            'next': next_video,
-            'prev': prev_video,
             'video': video,
+            'video_list': video_list,
         })

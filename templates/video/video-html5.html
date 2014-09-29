@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ video.name }}{% endblock %}
+
+{% if video.cover %}
+    {% set poster_url = video.cover.url %}
+{% else %}
+    {% set poster_url = "{{ STATIC_URL }}images/no-preview.png" %}
+{% endif %}
+
+{% block content %}
+    <div class="container">
+        <h2>{{ video.name }}</h2>
+        <div class="tag-item-list">
+            {% set tag = video.tag %}
+            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tag-item">{{ tag.name }}</a>
+        </div>
+        <hr class="tag-video-separator">
+        <video controls preload="none" poster="{{ poster_url }}">
+            <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
+            <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
+        </video>
+        {% if video_list %}
+            <hr class="tag-video-separator">
+            <table>
+                <tbody>
+                    {% for vid in video_list %}
+                        {% set url_video = url('video', args=[vid.id, vid.slug]) %}
+                        {% set url_video_html5 = url('video.html5', args=[vid.id, vid.slug]) %}
+                        <tr{% if index == loop.index0 %} class="active"{% endif %}>
+                            <td>
+                                <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
+                                <span class="icon icon-dot video-action-separator"></span>
+                                <a href="{{ url_video_html5 }}">{{ vid.name }}</a>
+                                {% if index == loop.index0 %}
+                                    <span> (currently playing)</span>
+                                {% endif %}
+                            </td>
+                            <td width="90px" class="min-md">
+                                <span>{{ vid.size|filesizeformat }}</span>
+                            </td>
+                            <td width="150px" class="min-xs">{{ vid.created_on|date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
