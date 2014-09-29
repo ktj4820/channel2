@@ -3,9 +3,11 @@
 {% endmacro %}
 
 {% macro non_field_errors(form) %}
-    {% for error in form.non_field_errors() %}
-        <div class="non-field-error">{{ error|safe }}</div>
-    {% endfor %}
+    <ul class="message-list">
+        {% for error in form.non_field_errors() %}
+            <li class="message message-error">{{ error|safe }}</li>
+        {% endfor %}
+    </ul>
 {% endmacro %}
 
 {% macro simple_field_label(field) %}

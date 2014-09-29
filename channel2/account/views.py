@@ -6,7 +6,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.base import View
 
 from channel2.account.forms import AccountLoginForm, AccountActivateForm, \
-    AccountPasswordResetForm, AccountPasswordSetForm
+    AccountPasswordResetForm, AccountPasswordSetForm, AccountPasswordChangeForm
 from channel2.account.models import User
 from channel2.core.views import TemplateView, ProtectedTemplateView
 
@@ -29,7 +29,9 @@ class AccountLoginView(TemplateView):
             login(request, form.get_user())
             return redirect(request.POST.get('next', reverse('home')))
 
-        return self.render_to_response({'form': form})
+        return self.render_to_response({
+            'form': form
+        })
 
 
 class AccountLogoutView(View):
@@ -127,7 +129,17 @@ class AccountSettingsPasswordView(ProtectedTemplateView):
     template_name = 'account/account-settings-password.html'
 
     def get(self, request):
-        return self.render_to_response({})
+        return self.render_to_response({
+            'form': AccountPasswordChangeForm(user=request.user)
+        })
 
     def post(self, request):
-        return self.render_to_response({})
+        form = AccountPasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your password has been updated successfully, please login again')
+            return redirect('account.login')
+
+        return self.render_to_response({
+            'form': form,
+        })

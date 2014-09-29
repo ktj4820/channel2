@@ -2,7 +2,7 @@ from captcha.conf import settings
 from captcha.models import CaptchaStore
 from django.core.urlresolvers import reverse
 
-from channel2.account.forms import AccountLoginForm
+from channel2.account.forms import AccountLoginForm, AccountPasswordChangeForm
 from channel2.account.models import User
 from channel2.core.tests import BaseTestCase
 
@@ -244,9 +244,57 @@ class AccountSettingsViewTests(BaseTestCase):
         self.assertTemplateUsed(response, 'account/account-settings.html')
 
 
+class AccountPasswordChangeFormTests(BaseTestCase):
+
+    def test_account_password_change_form(self):
+        form = AccountPasswordChangeForm(user=self.user, data={
+            'current_password': 'password',
+            'password1': 'Pa55w0rD',
+            'password2': 'Pa55w0rD',
+            })
+        self.assertTrue(form.is_valid())
+        form.save()
+
+        user = User.objects.get(id=self.user.id)
+        self.assertTrue(user.check_password('Pa55w0rD'))
+        self.assertFalse(user.check_password('password'))
+
+    def test_account_password_change_form_incorrect_current_password(self):
+        form = AccountPasswordChangeForm(user=self.user, data={
+            'current_password': 'abc',
+            })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['current_password'], [AccountPasswordChangeForm.error_messages['current_password_incorrect']])
+
+    def test_account_password_change_form_password_mismatch(self):
+        form = AccountPasswordChangeForm(user=self.user, data={
+            'password1': 'abcd',
+            'password2': 'bcde',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['__all__'], [AccountPasswordChangeForm.error_messages['password_mismatch']])
+
+
 class AccountSettingsPasswordViewTests(BaseTestCase):
 
-    def test_account_settings_view_get(self):
+    def test_account_settings_password_view_get(self):
         response = self.client.get(reverse('account.settings.password'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account/account-settings-password.html')
+
+    def test_account_settings_password_view_post_invalid(self):
+        response = self.client.post(reverse('account.settings.password'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/account-settings-password.html')
+
+    def test_account_settings_password_view_post(self):
+        response = self.client.post(reverse('account.settings.password'), {
+            'current_password': 'password',
+            'password1': 'Pa55w0rD',
+            'password2': 'Pa55w0rD',
+        })
+        self.assertRedirects(response, reverse('account.login'))
+
+        user = User.objects.get(id=self.user.id)
+        self.assertTrue(user.check_password('Pa55w0rD'))
+        self.assertFalse(user.check_password('password'))

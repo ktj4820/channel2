@@ -4,9 +4,9 @@ from django.contrib.auth import authenticate
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.forms.widgets import EmailInput
+
 from channel2.account.models import User
 from channel2.core.templates import TEMPLATE_ENV
-
 from channel2.core.utils import get_ip_address
 from channel2.settings import SITE_SCHEME, SITE_DOMAIN, EMAIL_HOST_USER
 
@@ -21,7 +21,6 @@ class AccountLoginForm(forms.Form):
         label='Email',
         widget=EmailInput(attrs={
             'autofocus': 'autofocus',
-            'class': 'account-input',
             'placeholder': 'Email',
             'required': 'required',
         })
@@ -29,7 +28,6 @@ class AccountLoginForm(forms.Form):
     password = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(attrs={
-            'class': 'account-input',
             'placeholder': 'Password',
             'required': 'required',
         })
@@ -84,7 +82,6 @@ class AccountPasswordSetForm(forms.Form):
         label='Password',
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Password',
-            'class': 'account-input',
         })
     )
 
@@ -92,7 +89,6 @@ class AccountPasswordSetForm(forms.Form):
         label='Confirm Password',
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Confirm Password',
-            'class': 'account-input',
         })
     )
 
@@ -141,7 +137,6 @@ class AccountPasswordResetForm(forms.Form):
 
     email = forms.EmailField(widget=EmailInput(attrs={
         'autofocus': 'autofocus',
-        'class': 'account-input',
         'placeholder': 'Email',
         'required': 'required',
     }))
@@ -170,3 +165,31 @@ class AccountPasswordResetForm(forms.Form):
             from_email=EMAIL_HOST_USER,
             recipient_list=[self.user.email]
         )
+
+
+class AccountPasswordChangeForm(AccountPasswordSetForm):
+
+    current_password = forms.CharField(
+        label='Current Password',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Current Password',
+        }),
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(user, *args, **kwargs)
+        self.error_messages.update({
+            'current_password_incorrect': 'Your current password was entered incorrectly',
+        })
+
+    def clean_current_password(self):
+        current_password = self.cleaned_data.get('current_password')
+        if not self.user.check_password(current_password):
+            raise forms.ValidationError(self.error_messages['current_password_incorrect'])
+        return current_password
+
+    def save(self):
+        raw_password = self.cleaned_data.get('password1')
+        self.user.set_password(raw_password)
+        self.user.save()
+        return self.user
