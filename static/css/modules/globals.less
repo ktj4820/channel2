@@ -18,11 +18,23 @@ img {
 
 video {
     display: block;
-
     margin: 0 auto;
-    max-height: 720px;
-    max-width: 1280px;
+    max-height: 360px;
+    max-width: 640px;
     width: 100%;
+}
+
+@media screen and (min-height: 600px) and (min-width: 1199px) {
+    video {
+        max-height: 480px;
+        max-width: 854px;
+    }
+}
+@media screen and (min-height: 900px) and (min-width: 1560px) {
+    video {
+        max-height: 720px;
+        max-width: 1280px;
+    }
 }
 
 /* -----------------------------------------------------------------------------

@@ -1,16 +1,18 @@
 from collections import defaultdict
+from django.http.response import Http404
 
 from django.shortcuts import get_object_or_404
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.models import Tag, TagChildren
+from channel2.video.models import Video
 
 
 class TagView(ProtectedTemplateView):
 
     template_name = 'tag/tag.html'
 
-    def get(self, request, id, slug):
+    def get(self, request, id, slug, video_id=None):
         tag = get_object_or_404(Tag, id=id)
         tag_children_list = tag.children.order_by('slug')
         tag_parent_list = tag.parents.order_by('slug')
@@ -23,11 +25,22 @@ class TagView(ProtectedTemplateView):
         for tag_parent in tag_parent_list:
             tag_parent.children_list = sorted(tpc_dict.get(tag_parent.id, []), key=lambda p: p.slug)
 
+        video_list = tag.video_set.order_by('created_on')
+        if video_list:
+            if video_id is None:
+                video = video_list[0]
+            else:
+                video = Video.objects.get(id=video_id)
+                if video not in video_list: raise Http404
+        else:
+            video = None
+
         return self.render_to_response({
             'tag': tag,
             'tag_children_list': tag_children_list,
             'tag_parent_list': tag_parent_list,
-            'video_list': tag.video_set.order_by('-created_on'),
+            'video': video,
+            'video_list': video_list,
         })
 
 

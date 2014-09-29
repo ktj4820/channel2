@@ -77,21 +77,3 @@ class VideoLinkView(TemplateView):
 
         download = 'download' in request.GET
         return HttpResponseXAccel(link.video.file, content_type='video/mp4', attachment=download)
-
-
-class VideoHtml5View(BaseVideoView):
-
-    template_name = 'video/video-html5.html'
-
-    def get(self, request, id, slug):
-        video, link = self.get_video_link(request, id)
-
-        video_list = list(Video.objects.filter(tag=video.tag).order_by('-created_on'))
-        index = video_list.index(video)
-
-        return self.render_to_response({
-            'index': index,
-            'link': link,
-            'video': video,
-            'video_list': video_list,
-        })

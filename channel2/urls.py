@@ -20,9 +20,6 @@ urlpatterns = patterns('',
     # url(r'^staff/',             include('channel2.staff.urls')),
     url(r'^videos/',            include('channel2.video.urls')),
 
-    # flat urls
-    # url(r'',                    include('channel2.flat.urls')),
-
 )
 
 

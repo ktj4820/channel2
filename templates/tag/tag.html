@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ video.name }}{% endblock %}
+
+{% if video.cover %}
+    {% set poster_url = video.cover.url %}
+{% else %}
+    {% set poster_url = "{{ STATIC_URL }}images/no-preview.png" %}
+{% endif %}
+
 {% block content %}
     <div class="container">
         <h2>{{ tag.name }}</h2>
@@ -13,6 +21,14 @@
         {% if tag.html %}
             <div class="tag-html markdown">{{ tag.html|safe }}</div>
         {% endif %}
+        {% if video %}
+            <hr class="tag-video-separator">
+            <video controls preload="none" poster="{{ poster_url }}">
+                <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
+                <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
+            </video>
+        {% endif %}
+        <hr class="tag-video-separator">
         <table>
             <tbody>
             {% for tag_p in tag_parent_list %}
@@ -27,19 +43,22 @@
         {% if video_list %}
             <table>
                 <tbody>
-                    {% for video in video_list %}
-                        {% set url_video = url('video', args=[video.id, video.slug]) %}
-                        {% set url_video_html5 = url('video.html5', args=[video.id, video.slug]) %}
-                        <tr>
+                    {% for item in video_list %}
+                        {% set url_video = url('video', args=[item.id, item.slug]) %}
+                        {% set url_tag_video = url('tag', args=[tag.id, tag.slug, item.id]) %}
+                        <tr{% if item == video %} class="active"{% endif %}>
                             <td>
                                 <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
                                 <span class="icon icon-dot video-action-separator"></span>
-                                <a href="{{ url_video_html5 }}">{{ video.name }}</a>
+                                <a href="{{ url_tag_video }}">{{ item.name }}</a>
+                                {% if item == video %}
+                                    <span> (currently playing)</span>
+                                {% endif %}
                             </td>
                             <td width="90px" class="min-md">
-                                <span>{{ video.size|filesizeformat }}</span>
+                                <span>{{ item.size|filesizeformat }}</span>
                             </td>
-                            <td width="150px" class="min-xs">{{ video.created_on|date }}</td>
+                            <td width="150px" class="min-xs">{{ item.created_on|date }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
