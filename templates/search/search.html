@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% set query = request.GET.q %}
+    <div class="container">
+        {% if tag_list %}
+            <h2>Found {{ tag_list|length }} result(s) for {{ query }}</h2>
+            <table>
+                <tbody>
+                {% for tag in tag_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" title="{{ tag.name }}" class="space-right-10">{{ tag.name }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h2>Sorry, no results were found for {{ query }}</h2>
+        {% endif %}
+    </div>
+{% endblock %}
