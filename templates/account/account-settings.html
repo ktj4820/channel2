@@ -1,3 +1,8 @@
 {% extends 'account/account-settings-base.html' %}
 
-{% block tab_content %}{% endblock %}
+{% block tab_content %}
+    <div class="account-settings-gravatar">
+        <img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=150">
+        <span>{{ user.email }}</span>
+    </div>
+{% endblock %}
