@@ -1,5 +1,6 @@
 {% import '_macros/forms.html' as forms with context %}
 
+{% set url_account_settings = url('account.settings') %}
 {% set url_home = url('home') %}
 {% set url_search = url('search') %}
 
@@ -10,7 +11,7 @@
         <span class="icon icon-search"></span>
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search">
     </form>
-    <a href="" class="header-link">
+    <a href="{{ url_account_settings }}" class="header-link">
         <span id="header-gravatar"><img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=102"></span>
         <span class="space-left-10 min-sm">Settings</span>
     </a>

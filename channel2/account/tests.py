@@ -30,13 +30,13 @@ class AccountLoginViewTestsAnonymous(BaseTestCase):
         })
         self.assertRedirects(response, reverse('home'))
 
-    # def test_account_login_view_post_next(self):
-    #     response = self.client.post(reverse('account.login'), {
-    #         'email': 'testuser@example.com',
-    #         'password': 'password',
-    #         'next': reverse('blog'),
-    #     })
-    #     self.assertRedirects(response, reverse('blog'))
+    def test_account_login_view_post_next(self):
+        response = self.client.post(reverse('account.login'), {
+            'email': 'testuser@example.com',
+            'password': 'password',
+            'next': reverse('tag.list'),
+        })
+        self.assertRedirects(response, reverse('tag.list'))
 
 
 class AccountLoginViewTestsAuthenticated(BaseTestCase):
@@ -229,3 +229,18 @@ class AccountPasswordSetViewTests(BaseTestCase):
 
         response = self.client.post(reverse('account.password.set', args=[self.user.token]))
         self.assertEqual(response.status_code, 404)
+
+
+class AccountSettingsViewTests(BaseTestCase):
+
+    def test_account_settings_view_get_anonymous(self):
+        self.client.logout()
+        response = self.client.get(reverse('account.settings'))
+        self.assertRedirects(response, '{}?next={}'.format(reverse('account.login'), reverse('account.settings')))
+
+    def test_account_settings_view_get(self):
+        response = self.client.get(reverse('account.settings'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/account-settings.html')
+
+
