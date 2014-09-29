@@ -244,3 +244,9 @@ class AccountSettingsViewTests(BaseTestCase):
         self.assertTemplateUsed(response, 'account/account-settings.html')
 
 
+class AccountSettingsPasswordViewTests(BaseTestCase):
+
+    def test_account_settings_view_get(self):
+        response = self.client.get(reverse('account.settings.password'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/account-settings-password.html')

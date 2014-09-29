@@ -120,3 +120,14 @@ class AccountSettingsView(ProtectedTemplateView):
 
     def post(self, request):
         return self.render_to_response({})
+
+
+class AccountSettingsPasswordView(ProtectedTemplateView):
+
+    template_name = 'account/account-settings-password.html'
+
+    def get(self, request):
+        return self.render_to_response({})
+
+    def post(self, request):
+        return self.render_to_response({})

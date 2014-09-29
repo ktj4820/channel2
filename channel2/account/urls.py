@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from channel2.account.views import AccountLoginView, AccountActivateView, \
     AccountLogoutView, AccountPasswordResetView, AccountPasswordSetView, \
-    AccountSettingsView
+    AccountSettingsView, AccountSettingsPasswordView
 
 
 urlpatterns = patterns('',
@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^password/reset/(?P<token>\w{64})/$',     AccountPasswordSetView.as_view(), name='account.password.set'),
     url(r'^activate/(?P<token>\w{64})/$',           AccountActivateView.as_view(), name='account.activate'),
 
-    url(r'^settings/$',         AccountSettingsView.as_view(), name='account.settings'),
-
+    url(r'^settings/$',             AccountSettingsView.as_view(), name='account.settings'),
+    url(r'^settings/password/$',    AccountSettingsPasswordView.as_view(), name='account.settings.password'),
 
 )
