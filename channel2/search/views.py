@@ -13,7 +13,7 @@ class SearchView(ProtectedTemplateView):
         if not query:
             return redirect('home')
 
-        tag_list = list(Tag.objects.filter(Q(name__icontains=query))) + list(Tag.objects.filter(Q(markdown__icontains=query)))
+        tag_list = Tag.objects.filter(Q(name__icontains=query) | Q(markdown__icontains=query))
         return self.render_to_response({
             'tag_list': tag_list
         })
