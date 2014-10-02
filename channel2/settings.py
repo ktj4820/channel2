@@ -58,6 +58,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
+        'ATOMIC_REQUESTS': True,
         'TEST_NAME': 'channel2_test',
     }
 }

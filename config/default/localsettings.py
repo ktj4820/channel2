@@ -24,6 +24,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('CHANNEL2_DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432',
+        'ATOMIC_REQUESTS': True,
     },
 }
 
