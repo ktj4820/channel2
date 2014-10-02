@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'channel2.core',
     'channel2.home',
     'channel2.search',
+    'channel2.staff',
     'channel2.tag',
     'channel2.video',
 )
@@ -130,18 +131,6 @@ FFMPEG_PATH = ''
 VIDEO_DIR = ''
 VIDEO_LINK_EXPIRE = 6 * 60 * 60
 X_ACCEL = False
-
-#-------------------------------------------------------------------------------
-# search settings
-#-------------------------------------------------------------------------------
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'channel2',
-    },
-}
 
 #-------------------------------------------------------------------------------
 # localsettings.py
