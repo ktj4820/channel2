@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    {% if video_list %}
+        <form action="{{ url('video.history.delete') }}" method="post">
+            {{ forms.csrf_input() }}
+            <button class="button button-danger right">Clear History</button>
+        </form>
+    {% endif %}
+    <h2>History</h2>
+    <div class="clear"></div>
+    {% if video_list %}
+        <table>
+            <tbody>
+                {% for video in video_list %}
+                    {% set tag = video.tag %}
+                    <tr>
+                        <td><a href="{{ url('tag', args=[tag.id, tag.slug, video.id]) }}#watch">{{ video.name }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have not watched anything.</p>
+    {% endif %}
+{% endblock %}

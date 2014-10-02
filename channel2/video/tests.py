@@ -84,3 +84,31 @@ class VideoLinkViewTests(BaseTestCase):
 
         actual_path = urlsplit(response['location'])[2]
         self.assertEqual(self.video.file.url, actual_path)
+
+
+class VideoHistoryViewTests(BaseTestCase):
+
+    def test_video_history_view_get(self):
+        for video in Video.objects.all():
+            VideoLink.objects.create(video=video, key='1'*64, ip_address='127.0.0.1', created_by=self.user)
+
+        response = self.client.get(reverse('video.history'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'video/video-history.html')
+
+
+class VideoHistoryDeleteViewTests(BaseTestCase):
+
+    def test_video_history_delete_view_get(self):
+        response = self.client.get(reverse('video.history.delete'))
+        self.assertEqual(response.status_code, 405)
+
+    def test_video_history_delete_view_post(self):
+        video_list = Video.objects.all()
+        for video in video_list:
+            VideoLink.objects.create(video=video, key='1'*64, ip_address='127.0.0.1', created_by=self.user)
+        self.assertEqual(VideoLink.objects.filter(created_by=self.user).count(), len(video_list))
+
+        response = self.client.post(reverse('video.history.delete'))
+        self.assertRedirects(response, reverse('video.history'))
+        self.assertEqual(VideoLink.objects.filter(created_by=self.user).count(), 0)

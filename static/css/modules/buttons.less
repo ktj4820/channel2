@@ -18,7 +18,7 @@ button::-moz-focus-inner {
     .transition(150ms ease all);
     .border-radius(@border-radius);
 
-    background: @default-bg;
+    background-color: @default-bg;
     border: none;
     border-bottom: 2px solid @default-border;
     color: @default-color;
@@ -29,6 +29,16 @@ button::-moz-focus-inner {
     &:hover {
         background-color: @default-bg-hover;
         border-color: @default-border-hover;
+    }
+}
+
+.button-danger {
+    background-color: darken(@color-accent4, 10%);
+    border-bottom-color: darken(@color-accent4, 30%);
+
+    &:hover {
+        background-color: darken(@color-accent4, 15%);
+        border-bottom-color: darken(@color-accent4, 35%);
     }
 }
 

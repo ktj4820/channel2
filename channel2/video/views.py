@@ -1,11 +1,12 @@
 import binascii
 import os
-from django.core.urlresolvers import reverse
 
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
-from channel2.core.response import HttpResponseXAccel
 
+from channel2.core.response import HttpResponseXAccel
 from channel2.core.utils import paginate, email_alert, get_ip_address
 from channel2.core.views import ProtectedTemplateView, TemplateView
 from channel2.settings import VIDEO_LINK_EXPIRE
@@ -77,3 +78,27 @@ class VideoLinkView(TemplateView):
 
         download = 'download' in request.GET
         return HttpResponseXAccel(link.video.file, content_type='video/mp4', attachment=download)
+
+
+class VideoHistoryView(ProtectedTemplateView):
+
+    page_size = 100
+    template_name = 'video/video-history.html'
+
+    def get(self, request):
+        video_list = VideoLink.objects.filter(created_by=request.user).order_by('-created_on').select_related('video', 'video__tag')
+        video_list = paginate(video_list, self.page_size, request.GET.get('p'))
+        video_list.object_list = [vl.video for vl in video_list]
+        return self.render_to_response({
+            'video_list': video_list,
+        })
+
+
+class VideoHistoryDeleteView(ProtectedTemplateView):
+
+    def get(self, request):
+        return HttpResponseNotAllowed(permitted_methods=['post'])
+
+    def post(self, request):
+        VideoLink.objects.filter(created_by=request.user).delete()
+        return redirect('video.history')
