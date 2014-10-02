@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ video.name }}{% endblock %}
+{% block title %}{{ active_video.name }}{% endblock %}
 
-{% if video.cover %}
-    {% set poster_url = video.cover.url %}
+{% if active_video.cover %}
+    {% set poster_url = active_video.cover.url %}
 {% else %}
     {% set poster_url = "{{ STATIC_URL }}images/no-preview.png" %}
 {% endif %}
@@ -20,13 +20,13 @@
     {% if tag.html %}
         <div class="tag-html markdown">{{ tag.html|safe }}</div>
     {% endif %}
-    {% if video %}
+    {% if active_video %}
         <hr class="tag-video-separator">
         <div class="video-jump-container">
             <div id="watch" class="video-jump"></div>
         </div>
         <video controls preload="none" poster="{{ poster_url }}">
-            <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
+            <source src="{{ url('video', args=[active_video.id, active_video.slug]) }}" type="video/mp4">
             <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
         </video>
         <hr class="tag-video-separator">
@@ -50,13 +50,13 @@
                 {% for item in video_list %}
                     {% set url_video = url('video', args=[item.id, item.slug]) %}
                     {% set url_tag_video = url('tag', args=[tag.id, tag.slug, item.id]) %}
-                    <tr{% if item == video %} class="active"{% endif %}>
+                    <tr class="{% if item.watched %}video-list-watched{% endif %}{% if item == active_video %} video-list-active{% endif %}">
                         <td>
                             <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
                             <span class="icon icon-dot video-action-separator"></span>
                             <a href="{{ url_tag_video }}#watch">{{ item.name }}</a>
-                            {% if item == video %}
-                                <span> (currently viewing)</span>
+                            {% if item == active_video %}
+                                <span> (playing)</span>
                             {% endif %}
                         </td>
                         <td width="90px" class="min-md">

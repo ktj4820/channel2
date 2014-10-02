@@ -1,11 +1,10 @@
 from collections import defaultdict
-from django.http.response import Http404
 
 from django.shortcuts import get_object_or_404
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.models import Tag, TagChildren
-from channel2.video.models import Video
+from channel2.video.models import VideoLink
 
 
 class TagView(ProtectedTemplateView):
@@ -26,20 +25,24 @@ class TagView(ProtectedTemplateView):
             tag_parent.children_list = sorted(tpc_dict.get(tag_parent.id, []), key=lambda p: p.slug)
 
         video_list = tag.video_set.order_by('created_on')
-        if video_list:
-            if video_id is None:
-                video = video_list[0]
-            else:
-                video = Video.objects.get(id=video_id)
-                if video not in video_list: raise Http404
+        video_dict = {str(v.id): v for v in video_list}
+        user_video_id_list = VideoLink.objects.filter(video__in=video_list, created_by=request.user).values_list('video_id', flat=True).distinct()
+
+        if video_id and video_id in video_dict:
+            active_video = video_dict[video_id]
         else:
-            video = None
+            active_video = None
+
+        for video in video_list:
+            video.watched = video.id in user_video_id_list
+            if not active_video and not video.watched:
+                active_video = video
 
         return self.render_to_response({
+            'active_video': active_video,
             'tag': tag,
             'tag_children_list': tag_children_list,
             'tag_parent_list': tag_parent_list,
-            'video': video,
             'video_list': video_list,
         })
 
