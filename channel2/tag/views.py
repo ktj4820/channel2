@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from django.shortcuts import get_object_or_404
 
-from channel2.core.views import ProtectedTemplateView
+from channel2.core.views import ProtectedTemplateView, StaffTemplateView
 from channel2.tag.models import Tag, TagChildren
 from channel2.video.models import VideoLink
 
@@ -56,3 +56,25 @@ class TagListView(ProtectedTemplateView):
         return self.render_to_response({
             'tag_list': tag_list,
         })
+
+
+class TagEditView(StaffTemplateView):
+
+    template_name = 'tag/tag-edit.html'
+
+    def get(self, request, id, slug):
+        return self.render_to_response({})
+
+    def post(self, request, id, slug):
+        return self.render_to_response({})
+
+
+class TagVideoView(StaffTemplateView):
+
+    template_name = 'tag/tag-video.html'
+
+    def get(self, request, id, slug):
+        return self.render_to_response({})
+
+    def post(self, request, id, slug):
+        return self.render_to_response({})

@@ -9,6 +9,14 @@
 {% endif %}
 
 {% block content %}
+    {% if user.is_staff %}
+        {% set url_tag_edit = url('tag.edit', args=[tag.id, tag.slug]) %}
+        {% set url_tag_video = url('tag.video', args=[tag.id, tag.slug]) %}
+        <div class="right min-md">
+            <a href="{{ url_tag_video }}" class="button button-thin space-right-10">Add Videos</a>
+            <a href="{{ url_tag_edit }}" class="button button-thin">Edit Tag</a>
+        </div>
+    {% endif %}
     <h2>{{ tag.name }}</h2>
     {% if tag_children_list %}
         <div class="tag-item-list">

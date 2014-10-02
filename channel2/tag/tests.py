@@ -34,3 +34,42 @@ class TagModelTests(BaseTestCase):
 
         self.assertTrue(tag2 in tag1.children.all())
         self.assertFalse(tag1 in tag2.children.all())
+
+
+class TagEditViewTests(BaseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.all()[0]
+
+    def test_tag_edit_view_get_not_staff(self):
+        self.user.is_staff = False
+        self.user.save()
+
+        response = self.client.get(reverse('tag.video', args=[self.tag.id, self.tag.slug]))
+        self.assertEqual(response.status_code, 404)
+
+
+    def test_tag_edit_view_get(self):
+        response = self.client.get(reverse('tag.edit', args=[self.tag.id, self.tag.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tag/tag-edit.html')
+
+
+class TagVideoViewTests(BaseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.all()[0]
+
+    def test_tag_video_view_get_not_staff(self):
+        self.user.is_staff = False
+        self.user.save()
+
+        response = self.client.get(reverse('tag.video', args=[self.tag.id, self.tag.slug]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_tag_video_view_get(self):
+        response = self.client.get(reverse('tag.video', args=[self.tag.id, self.tag.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tag/tag-video.html')

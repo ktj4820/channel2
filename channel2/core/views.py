@@ -42,7 +42,6 @@ class StaffTemplateView(ProtectedTemplateView):
     User must be a staff to view this page
     """
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff:
             raise Http404
