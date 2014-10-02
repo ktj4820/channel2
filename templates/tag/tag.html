@@ -25,10 +25,12 @@
         <div class="video-jump-container">
             <div id="watch" class="video-jump"></div>
         </div>
-        <video controls preload="none" poster="{{ poster_url }}">
-            <source src="{{ url('video', args=[active_video.id, active_video.slug]) }}" type="video/mp4">
-            <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
-        </video>
+        <div class="video-container">
+            <video controls preload="none" poster="{{ poster_url }}">
+                <source src="{{ url('video', args=[active_video.id, active_video.slug]) }}" type="video/mp4">
+                <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
+            </video>
+        </div>
         <hr class="tag-video-separator">
     {% endif %}
     {% if tag_parent_list %}

@@ -2,5 +2,35 @@
 
 {% block content %}
     <h2>Recently Watched</h2>
-    <h2>Newly Added</h2>
+    {% if recent_tag_list %}
+        <table>
+            <tbody>
+                {% for tag in recent_tag_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" title="{{ tag.name }}">{{ tag.name }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have not watched anything recently.</p>
+    {% endif %}
+    <h2 class="space-top-30">Newly Added</h2>
+    {% if new_tag_list %}
+        <table>
+            <tbody>
+                {% for tag in new_tag_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" title="{{ tag.name }}">{{ tag.name }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Sorry, nothing new has been added recently &#x2639;</p>
+    {% endif %}
 {% endblock %}

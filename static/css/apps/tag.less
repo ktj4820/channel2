@@ -4,6 +4,7 @@
 
 .tag-html {
     margin-bottom: 20px;
+    overflow: auto;
 }
 
 .tag-item-list {
@@ -12,11 +13,13 @@
 
 .tag-item {
     .border-radius(@border-radius);
+    .inline-block();
     background-color: #444;
     color: #eee;
     font-size: 13px;
     margin: 2px;
     padding: 3px 6px;
+    white-space: nowrap;
 }
 
 .tag-video-separator {

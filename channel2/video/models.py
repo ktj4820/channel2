@@ -69,7 +69,7 @@ class VideoLink(models.Model):
     key             = models.CharField(max_length=64, db_index=True)
     ip_address      = models.CharField(max_length=64)
 
-    created_on      = models.DateTimeField(auto_now_add=True)
+    created_on      = models.DateTimeField(auto_now_add=True, db_index=True)
     created_by      = models.ForeignKey(User, related_name='+')
 
     class Meta:

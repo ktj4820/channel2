@@ -17,4 +17,9 @@ class Migration(migrations.Migration):
             name='created_by',
             field=models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+'),
         ),
+        migrations.AlterField(
+            model_name='videolink',
+            name='created_on',
+            field=models.DateTimeField(db_index=True, auto_now_add=True),
+        ),
     ]
