@@ -1,8 +1,18 @@
 {% extends 'account/account-settings-base.html' %}
 
 {% block tab_content %}
-    <div class="account-settings-gravatar">
+    <div class="account-settings-gravatar space-bottom-30">
         <img src="//www.gravatar.com/avatar/{{ GRAVATAR_HASH }}?s=150">
         <span>{{ user.email }}</span>
     </div>
+    <table class="table-minimal">
+        <tr>
+            <td width="150px">Joined on</td>
+            <td>{{ user.date_joined|date }}</td>
+        </tr>
+        <tr>
+            <td>Last login</td>
+            <td>{{ user.last_login|date }}</td>
+        </tr>
+    </table>
 {% endblock %}

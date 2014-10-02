@@ -1,5 +1,4 @@
 from django.contrib import messages
-
 from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, get_object_or_404
@@ -118,9 +117,6 @@ class AccountSettingsView(ProtectedTemplateView):
     template_name = 'account/account-settings.html'
 
     def get(self, request):
-        return self.render_to_response({})
-
-    def post(self, request):
         return self.render_to_response({})
 
 
