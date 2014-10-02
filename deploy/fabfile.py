@@ -167,7 +167,7 @@ def _install_requirements():
     with virtualenv():
         with cd('{django_path}'.format(**env)):
             run('rm -fr {venv_path}/build')
-            run('pip install -r requirements.txt')
+            run('pip install --upgrade -r requirements.txt')
 
 
 def _syncdb_migrate():
@@ -209,7 +209,7 @@ def start():
     start supervisor (starts channel2)
     """
 
-    run('service supervisor start')
+    run('killall gunicorn')
     run('rm -f {static_path}/maintenance.html'.format(**env))
 
 
@@ -220,7 +220,8 @@ def stop():
 
     if exists('{django_path}/static/maintenance.html'.format(**env)):
         sudo('cp {django_path}/static/maintenance.html {static_path}/maintenance.html'.format(**env), user='www-data')
-    run('killall supervisord', warn_only=True)
+    else:
+        sudo('touch {static_path}/maintenance.html'.format(**env), user='www-data')
 
 
 def manage(command):

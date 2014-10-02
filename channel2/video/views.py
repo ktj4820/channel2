@@ -13,19 +13,6 @@ from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
 
 
-class VideoListView(ProtectedTemplateView):
-
-    page_size = 20
-    template_name = 'video/video-list.html'
-
-    def get(self, request):
-        video_list = Video.objects.order_by('-created_on').select_related('tag').prefetch_related('tag__children')
-        video_list = paginate(video_list, self.page_size, request.GET.get('p'))
-        return self.render_to_response({
-            'video_list': video_list,
-        })
-
-
 class BaseVideoView(ProtectedTemplateView):
 
     def get_video_link(self, request, id):
