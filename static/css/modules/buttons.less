@@ -8,6 +8,11 @@
 @default-bg-hover: @default-border;
 @default-border-hover: #000;
 
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+
 .button {
     .inline-block();
     .transition(150ms ease all);

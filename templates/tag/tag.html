@@ -22,6 +22,9 @@
     {% endif %}
     {% if video %}
         <hr class="tag-video-separator">
+        <div class="video-jump-container">
+            <div id="watch" class="video-jump"></div>
+        </div>
         <video controls preload="none" poster="{{ poster_url }}">
             <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
             <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
@@ -51,7 +54,7 @@
                         <td>
                             <a href="{{ url_video }}"><span class="icon icon-down-circled"></span></a>
                             <span class="icon icon-dot video-action-separator"></span>
-                            <a href="{{ url_tag_video }}">{{ item.name }}</a>
+                            <a href="{{ url_tag_video }}#watch">{{ item.name }}</a>
                             {% if item == video %}
                                 <span> (currently viewing)</span>
                             {% endif %}
