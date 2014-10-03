@@ -1,8 +1,10 @@
 from collections import defaultdict
 
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView, StaffTemplateView
+from channel2.tag.forms import TagForm
 from channel2.tag.models import Tag, TagChildren
 from channel2.video.models import VideoLink
 
@@ -58,15 +60,48 @@ class TagListView(ProtectedTemplateView):
         })
 
 
+class TagCreateView(StaffTemplateView):
+
+    template_name = 'tag/tag-create.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'form': TagForm(user=request.user),
+        })
+
+    def post(self, request):
+        form = TagForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            tag = form.save()
+            messages.success(request, 'Tag "{}" has been created'.format(tag.name))
+            return redirect('tag.edit', id=tag.id, slug=tag.slug)
+
+        return self.render_to_response({
+            'form': form,
+        })
+
+
 class TagEditView(StaffTemplateView):
 
     template_name = 'tag/tag-edit.html'
 
-    def get(self, request, id, slug):
-        return self.render_to_response({})
+    def get(self, request, id=None, slug=None):
+        tag = get_object_or_404(Tag, id=id)
+        return self.render_to_response({
+            'form': TagForm(user=request.user, instance=tag)
+        })
 
-    def post(self, request, id, slug):
-        return self.render_to_response({})
+    def post(self, request, id=None, slug=None):
+        tag = get_object_or_404(Tag, id=id)
+        form = TagForm(user=request.user, instance=tag, data=request.POST)
+        if form.is_valid():
+            tag = form.save()
+            messages.success(request, 'Tag "{}" has been updated'.format(tag.name))
+            return redirect('tag.edit', id=tag.id, slug=tag.slug)
+
+        return self.render_to_response({
+            'form': form,
+        })
 
 
 class TagVideoView(StaffTemplateView):

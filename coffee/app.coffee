@@ -20,10 +20,6 @@ $ ->
         input.on 'keyup', -> preview.html(markdown.makeHtml(input.val()))
         preview.html(markdown.makeHtml(input.val()))
 
-        # tags autocomplete
-        split = (val) -> val.split(/,\s*/)
-        extractLast = (term) -> split(term).pop()
-
     #---------------------------------------------------------------------------
     # tag autocomplete
     #---------------------------------------------------------------------------

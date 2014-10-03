@@ -1,5 +1,6 @@
 {% set url_home = url('home') %}
 {% set url_staff_user_add = url('staff.user.add') %}
+{% set url_tag_create = url('tag.create') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_video_history = url('video.history') %}
 
@@ -30,6 +31,10 @@
         <a href="{{ url_staff_user_add }}" class="nav-link">
             <span class="icon icon-user-add"></span>
             <span>Add User</span>
+        </a>
+        <a href="{{ url_tag_create }}" class="nav-link">
+            <span class="icon icon-plus-circled"></span>
+            <span>Create Tag</span>
         </a>
     {% endif %}
 </nav>

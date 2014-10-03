@@ -3,7 +3,7 @@
 
 {% block content %}
     <form action="" method="post" class="max-800">
-        <h2>Edit Tag</h2>
+        <h2>Create Tag</h2>
         {{ forms.non_field_errors(form) }}
         {{ forms.csrf_input() }}
         {{ forms.field(form.name, show_label=False) }}
@@ -15,7 +15,6 @@
         <hr>
         {{ forms.field(form.markdown, show_label=False) }}
         <div class="markdown-preview" data-for="id_markdown"></div>
-        <button type="submit" class="button">Save</button>
+        <button type="submit" class="button">Create</button>
     </form>
 {% endblock %}
-
