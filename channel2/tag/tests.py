@@ -43,12 +43,12 @@ class TagCreateViewTests(BaseTestCase):
     def test_tag_create_view_get(self):
         response = self.client.get(reverse('tag.create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tag/tag-create.html')
+        self.assertTemplateUsed(response, 'tag/tag-edit.html')
 
     def test_tag_create_view_post_invalid(self):
         response = self.client.post(reverse('tag.create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tag/tag-create.html')
+        self.assertTemplateUsed(response, 'tag/tag-edit.html')
 
     def test_tag_create_view_post(self):
         response = self.client.post(reverse('tag.create'), {
@@ -160,3 +160,11 @@ class TagFormTests(BaseTestCase):
         self.assertTrue(form.is_valid())
         tag = form.save()
         self.assertEqual(set(tag.children.all()), set(Tag.objects.all().exclude(id=tag.id)))
+
+        form = TagForm(user=self.user, instance=tag, data={
+            'name': 'New Tag',
+            'children': '',
+        })
+        self.assertTrue(form.is_valid())
+        tag = form.save()
+        self.assertEqual(set(tag.children.all()), set())

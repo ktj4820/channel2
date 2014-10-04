@@ -2,20 +2,34 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
-    <form action="" method="post" class="max-800">
-        <h2>Edit Tag</h2>
-        {{ forms.non_field_errors(form) }}
-        {{ forms.csrf_input() }}
-        {{ forms.field(form.name, show_label=False) }}
-        <div>
-            <div class="left space-right-15">{{ forms.field(form.order) }}</div>
-            <div class="left">{{ forms.field(form.pinned) }}</div>
-            <div class="clear"></div>
-        </div>
-        <hr>
-        {{ forms.field(form.markdown, show_label=False) }}
-        <div class="markdown-preview" data-for="id_markdown"></div>
-        <button type="submit" class="button">Save</button>
-    </form>
+    <div class="max-800">
+        {% if tag %}
+            <form action="#" method="post">
+                {{ forms.csrf_input() }}
+                <button class="button button-danger button-thin right">Delete Tag</button>
+            </form>
+            <h2>Edit Tag<span class="icon icon-dot text-secondary"></span><a href="{{ url('tag', args=[tag.id, tag.slug]) }}">{{ tag.name }}</a></h2>
+        {% else %}
+            <h2>Create Tag</h2>
+        {% endif %}
+        <form action="" method="post">
+            {{ forms.non_field_errors(form) }}
+            {{ forms.csrf_input() }}
+            {{ forms.field(form.name, show_label=False) }}
+            {{ forms.field(form.children, show_label=False) }}
+            <div>
+                <div class="left space-right-15">{{ forms.field(form.order) }}</div>
+                <div class="left">{{ forms.field(form.pinned) }}</div>
+                <div class="clear"></div>
+            </div>
+            <hr>
+            {{ forms.field(form.markdown, show_label=False) }}
+            <div class="markdown markdown-preview" data-for="id_markdown"></div>
+            {% if tag %}
+                <button type="submit" class="button">Save</button>
+            {% else %}
+                <button type="submit" class="button">Create</button>
+            {% endif %}
+        </form>
+    </div>
 {% endblock %}
-

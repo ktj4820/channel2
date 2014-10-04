@@ -5,7 +5,7 @@
     {% if video_list %}
         <form action="{{ url('video.history.delete') }}" method="post">
             {{ forms.csrf_input() }}
-            <button class="button button-danger right button-thin">Clear History</button>
+            <button class="button button-danger button-thin right">Clear History</button>
         </form>
     {% endif %}
     <h2>History</h2>

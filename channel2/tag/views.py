@@ -62,7 +62,7 @@ class TagListView(ProtectedTemplateView):
 
 class TagCreateView(StaffTemplateView):
 
-    template_name = 'tag/tag-create.html'
+    template_name = 'tag/tag-edit.html'
 
     def get(self, request):
         return self.render_to_response({
@@ -85,13 +85,14 @@ class TagEditView(StaffTemplateView):
 
     template_name = 'tag/tag-edit.html'
 
-    def get(self, request, id=None, slug=None):
+    def get(self, request, id, slug):
         tag = get_object_or_404(Tag, id=id)
         return self.render_to_response({
-            'form': TagForm(user=request.user, instance=tag)
+            'form': TagForm(user=request.user, instance=tag),
+            'tag': tag,
         })
 
-    def post(self, request, id=None, slug=None):
+    def post(self, request, id, slug):
         tag = get_object_or_404(Tag, id=id)
         form = TagForm(user=request.user, instance=tag, data=request.POST)
         if form.is_valid():
@@ -101,6 +102,7 @@ class TagEditView(StaffTemplateView):
 
         return self.render_to_response({
             'form': form,
+            'tag': tag,
         })
 
 

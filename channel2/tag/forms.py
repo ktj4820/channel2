@@ -9,7 +9,6 @@ class TagForm(forms.ModelForm):
     name = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={
-            'autofocus': 'autofocus',
             'placeholder': 'Name',
             'required': 'required',
         })
@@ -54,6 +53,10 @@ class TagForm(forms.ModelForm):
         self.html = ''
         self.children_tag_list = []
 
+        if 'instance' in kwargs:
+            instance = kwargs['instance']
+            self.fields['children'].initial = ', '.join(Tag.objects.filter(parents=instance).order_by('slug').values_list('name', flat=True))
+
     def clean_name(self):
         name = self.cleaned_data.get('name')
         if ',' in name:
@@ -88,6 +91,7 @@ class TagForm(forms.ModelForm):
             tag.created_by = self.user
 
         tag.save()
+        tag.children.clear()
         if self.children_tag_list:
             tag.children.add(*self.children_tag_list)
 
