@@ -48,7 +48,7 @@ class Video(models.Model):
             cover_path = '/tmp/{}.jpg'.format(self.slug)
             command = [
                 FFMPEG_PATH, '-ss', '00:00:05', '-t', '1', '-i',
-                self.file.path, '-s', '960x540', '-f', 'image2',
+                self.file.path, '-s', '1280x720', '-f', 'image2',
                 cover_path
             ]
             subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
