@@ -1,6 +1,30 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <h2>500 Internal Server Error</h2>
-    <p>An unexpected error occured. Derek has been automatically notified of the error, so check back later.</p>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+        <title>Server Maintenance</title>
+        <style>
+            * { 
+                font-family: 'Roboto', sans-serif;
+                font-weight: 300;
+            }
+            html, body {
+                background-color: #333;
+                max-width: 960px;
+                margin: 0 auto;
+            }
+            h1, p { color: #eee; }
+            h1 { font-size: 36px; }
+            p { font-size: 15px; }
+        </style>
+    </head>
+    <body>
+        <div class="maintenance-container">
+            <h1>500 Internal Server Error</h1>
+            <p>An unexpected error occured. Derek has been automatically notified of the error, so check back later.</p>
+        </div>
+    </body>
+</html>
