@@ -51,10 +51,14 @@ class Video(models.Model):
                 self.file.path, '-s', '1280x720', '-f', 'image2',
                 cover_path
             ]
-            subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            if os.path.exists(cover_path):
-                self.cover.delete()
-                self.cover.save('', File(open(cover_path, 'rb')), save=True)
+            try:
+                subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                if os.path.exists(cover_path):
+                    self.cover.delete()
+                    self.cover.save('', File(open(cover_path, 'rb')), save=True)
+            finally:
+                try: os.unlink(cover_path)
+                except OSError: pass
 
     @property
     def size(self):
