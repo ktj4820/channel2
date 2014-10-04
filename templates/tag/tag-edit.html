@@ -4,7 +4,7 @@
 {% block content %}
     <div class="max-800">
         {% if tag %}
-            <form action="#" method="post">
+            <form action="{{ url('tag.delete', args=[tag.id, tag.slug]) }}" method="post">
                 {{ forms.csrf_input() }}
                 <button class="button button-danger button-thin right">Delete Tag</button>
             </form>

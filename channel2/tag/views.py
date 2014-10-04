@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from django.contrib import messages
+from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView, StaffTemplateView
@@ -104,6 +105,18 @@ class TagEditView(StaffTemplateView):
             'form': form,
             'tag': tag,
         })
+
+
+class TagDeleteView(StaffTemplateView):
+
+    def get(self, request, id, slug):
+        return HttpResponseNotAllowed(permitted_methods=['post'])
+
+    def post(self, request, id, slug):
+        tag = get_object_or_404(Tag, id=id)
+        tag.delete()
+        messages.error(request, 'Tag "{}" has been deleted'.format(tag.name))
+        return redirect('tag.list')
 
 
 class TagVideoView(StaffTemplateView):

@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from channel2.core.tests import BaseTestCase
 from channel2.tag.forms import TagForm
 from channel2.tag.models import Tag
+from channel2.video.models import Video
 
 
 class TagListViewTests(BaseTestCase):
@@ -100,6 +101,32 @@ class TagEditViewTests(BaseTestCase):
         self.assertEqual(tag.pinned, False)
         self.assertEqual(tag.order, None)
         self.assertEqual(tag.html, '<p>Some new markdown for the tag</p>')
+
+
+class TagDeleteViewTests(BaseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.all()[0]
+        
+    def test_tag_delete_view_get(self):
+        response = self.client.get(reverse('tag.delete', args=[self.tag.id, self.tag.slug]))
+        self.assertEqual(response.status_code, 405)
+        
+    def test_tag_delete_view_post(self):
+        response = self.client.post(reverse('tag.delete', args=[self.tag.id, self.tag.slug]))
+        self.assertRedirects(response, reverse('tag.list'))
+        self.assertFalse(Tag.objects.filter(id=self.tag.id).exists())
+
+    def test_tag_delete_view_post_with_videos(self):
+        video = Video.objects.all()[0]
+        video.tag = self.tag
+        video.save()
+
+        response = self.client.post(reverse('tag.delete', args=[self.tag.id, self.tag.slug]))
+        self.assertRedirects(response, reverse('tag.list'))
+        self.assertFalse(Tag.objects.filter(id=self.tag.id).exists())
+        self.assertFalse(Video.objects.filter(id=video.id).exists())
 
 
 class TagVideoViewTests(BaseTestCase):

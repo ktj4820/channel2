@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from channel2.tag.views import TagView, TagListView, TagEditView, TagVideoView, \
-    TagCreateView
+    TagCreateView, TagDeleteView
 
 
 urlpatterns = patterns('',
@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^new/$',                                                  TagCreateView.as_view(), name='tag.create'),
     url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/edit/$',                    TagEditView.as_view(), name='tag.edit'),
+    url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/delete/$',                  TagDeleteView.as_view(), name='tag.delete'),
     url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/videos/$',                  TagVideoView.as_view(), name='tag.video'),
 
 )
