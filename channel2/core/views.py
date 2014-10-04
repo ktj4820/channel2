@@ -46,3 +46,26 @@ class StaffTemplateView(ProtectedTemplateView):
         if not request.user.is_staff:
             raise Http404
         return super().dispatch(request, *args, **kwargs)
+
+
+#-------------------------------------------------------------------------------
+
+
+class PageNotFoundView(TemplateView):
+
+    template_name = '404.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        response = self.render_to_response({})
+        response.status_code = 404
+        return response
+
+
+class ServerErrorView(TemplateView):
+
+    template_name = '500.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        response = self.render_to_response({})
+        response.status_code = 500
+        return response

@@ -1,11 +1,17 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
+from channel2.core.views import PageNotFoundView, ServerErrorView
 from channel2.home.views import HomeView
 from channel2.settings import DEBUG, MEDIA_ROOT
 
 
 admin.autodiscover()
+
+
+handler404 = PageNotFoundView.as_view()
+handler500 = ServerErrorView.as_view()
+
 
 urlpatterns = patterns('',
 
