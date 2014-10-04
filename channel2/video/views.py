@@ -1,10 +1,12 @@
 import binascii
 import os
+import datetime
 
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
+import pytz
 
 from channel2.core.response import HttpResponseXAccel
 from channel2.core.utils import paginate, email_alert, get_ip_address
@@ -13,10 +15,24 @@ from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
 
 
-class BaseVideoView(ProtectedTemplateView):
+class VideoView(ProtectedTemplateView):
 
-    def get_video_link(self, request, id):
+    @classmethod
+    def get_video_link(cls, request, id):
         video = get_object_or_404(Video, id=id)
+
+        try:
+            time_limit = datetime.datetime.now(tz=pytz.UTC) - datetime.timedelta(minutes=30)
+            link = VideoLink.objects.get(
+                video=video,
+                ip_address=get_ip_address(request),
+                created_by=request.user,
+                created_on__gte=time_limit,
+            )
+            return video, link
+        except VideoLink.DoesNotExist:
+            pass
+
         video.views += 1
         video.save()
 
@@ -27,9 +43,6 @@ class BaseVideoView(ProtectedTemplateView):
             created_by=request.user,
         )
         return video, link
-
-
-class VideoView(BaseVideoView):
 
     def get(self, request, id, slug):
         video, link = self.get_video_link(request, id)

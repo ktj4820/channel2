@@ -30,6 +30,25 @@ class VideoModelTests(BaseTestCase):
         self.assertFalse(os.path.exists(video.file.path))
 
 
+class VideoViewTests(BaseTestCase):
+
+    def setUp(self):
+        super(VideoViewTests, self).setUp()
+
+    def test_video_view_get(self):
+        video = Video.objects.all()[0]
+        response = self.client.get(reverse('video', args=[video.id, video.slug]))
+
+        link = VideoLink.objects.get(video=video)
+        redirect_location = reverse('video.link', args=[link.key, video.slug])
+        self.assertRedirects(response, redirect_location)
+        self.assertEqual(video.views+1, Video.objects.get(id=video.id).views)
+
+        response = self.client.get(reverse('video', args=[video.id, video.slug]))
+        self.assertRedirects(response, redirect_location)
+        self.assertEqual(video.views+1, Video.objects.get(id=video.id).views)
+
+
 class VideoLinkViewTests(BaseTestCase):
 
     def setUp(self):
