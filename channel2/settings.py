@@ -94,6 +94,13 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 TEST_RUNNER = 'channel2.core.tests.Channel2TestSuiteRunner'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    }
+}
+
 #-------------------------------------------------------------------------------
 # template settings
 #-------------------------------------------------------------------------------

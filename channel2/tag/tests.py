@@ -136,3 +136,27 @@ class TagFormTests(BaseTestCase):
         self.assertEqual(tag.created_by, self.user)
         self.assertEqual(tag.markdown, 'Some markdown for the new tag.')
         self.assertEqual(tag.html, '<p>Some markdown for the new tag.</p>')
+
+    def test_tag_form_create_name_with_comma(self):
+        form = TagForm(user=self.user, data={
+            'name': 'New Tag, with comma',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['name'], [TagForm.error_messages['name.has.comma']])
+
+    def test_tag_form_create_children_not_exists(self):
+        form = TagForm(user=self.user, data={
+            'name': 'New Tag',
+            'children': 'Invalid Tag',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['children'], [TagForm.error_messages['tag.not.found'].format('Invalid Tag')])
+
+    def test_tag_form_create_children(self):
+        form = TagForm(user=self.user, data={
+            'name': 'New Tag',
+            'children': ', '.join([tag.name for tag in Tag.objects.all()]),
+        })
+        self.assertTrue(form.is_valid())
+        tag = form.save()
+        self.assertEqual(set(tag.children.all()), set(Tag.objects.all().exclude(id=tag.id)))

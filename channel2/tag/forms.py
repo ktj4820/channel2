@@ -15,6 +15,13 @@ class TagForm(forms.ModelForm):
         })
     )
 
+    children = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Children Tags',
+        })
+    )
+
     markdown = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
@@ -31,6 +38,11 @@ class TagForm(forms.ModelForm):
         min_value=0,
     )
 
+    error_messages = {
+        'name.has.comma': 'The tag name cannot have a comma in it',
+        'tag.not.found': 'Unable to find tag "{}"',
+    }
+
     class Meta:
         model = Tag
         fields = ('name', 'markdown', 'pinned', 'order',)
@@ -40,7 +52,27 @@ class TagForm(forms.ModelForm):
         self.label_suffix = ''
         self.user = user
         self.html = ''
-        self.tag_parent = None
+        self.children_tag_list = []
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if ',' in name:
+            raise forms.ValidationError(self.error_messages['name.has.comma'])
+        return name
+
+    def clean_children(self):
+        children = self.cleaned_data.get('children')
+        self.children_tag_list = []
+        for tag_name in children.split(','):
+            tag_name = tag_name.strip()
+            if not tag_name:
+                continue
+            try:
+                tag = Tag.objects.get(name=tag_name)
+                self.children_tag_list.append(tag)
+            except Tag.DoesNotExist:
+                raise forms.ValidationError(self.error_messages['tag.not.found'].format(tag_name))
+        return children
 
     def clean_markdown(self):
         md = self.cleaned_data.get('markdown')
@@ -56,7 +88,7 @@ class TagForm(forms.ModelForm):
             tag.created_by = self.user
 
         tag.save()
-        if self.tag_parent:
-            tag.parents.add(self.tag_parent)
+        if self.children_tag_list:
+            tag.children.add(*self.children_tag_list)
 
         return tag
