@@ -129,6 +129,16 @@ class TagDeleteViewTests(BaseTestCase):
         self.assertFalse(Video.objects.filter(id=video.id).exists())
 
 
+class TagAutocompleteJsonViewTests(BaseTestCase):
+
+    def test_tag_autocomplete_json_view_get(self):
+        tag_list = Tag.objects.all().order_by('slug').values_list('name', flat=True)
+        tag_list = ['"{}"'.format(name) for name in tag_list]
+        response = self.client.get(reverse('tag.autocomplete.json'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, '[{}]'.format(', '.join(tag_list)).encode('utf-8'))
+
+
 class TagVideoViewTests(BaseTestCase):
 
     def setUp(self):

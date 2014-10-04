@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from channel2.tag.views import TagView, TagListView, TagEditView, TagVideoView, \
-    TagCreateView, TagDeleteView
+    TagCreateView, TagDeleteView, TagAutocompleteJsonView
 
 
 urlpatterns = patterns('',
@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/edit/$',                    TagEditView.as_view(), name='tag.edit'),
     url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/delete/$',                  TagDeleteView.as_view(), name='tag.delete'),
     url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/videos/$',                  TagVideoView.as_view(), name='tag.video'),
+    url(r'autocomplete.json$',                                      TagAutocompleteJsonView.as_view(), name='tag.autocomplete.json'),
 
 )

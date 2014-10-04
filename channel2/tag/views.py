@@ -1,7 +1,8 @@
 from collections import defaultdict
+import json
 
 from django.contrib import messages
-from django.http.response import HttpResponseNotAllowed
+from django.http.response import HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView, StaffTemplateView
@@ -128,3 +129,11 @@ class TagVideoView(StaffTemplateView):
 
     def post(self, request, id, slug):
         return self.render_to_response({})
+
+
+class TagAutocompleteJsonView(StaffTemplateView):
+
+    def get(self, request):
+        tag_list = Tag.objects.order_by('slug').values_list('name', flat=True)
+        content = json.dumps(list(tag_list), ensure_ascii=False)
+        return HttpResponse(content=content, content_type='application/json')
