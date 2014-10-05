@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from channel2.core.views import ProtectedTemplateView, StaffTemplateView
 from channel2.tag.forms import TagForm
 from channel2.tag.models import Tag, TagChildren
-from channel2.video.models import VideoLink
+from channel2.video.models import VideoLink, Video
 
 
 class TagView(ProtectedTemplateView):
@@ -125,7 +125,12 @@ class TagVideoView(StaffTemplateView):
     template_name = 'tag/tag-video.html'
 
     def get(self, request, id, slug):
-        return self.render_to_response({})
+        tag = get_object_or_404(Tag, id=id)
+        video_list = Video.objects.filter(tag=tag).order_by('created_on')
+        return self.render_to_response({
+            'tag': tag,
+            'video_list': video_list,
+        })
 
     def post(self, request, id, slug):
         return self.render_to_response({})

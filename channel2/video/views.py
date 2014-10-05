@@ -2,6 +2,7 @@ import binascii
 import os
 import datetime
 
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect
@@ -10,7 +11,8 @@ import pytz
 
 from channel2.core.response import HttpResponseXAccel
 from channel2.core.utils import paginate, email_alert, get_ip_address
-from channel2.core.views import ProtectedTemplateView, TemplateView
+from channel2.core.views import ProtectedTemplateView, TemplateView, \
+    StaffTemplateView
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
 
@@ -102,3 +104,21 @@ class VideoHistoryDeleteView(ProtectedTemplateView):
     def post(self, request):
         VideoLink.objects.filter(created_by=request.user).delete()
         return redirect('video.history')
+
+
+class VideoDeleteView(StaffTemplateView):
+
+    def get(self, request, id, slug):
+        return HttpResponseNotAllowed(permitted_methods=['post'])
+
+    def post(self, request, id, slug):
+        video = get_object_or_404(Video, id=id)
+        video.delete()
+
+        messages.error(request, 'Video "{}" has been deleted'.format(video.name))
+        tag = video.tag
+        if tag is None:
+            response = redirect('home')
+        else:
+            response = redirect('tag.video', id=tag.id, slug=tag.slug)
+        return response

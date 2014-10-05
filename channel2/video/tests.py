@@ -9,6 +9,7 @@ from django.utils import timezone
 
 from channel2.core.tests import BaseTestCase
 from channel2.settings import VIDEO_LINK_EXPIRE
+from channel2.tag.models import Tag
 from channel2.video.models import Video, VideoLink
 from channel2.video.views import VideoLinkView
 
@@ -131,3 +132,37 @@ class VideoHistoryDeleteViewTests(BaseTestCase):
         response = self.client.post(reverse('video.history.delete'))
         self.assertRedirects(response, reverse('video.history'))
         self.assertEqual(VideoLink.objects.filter(created_by=self.user).count(), 0)
+
+
+class VideoDeleteViewTests(BaseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.video = Video.objects.all()[0]
+
+    def test_video_delete_view_get(self):
+        response = self.client.get(reverse('video.delete', args=[self.video.id, self.video.slug]))
+        self.assertEqual(response.status_code, 405)
+
+    def test_video_delete_view_post(self):
+        self.video.tag = None
+        self.video.save()
+
+        response = self.client.post(reverse('video.delete', args=[self.video.id, self.video.slug]))
+        self.assertRedirects(response, reverse('home'))
+        self.assertFalse(Video.objects.filter(id=self.video.id).exists())
+
+    def test_video_delete_view_post_with_tag(self):
+        tag = Tag.objects.all()[0]
+        self.video.tag = tag
+        self.video.save()
+
+        response = self.client.post(reverse('video.delete', args=[self.video.id, self.video.slug]))
+        self.assertRedirects(response, reverse('tag.video', args=[tag.id, tag.slug]))
+
+    def test_video_delete_view_post_not_staff(self):
+        self.user.is_staff = False
+        self.user.save()
+
+        response = self.client.post(reverse('video.delete', args=[self.video.id, self.video.slug]))
+        self.assertEqual(response.status_code, 404)

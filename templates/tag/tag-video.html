@@ -1,1 +1,25 @@
 {% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <h2><a href="{{ url('tag', args=[tag.id, tag.slug]) }}">{{ tag.name }}</a></h2>
+    <table>
+        <tbody>
+            {% for video in video_list %}
+                <tr>
+                    <td width="35px">
+                        <form action="{{ url('video.delete', args=[video.id, video.slug]) }}" method="post">
+                            {{ forms.csrf_input() }}
+                            <button class="button button-danger button-delete"><span class="icon icon-minus"></span></button>
+                        </form>
+                    </td>
+                    <td><a href="{{ url('tag', args=[tag.id, tag.slug, video.id]) }}">{{ video.name }}</a></td>
+                    <td width="90px" class="min-md">
+                        <span>{{ video.size|filesizeformat }}</span>
+                    </td>
+                    <td width="150px" class="min-xs">{{ video.created_on|date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
