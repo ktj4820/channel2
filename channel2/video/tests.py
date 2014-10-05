@@ -11,19 +11,20 @@ from channel2.core.tests import BaseTestCase
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.tag.models import Tag
 from channel2.video.models import Video, VideoLink
+from channel2.video.utils import extract_name
 from channel2.video.views import VideoLinkView
 
 
 class VideoModelTests(BaseTestCase):
 
     def test_video_save_slugify(self):
-        video = Video.objects.create(name='Test Episode 01')
+        video = Video.objects.create(name='Test Episode 01', tag=Tag.objects.all()[0])
         self.assertEqual(video.slug, 'test-episode-01')
 
     def test_video_delete(self):
         file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
 
-        video = Video.objects.create(name='Test Video')
+        video = Video.objects.create(name='Test Video', tag=Tag.objects.all()[0])
         video.file.save(file.name, File(file))
         self.assertTrue(os.path.exists(video.file.path))
 
@@ -144,14 +145,6 @@ class VideoDeleteViewTests(BaseTestCase):
         response = self.client.get(reverse('video.delete', args=[self.video.id, self.video.slug]))
         self.assertEqual(response.status_code, 405)
 
-    def test_video_delete_view_post(self):
-        self.video.tag = None
-        self.video.save()
-
-        response = self.client.post(reverse('video.delete', args=[self.video.id, self.video.slug]))
-        self.assertRedirects(response, reverse('home'))
-        self.assertFalse(Video.objects.filter(id=self.video.id).exists())
-
     def test_video_delete_view_post_with_tag(self):
         tag = Tag.objects.all()[0]
         self.video.tag = tag
@@ -166,3 +159,18 @@ class VideoDeleteViewTests(BaseTestCase):
 
         response = self.client.post(reverse('video.delete', args=[self.video.id, self.video.slug]))
         self.assertEqual(response.status_code, 404)
+
+
+class VideoUtilTests(BaseTestCase):
+
+    def test_extract_name(self):
+        TEST_CASES = (
+            ('[HorribleSubs] Mekakucity Actors - 07 [1080p].mp4', 'Mekakucity Actors - 07'),
+            ('[Doki] Saki - 06 (848x480 h264 DVD AAC) [EAE93A6F].mp4', 'Saki - 06'),
+            ('[Underwater-FFF] Saki Zenkoku-hen 03 - Start (TV 720p) [A1BE086A].mp4', 'Saki Zenkoku-hen 03 - Start'),
+            ('[Doki] Freezing Vibration - 06 (1280x720 h264 AAC) [B6D45C62].mp4', 'Freezing Vibration - 06'),
+            ('[UTW]_Fate_Zero_-_01_[BD][h264-720p_AC3][02A0491D].mp4', 'Fate Zero - 01')
+        )
+
+        for source, output in TEST_CASES:
+            self.assertEqual(extract_name(source), output)

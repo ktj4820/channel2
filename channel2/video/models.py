@@ -21,7 +21,7 @@ class Video(models.Model):
     slug            = models.SlugField(max_length=100, editable=False)
     views           = models.IntegerField(default=0)
     cover           = models.FileField(upload_to=video_cover_upload_to, null=True, blank=True)
-    tag             = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.CASCADE)
+    tag             = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
     created_on      = models.DateTimeField(auto_now_add=True)
 
@@ -41,7 +41,7 @@ class Video(models.Model):
     def generate_cover(self):
         """
         generate a cover using the ffmpeg command:
-        ffmpeg -ss 00:00:05 -t 1 -i <input_file.file> -s 960x540 -f image2 <output.jpg>
+        ffmpeg -ss 00:00:05 -t 1 -i <input_file.file> -s 1280x720 -f image2 <output.jpg>
         """
 
         if self.file and FFMPEG_PATH:

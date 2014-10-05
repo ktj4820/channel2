@@ -8,18 +8,23 @@
                 {{ forms.csrf_input() }}
                 <button class="button button-danger button-thin right">Delete Tag</button>
             </form>
-            <h2><a href="{{ url('tag', args=[tag.id, tag.slug]) }}">{{ tag.name }}</a></h2>
+            <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="button button-thin space-right-10 left">
+                <span class="icon icon-back"></span>
+                <span>Back</span>
+            </a>
+            <h2>{{ tag.name }}</h2>
         {% else %}
             <h2>Create Tag</h2>
         {% endif %}
+        <hr>
         <form action="" method="post">
             {{ forms.non_field_errors(form) }}
             {{ forms.csrf_input() }}
             {{ forms.field(form.name, show_label=False) }}
             {{ forms.field(form.children, show_label=False) }}
             <div>
-                <div class="left space-right-15">{{ forms.field(form.order) }}</div>
-                <div class="left">{{ forms.field(form.pinned) }}</div>
+                <div class="left space-right-15">{{ forms.field(form.pinned) }}</div>
+                <div class="left">{{ forms.field(form.order) }}</div>
                 <div class="clear"></div>
             </div>
             <hr>

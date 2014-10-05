@@ -1,7 +1,13 @@
+import os
+
 from django import forms
+from django.core.files.base import File
+from django.forms.formsets import BaseFormSet
 import markdown
 
+from channel2.settings import VIDEO_DIR
 from channel2.tag.models import Tag
+from channel2.video.models import Video
 
 
 class TagForm(forms.ModelForm):
@@ -96,3 +102,34 @@ class TagForm(forms.ModelForm):
             tag.children.add(*self.children_tag_list)
 
         return tag
+
+
+class TagVideoForm(forms.Form):
+
+    select = forms.BooleanField(required=False, initial=True)
+    filename = forms.CharField(widget=forms.HiddenInput)
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'tag-video-input',
+        })
+    )
+
+
+class TagVideoFormSet(BaseFormSet):
+
+    def save(self, tag):
+        count = 0
+        for form in self.ordered_forms:
+            if not form.cleaned_data.get('select'):
+                continue
+
+            count += 1
+            data = form.cleaned_data
+            file_path = os.path.join(VIDEO_DIR, data.get('filename'))
+            file = open(file_path, 'rb')
+            Video.objects.create(file=File(file), name=data.get('name'), tag=tag)
+            file.close()
+            os.unlink(file_path)
+
+        return count

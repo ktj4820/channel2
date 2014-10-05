@@ -2,24 +2,64 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
-    <h2><a href="{{ url('tag', args=[tag.id, tag.slug]) }}">{{ tag.name }}</a></h2>
-    <table>
-        <tbody>
-            {% for video in video_list %}
+    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="button button-thin space-right-10 left">
+        <span class="icon icon-back"></span>
+        <span>Back</span>
+    </a>
+    <h2>{{ tag.name }}</h2>
+    {% if video_list %}
+        <table>
+            <tbody>
+                {% for video in video_list %}
+                    <tr>
+                        <td width="35px">
+                            <form action="{{ url('video.delete', args=[video.id, video.slug]) }}" method="post">
+                                {{ forms.csrf_input() }}
+                                <button class="button button-danger button-delete"><span class="icon icon-minus"></span></button>
+                            </form>
+                        </td>
+                        <td><a href="{{ url('tag', args=[tag.id, tag.slug, video.id]) }}">{{ video.name }}</a></td>
+                        <td width="90px" class="min-md">
+                            <span>{{ video.size|filesizeformat }}</span>
+                        </td>
+                        <td width="150px" class="min-xs">{{ video.created_on|date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <hr>
+    <form action="" method="post">
+        {{ forms.csrf_input() }}
+        {{ formset.management_form|safe }}
+        <table class="space-bottom-15">
+            <thead>
                 <tr>
-                    <td width="35px">
-                        <form action="{{ url('video.delete', args=[video.id, video.slug]) }}" method="post">
-                            {{ forms.csrf_input() }}
-                            <button class="button button-danger button-delete"><span class="icon icon-minus"></span></button>
-                        </form>
-                    </td>
-                    <td><a href="{{ url('tag', args=[tag.id, tag.slug, video.id]) }}">{{ video.name }}</a></td>
-                    <td width="90px" class="min-md">
-                        <span>{{ video.size|filesizeformat }}</span>
-                    </td>
-                    <td width="150px" class="min-xs">{{ video.created_on|date }}</td>
+                    <th width="25"></th>
+                    <th>{% trans %}File name{% endtrans %}</th>
+                    <th>{% trans %}Name{% endtrans %}</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                    <tr>
+                        <td width="25" class="text-center">{{ forms.simple_field(form.select) }}</td>
+                        <td>
+                            <label for="{{ form.select.auto_id }}" class="staff-video-add-label">{{ form.filename.value() }}</label>
+                            {{ forms.simple_field(form.filename) }}
+                            <div class="none">{{ forms.simple_field(form.ORDER) }}</div>
+                        </td>
+                        <td>{{ forms.simple_field(form.name) }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td>There are no videos that can be added.</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="button">{% trans %}Add Videos{% endtrans %}</button>
+    </form>
 {% endblock %}

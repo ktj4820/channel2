@@ -157,6 +157,15 @@ class TagVideoViewTests(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'tag/tag-video.html')
 
+    def test_tag_video_view_post(self):
+        response = self.client.post(reverse('tag.video', args=[self.tag.id, self.tag.slug]), {
+            'form-TOTAL_FORMS': '0',
+            'form-INITIAL_FORMS': '0',
+            'form-MIN_NUM_FORMS': '0',
+            'form-MAX_NUM_FORMS': '100',
+        })
+        self.assertRedirects(response, reverse('tag.video', args=[self.tag.id, self.tag.slug]))
+
 
 class TagFormTests(BaseTestCase):
 

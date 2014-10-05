@@ -1,14 +1,18 @@
 from collections import defaultdict
 import json
+import os
 
 from django.contrib import messages
+from django.forms.formsets import formset_factory
 from django.http.response import HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView, StaffTemplateView
-from channel2.tag.forms import TagForm
+from channel2.settings import VIDEO_DIR
+from channel2.tag.forms import TagForm, TagVideoForm, TagVideoFormSet
 from channel2.tag.models import Tag, TagChildren
 from channel2.video.models import VideoLink, Video
+from channel2.video.utils import extract_name
 
 
 class TagView(ProtectedTemplateView):
@@ -122,18 +126,61 @@ class TagDeleteView(StaffTemplateView):
 
 class TagVideoView(StaffTemplateView):
 
+    select_count_default = 10
     template_name = 'tag/tag-video.html'
 
-    def get(self, request, id, slug):
+    @classmethod
+    def get_formset_cls(cls):
+        return formset_factory(
+            form=TagVideoForm,
+            formset=TagVideoFormSet,
+            extra=0,
+            can_order=True,
+            max_num=1000,
+        )
+
+    def get_context_data(self, id):
         tag = get_object_or_404(Tag, id=id)
         video_list = Video.objects.filter(tag=tag).order_by('created_on')
-        return self.render_to_response({
+        return {
             'tag': tag,
             'video_list': video_list,
-        })
+        }
+
+    def get(self, request, id, slug):
+        context = self.get_context_data(id)
+
+        initial = []
+        for filename in os.listdir(VIDEO_DIR):
+            if os.path.isdir(os.path.join(VIDEO_DIR, filename)):
+                continue
+            if not filename.endswith('mp4'):
+                continue
+
+            initial.append({
+                'select': False,
+                'filename': filename,
+                'name': extract_name(filename),
+            })
+
+        initial = sorted(initial, key=lambda i: i['filename'])
+        for i in range(min(len(initial), self.select_count_default)):
+            initial[i]['select'] = True
+
+        formset = self.get_formset_cls()(initial=initial)
+        context['formset'] = formset
+        return self.render_to_response(context)
 
     def post(self, request, id, slug):
-        return self.render_to_response({})
+        context = self.get_context_data(id)
+        formset = self.get_formset_cls()(data=request.POST)
+        if formset.is_valid():
+            count = formset.save(tag=context['tag'])
+            messages.success(request, '{} videos have been improted successfully.'.format(count))
+            return redirect('tag.video', id=id, slug=slug)
+
+        context['formset'] = formset
+        return self.render_to_response(context)
 
 
 class TagAutocompleteJsonView(StaffTemplateView):

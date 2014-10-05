@@ -117,8 +117,4 @@ class VideoDeleteView(StaffTemplateView):
 
         messages.error(request, 'Video "{}" has been deleted'.format(video.name))
         tag = video.tag
-        if tag is None:
-            response = redirect('home')
-        else:
-            response = redirect('tag.video', id=tag.id, slug=tag.slug)
-        return response
+        return redirect('tag.video', id=tag.id, slug=tag.slug)
