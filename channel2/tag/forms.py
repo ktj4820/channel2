@@ -132,8 +132,9 @@ class TagVideoFormSet(BaseFormSet):
             file = open(file_path, 'rb')
             Video.objects.create(file=File(file), name=data.get('name'), tag=tag)
             file.close()
+            unlink_list.append(file_path)
 
-        for file in unlink_list:
-            os.unlink(file)
+        for path in unlink_list:
+            os.unlink(path)
 
         return count
