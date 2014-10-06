@@ -120,6 +120,8 @@ class TagVideoFormSet(BaseFormSet):
 
     def save(self, tag):
         count = 0
+        unlink_list = []
+
         for form in self.ordered_forms:
             if not form.cleaned_data.get('select'):
                 continue
@@ -130,6 +132,8 @@ class TagVideoFormSet(BaseFormSet):
             file = open(file_path, 'rb')
             Video.objects.create(file=File(file), name=data.get('name'), tag=tag)
             file.close()
-            os.unlink(file_path)
+
+        for file in unlink_list:
+            os.unlink(file)
 
         return count

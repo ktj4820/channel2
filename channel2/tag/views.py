@@ -41,10 +41,13 @@ class TagView(ProtectedTemplateView):
         else:
             active_video = None
 
-        for video in video_list:
-            video.watched = video.id in user_video_id_list
-            if not active_video and not video.watched:
-                active_video = video
+        if video_list:
+            for video in video_list:
+                video.watched = video.id in user_video_id_list
+                if active_video is None and not video.watched:
+                    active_video = video
+            if active_video is None:
+                active_video = video_list[0]
 
         return self.render_to_response({
             'active_video': active_video,
