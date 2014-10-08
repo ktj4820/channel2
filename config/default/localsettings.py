@@ -6,6 +6,10 @@ DEBUG_TOOLBAR = False
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 TEMPLATE_DEBUG = DEBUG
 
+ADMINS = (
+    ('Derek Kwok', 'derek.kai.chun.kwok@gmail.com'),
+)
+
 RESOURCE_VERSION = 'fabric:resource-version'
 
 ALLOWED_HOSTS = ['channel2.derekkwok.net']

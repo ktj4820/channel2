@@ -58,10 +58,6 @@
         - tmux
         - update-notifier-common
 
-    # elastic search
-    - get_url: url='https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{ elasticsearch_version }}.deb' dest='/root/elasticsearch-{{ elasticsearch_version }}.deb'
-    - apt: deb='/root/elasticsearch-{{ elasticsearch_version }}.deb'
-
     # ssh setup
     - template: src=templates/sshd_config.j2 dest=/etc/ssh/sshd_config owner=0 group=0 mode=0644 validate='/usr/sbin/sshd -T -f %s'
       notify:

@@ -48,7 +48,7 @@ def get_ip_address(request):
     Returns the user's ip address from the request.
     """
 
-    ip_address = request.META.get('REMOTE_ADDR', '')
+    ip_address = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR', '')
     ip_address = ip_address[:200]
     return ip_address
 
