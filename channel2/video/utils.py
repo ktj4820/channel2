@@ -8,7 +8,7 @@ def extract_name(filename):
     """
 
     REGEX_LIST = (
-        r'\](.*?)[\(\[\.]',
+        r'\](.*?)[\(\[]',
         r'(.*?).mp4',
     )
 

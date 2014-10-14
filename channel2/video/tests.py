@@ -169,7 +169,8 @@ class VideoUtilTests(BaseTestCase):
             ('[Doki] Saki - 06 (848x480 h264 DVD AAC) [EAE93A6F].mp4', 'Saki - 06'),
             ('[Underwater-FFF] Saki Zenkoku-hen 03 - Start (TV 720p) [A1BE086A].mp4', 'Saki Zenkoku-hen 03 - Start'),
             ('[Doki] Freezing Vibration - 06 (1280x720 h264 AAC) [B6D45C62].mp4', 'Freezing Vibration - 06'),
-            ('[UTW]_Fate_Zero_-_01_[BD][h264-720p_AC3][02A0491D].mp4', 'Fate Zero - 01')
+            ('[UTW]_Fate_Zero_-_01_[BD][h264-720p_AC3][02A0491D].mp4', 'Fate Zero - 01'),
+            ('[DeadFish] D.Gray-man - 001 [DVD][480p][AAC].mp4', 'D.Gray-man - 001'),
         )
 
         for source, output in TEST_CASES:
