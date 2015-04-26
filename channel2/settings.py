@@ -40,24 +40,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-        ],
-        'APP_DIRS': False,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
 ROOT_URLCONF = 'channel2.urls'
 WSGI_APPLICATION = 'channel2.wsgi.application'
 
@@ -98,7 +80,6 @@ STATICFILES_FINDERS = (
 
 AUTH_USER_MODEL = 'account.User'
 
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 TEST_RUNNER = 'channel2.core.tests.Channel2TestRunner'
 
@@ -112,6 +93,25 @@ CACHES = {
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
+
+#-------------------------------------------------------------------------------
+# template settings
+#-------------------------------------------------------------------------------
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
+    'django.contrib.messages.context_processors.messages',
+)
 
 #-------------------------------------------------------------------------------
 # captcha settings

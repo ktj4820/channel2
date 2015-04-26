@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from channel2.core.views import TemplateView
 
-# Create your views here.
+
+class AccountLoginView(TemplateView):
+
+    template_name = 'account/account-login.html'
+
+    def get(self, request):
+        return self.render_to_response({})
