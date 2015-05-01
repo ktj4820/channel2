@@ -14,8 +14,9 @@ label {
 	display: none;
 }
 
-input[type="email"], input[type="password"] {
-	background: transparent;
+input[type="email"], input[type="password"], input[type="text"] {
+    .border-radius(0);
+    background: none;
 	border: 1px solid #eee;
 	display: block;
 	font-size: 15px;
@@ -24,6 +25,8 @@ input[type="email"], input[type="password"] {
 	outline: none;
 	padding: 10px 15px;
 	width: 100%;
+
+    -webkit-appearance: none;
 }
 
 /* -----------------------------------------------------------------------------

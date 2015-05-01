@@ -1,0 +1,20 @@
+{% import '_macros/forms.html' as forms with context %}
+
+{% set gravatar_url = user.email|gravatar %}
+
+<header>
+    <a href="{{ url('home') }}" class="header-logo">Channel 2</a>
+    <form action="" method="get" class="header-form">
+        <input type="text" name="q" placeholder="Search Channel 2..." id="header-search-input" value="{{ request.GET.q }}">
+        <button class="icon icon-search" id="header-search-button"></button>
+    </form>
+    <a href="{{ url_account_settings }}" class="header-link">
+        <img class="header-gravatar circle" src="{{ gravatar_url }}&s=60">
+        <span class="space-left-5">Settings</span>
+    </a>
+    <a class="header-link" onclick="document.getElementById('logout-form').submit()">
+        <span class="icon icon-logout"></span>
+        <span class="space-left-5">{% trans %}Logout{% endtrans %}</span>
+    </a>
+</header>
+<form action="{{ url('account.logout') }}" method="post" class="none" id="logout-form">{{ forms.csrf_input() }}</form>

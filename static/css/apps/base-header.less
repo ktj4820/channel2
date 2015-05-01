@@ -1,0 +1,69 @@
+/* -----------------------------------------------------------------------------
+    header styles
+----------------------------------------------------------------------------- */
+
+header {
+    .flex-display();
+
+    background-color: #333;
+    height: 50px;
+    padding: 0 20px;
+}
+
+.header-logo {
+    .inline-block();
+
+    color: #fff;
+    font-size: 24px;
+    line-height: 50px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.header-form {
+    .flex-grow(1);
+    .flex-display();
+    padding: 8px 10px;
+}
+
+#header-search-input, #header-search-button {
+    .inline-block();
+    border: 1px solid #000;
+    height: 34px;
+}
+
+#header-search-input {
+    .border-radius(@border-radius 0 0 @border-radius);
+
+    background-color: #fff;
+    border-right: none;
+    line-height: 24px;
+    padding: 5px 10px;
+    max-width: 400px;
+}
+
+#header-search-button {
+    .border-radius(0 @border-radius @border-radius 0);
+
+    background-color: @color-accent3;
+    border-left: none;
+    line-height: 24px;
+    padding: 5px 10px;
+}
+
+.header-link {
+    .inline-block();
+
+    color: #fff;
+    font-size: 15px;
+    line-height: 50px;
+    padding: 0 15px;
+}
+
+.header-gravatar {
+    .inline-block();
+
+    height: 30px;
+    margin: 10px 5px 10px 0;
+    width: 30px;
+}
