@@ -1,0 +1,45 @@
+/* -----------------------------------------------------------------------------
+    form classes
+----------------------------------------------------------------------------- */
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+/* -----------------------------------------------------------------------------
+    form styles
+----------------------------------------------------------------------------- */
+
+label {
+	display: none;
+}
+
+input[type="email"], input[type="password"] {
+	background: transparent;
+	border: 1px solid #eee;
+	display: block;
+	font-size: 15px;
+	height: 46px;
+	line-height: 24px;
+	outline: none;
+	padding: 10px 15px;
+	width: 100%;
+}
+
+/* -----------------------------------------------------------------------------
+    error classes
+----------------------------------------------------------------------------- */
+
+.form-field.error {
+    > input { border-bottom: none; }
+}
+
+.error-block {
+    background-color: @color-accent4;
+    border: 1px solid #000;
+    border-top: none;
+    color: #fff;
+    display: block;
+    font-size: 13px;
+    padding: 5px 10px;
+}

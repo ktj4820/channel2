@@ -1,4 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'account/account-base.html' %}
+{% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
+    <form action="" method="post">
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        {{ forms.field(form.email, show_label=False) }}
+        {{ forms.field(form.password, show_label=False) }}
+        <button>Login</button>
+        <div class="space-top-30 text-center">
+            <a href="#">Doh! I forgot my password</a>
+        </div>
+    </form>
 {% endblock %}

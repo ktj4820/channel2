@@ -1,0 +1,31 @@
+/* -----------------------------------------------------------------------------
+    button styles
+----------------------------------------------------------------------------- */
+
+@default-bg: #222;
+@default-border: #000;
+@default-color: #fff;
+@default-bg-hover: @default-border;
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+button {
+	.inline-block();
+    .transition(150ms ease all);
+
+    background-color: @default-bg;
+    border: 1px solid @default-border;
+    color: @default-color;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: @base-line-height;
+    margin: 0;
+    padding: 10px 15px;
+
+    &:hover {
+        background-color: @default-bg-hover;
+    }
+}

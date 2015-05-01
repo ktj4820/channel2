@@ -1,0 +1,39 @@
+/* -----------------------------------------------------------------------------
+    message styles
+----------------------------------------------------------------------------- */
+
+@message-bg:                #eee;
+@message-border:            #999;
+@message-color:             #333;
+
+@message-bg-info:           @color-accent1;
+@message-bg-success:        @color-accent2;
+@message-bg-warning:        @color-accent3;
+@message-bg-error:          @color-accent4;
+
+.message-list {
+    list-style-type: none;
+    margin: 0;
+}
+
+.message {
+    background-color: @message-bg;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 15px 0;
+    padding: 10px 15px;
+}
+.message-info {
+    background-color: @message-bg-info;
+}
+.message-success {
+    background-color: @message-bg-success;
+}
+.message-warning {
+    background-color: @message-bg-warning;
+}
+.message-error {
+    background-color: @message-bg-error;
+}

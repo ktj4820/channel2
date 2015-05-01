@@ -17,14 +17,12 @@ class AccountLoginForm(forms.Form):
         widget=forms.EmailInput(attrs={
             'autofocus': 'autofocus',
             'placeholder': 'Email',
-            'required': 'required',
         })
     )
     password = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Password',
-            'required': 'required',
         })
     )
 

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div id="template-{{ TEMPLATE_NAME }}" class="account-page">
+        <div class="absolute-center">
+            <div class="account-form">
+                <h2 class="account-header">Channel 2</h2>
+                {% include '_include/messages.html' %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
