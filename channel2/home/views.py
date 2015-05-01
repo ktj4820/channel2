@@ -1,9 +1,9 @@
 from channel2.core.views import ProtectedTemplateView
 
 
-class TagListView(ProtectedTemplateView):
+class HomeView(ProtectedTemplateView):
 
-    template_name = 'tag/tag-list.html'
+    template_name = 'home/home.html'
 
     def get(self, request):
         return self.render_to_response({})

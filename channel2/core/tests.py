@@ -77,3 +77,6 @@ class BaseTestCase(TestCase):
         if duration > 150:
             warnings.warn('{} is slower than 150ms: {}ms'.format(self._testMethodName, duration), RuntimeWarning)
         super().tearDown()
+
+    def assertTemplateUsed(self, response, template_name):
+        self.assertEqual(response.template_name, template_name)

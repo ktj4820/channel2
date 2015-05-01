@@ -13,9 +13,10 @@ TEMPLATE_DEBUG = True
 
 RESOURCE_VERSION = 'development'
 
-INTERNAL_IPS = ['127.0.0.1',]
+ADMINS = []
 
 ALLOWED_HOSTS = []
+INTERNAL_IPS = ['127.0.0.1',]
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -25,8 +26,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'captcha',
+
     'channel2.account',
     'channel2.core',
+    'channel2.home',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -93,6 +97,24 @@ CACHES = {
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
 LOGOUT_URL = '/account/logout/'
+
+#-------------------------------------------------------------------------------
+# local site settings
+#-------------------------------------------------------------------------------
+
+SITE_DOMAIN = 'localhost:8000'
+SITE_SCHEME = 'http'
+
+EMAIL_HOST = ''
+EMAIL_PORT = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+
+FFMPEG_PATH = ''
+VIDEO_DIR = '.'
+VIDEO_LINK_EXPIRE = 6 * 60 * 60
+X_ACCEL = False
 
 #-------------------------------------------------------------------------------
 # template settings

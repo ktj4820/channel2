@@ -9,9 +9,12 @@ Django>=1.8,<1.9
 #------------------------------------------------------------------------------
 
 django-debug-toolbar
-jinja2
+django-simple-captcha
+Jinja2
+Markdown
 psycopg2
 pytz
+Unidecode
 
 #------------------------------------------------------------------------------
 # Deployment
