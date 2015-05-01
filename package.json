@@ -1,0 +1,12 @@
+{
+  "name": "channel2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/derekkwok/channel2.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.1.0"
+  }
+}

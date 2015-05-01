@@ -1,7 +1,37 @@
-<!DOCTYPE>
-<html>
-<head></head>
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="msapplication-TileImage" content="{{ STATIC_URL }}images/touch.png">
+    <meta name="msapplication-TileColor" content="#eeeeee">
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
+    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/touch.png">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
+    <title>Channel 2</title>
+    {% include "_include/analytics.html" %}
+</head>
 <body>
-    <h1>Hello World!</h1>
+    {% block body %}
+        <div id="template-{{ TEMPLATE_NAME }}">
+            {% include '_include/header.html' %}
+            {% include '_include/nav.html' %}
+            <div class="content">
+                <div class="container">
+                    {% include '_include/messages.html' %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block javascript %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}js/app.js"></script>
+    {% endblock %}
 </body>
 </html>
+{% endspaceless %}

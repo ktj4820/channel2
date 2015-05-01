@@ -12,6 +12,7 @@ You will need the following:
 
 - Python 3.4+
 - [PostgreSQL](http://www.postgresql.org/)
+- [npm](https://www.npmjs.org/)
 
 Start by creating a python virtual environment:
 
@@ -36,7 +37,16 @@ Create the database and populate it with some test data:
 Create `imagepress/localsettings.py` with the following:
 	
 	DEBUG = True
-	
+
 Run the server:
 
 	(channel2) $ python manage.py runserver
+
+
+Less Styles Compilation
+-----------------------
+
+Gulp is used to watch and autorun less compilation:
+
+    $ npm install
+    $ gulp

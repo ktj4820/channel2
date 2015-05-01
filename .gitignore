@@ -6,6 +6,10 @@
 .DS_Store
 
 channel2/localsettings.py
+media-test
+node_modules
+static/css/app.css
+static/js/app.js
 
 #-------------------------------------------------------------------------------
 # IDEs
