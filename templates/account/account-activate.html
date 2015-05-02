@@ -1,0 +1,12 @@
+{% extends 'account/account-base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <form action="" method="post">
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        {{ forms.field(form.password1, show_label=False) }}
+        {{ forms.field(form.password2, show_label=False) }}
+        <button type="submit">Set Password</button>
+    </form>
+{% endblock %}
