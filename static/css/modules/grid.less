@@ -1,3 +1,16 @@
+/* --------------------------------------------------
+    grid breakpoints
+---------------------------------------------------*/
+
+@screen-xs1:                599px;
+@screen-xs:                 600px;
+
+@screen-sm1:                767px;
+@screen-sm:                 768px;
+
+@screen-md1:                959px;
+@screen-md:                 960px;
+
 /* -----------------------------------------------------------------------------
     grid styles
 ----------------------------------------------------------------------------- */
@@ -8,4 +21,29 @@
     .align-items(center);
 
     height: 100%;
+}
+
+/* -----------------------------------------------------------------------------
+    screen size classes
+----------------------------------------------------------------------------- */
+
+@media screen and (max-width: @screen-xs1) {
+    .min-xs { display: none !important; }
+}
+@media screen and (min-width: @screen-xs) {
+    .max-xs { display: none !important; }
+}
+
+@media screen and (max-width: @screen-sm1) {
+    .min-sm { display: none !important; }
+}
+@media screen and (min-width: @screen-sm) {
+    .max-sm { display: none !important; }
+}
+
+@media screen and (max-width: @screen-md1) {
+    .min-md { display: none !important; }
+}
+@media screen and (min-width: @screen-md) {
+    .max-md { display: none !important; }
 }

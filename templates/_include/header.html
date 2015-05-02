@@ -3,16 +3,17 @@
 {% set gravatar_url = user.email|gravatar %}
 
 <header>
-    <a href="{{ url('home') }}" class="header-logo">Channel 2</a>
+    <a href="{{ url('home') }}" class="header-logo min-sm">Channel 2</a>
+    <span class="max-sm icon icon-menu" id="header-menu-button"></span>
     <form action="" method="get" class="header-form">
         <input type="text" name="q" placeholder="Search Channel 2..." id="header-search-input" value="{{ request.GET.q }}">
         <button class="icon icon-search" id="header-search-button"></button>
     </form>
-    <a href="{{ url_account_settings }}" class="header-link">
+    <a href="{{ url_account_settings }}" class="header-link min-md">
         <img class="header-gravatar circle" src="{{ gravatar_url }}&s=60">
         <span class="space-left-5">Settings</span>
     </a>
-    <a class="header-link" onclick="document.getElementById('logout-form').submit()">
+    <a class="header-link min-md" onclick="document.getElementById('logout-form').submit()">
         <span class="icon icon-logout"></span>
         <span class="space-left-5">{% trans %}Logout{% endtrans %}</span>
     </a>
