@@ -13,5 +13,34 @@
 }
 .tli-inner {
     display: block;
-    width: 200px;
+}
+
+@media screen and (min-width: 1025px) {
+    .tli-inner { width: 200px; }
+}
+
+@media screen and (min-width: @screen-md) and (max-width: 1024px) {
+    .tli {
+        width: 100% / 4;
+        padding: 5px;
+    }
+}
+
+@media screen and (min-width: @screen-sm) and (max-width: @screen-md1) {
+    .tli {
+        width: 100% / 4;
+        padding: 5px;
+    }
+}
+@media screen and (min-width: @screen-xs) and (max-width: @screen-sm1) {
+    .tli {
+        width: 100% / 3;
+        padding: 5px;
+    }
+}
+@media screen and (max-width: @screen-xs1) {
+    .tli {
+        width: 100% / 2;
+        padding: 5px;
+    }
 }
