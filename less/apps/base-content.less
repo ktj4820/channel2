@@ -4,6 +4,12 @@
 
 .content {
     margin-top: 50px;
-    margin-left: @nav-width;
-    padding: 20px 20px 20px 0;
+    padding: 20px;
+}
+
+@media screen and (min-width: @screen-md) {
+    .content {
+        margin-left: @nav-width;
+        padding-left: 0;
+    }
 }

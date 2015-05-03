@@ -7,14 +7,14 @@ var gulp        = require('gulp'),
 //------------------------------------------------------------------------------
 
 gulp.task('less', function() {
-    return gulp.src('./static/css/app.less')
+    return gulp.src('./less/app.less')
         .pipe(less())
         .pipe(minifycss())
         .pipe(gulp.dest('./static/css'));
 });
 
 gulp.task('watch-less', function() {
-    gulp.watch('static/css/**/*.less', ['less']);
+    gulp.watch('./less/**/*.less', ['less']);
 });
 
 //------------------------------------------------------------------------------

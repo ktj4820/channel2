@@ -4,18 +4,6 @@
 
 @nav-item-height: 36px;
 
-nav {
-    padding: 20px;
-    width: @nav-width;
-
-    position: fixed;
-    top: 50px;
-    left: 0;
-    bottom: 0;
-    z-index: 750;
-}
-
-
 .nav-section {}
 
 .nav-link {
@@ -39,4 +27,31 @@ nav {
     margin-right: 10px;
     text-align: center;
     width: @nav-item-height;
+}
+
+@media screen and (min-width: @screen-md) {
+    nav {
+        padding: 20px;
+        width: @nav-width;
+
+        position: fixed;
+        top: 50px;
+        left: 0;
+        bottom: 0;
+        z-index: 750;
+    }
+}
+
+@media screen and (max-width: @screen-md1) {
+    nav {
+        background-color: #eee;
+        padding: 20px;
+
+        position: fixed;
+        top: 50px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 750;
+    }
 }
