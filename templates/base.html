@@ -21,10 +21,8 @@
             {% include '_include/header.html' %}
             {% include '_include/nav.html' %}
             <div class="content">
-                <div class="container">
-                    {% include '_include/messages.html' %}
-                    {% block content %}{% endblock %}
-                </div>
+                {% include '_include/messages.html' %}
+                {% block content %}{% endblock %}
             </div>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

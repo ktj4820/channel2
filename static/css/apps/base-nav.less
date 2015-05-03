@@ -1,0 +1,42 @@
+/* -----------------------------------------------------------------------------
+    nav styles
+----------------------------------------------------------------------------- */
+
+@nav-item-height: 36px;
+
+nav {
+    padding: 20px;
+    width: @nav-width;
+
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    z-index: 750;
+}
+
+
+.nav-section {}
+
+.nav-link {
+    line-height: @nav-item-height;
+    color: #000;
+    display: block;
+    padding: 3px;
+
+    &.active {}
+    &:hover { background-color: #ddd; }
+}
+
+.nav-icon {
+    .inline-block();
+
+    background-color: @color-accent3;
+    color: #fff;
+    font-size: 18px;
+    height: @nav-item-height;
+    line-height: @nav-item-height;
+    margin-right: 10px;
+    text-align: center;
+    width: @nav-item-height;
+}

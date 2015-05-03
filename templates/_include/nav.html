@@ -1,0 +1,19 @@
+{% set url_home = url('home') %}
+{% import '_macros/utils.html' as utils with context %}
+
+<nav>
+    <div class="nav-section">
+        <a href="{{ url_home }}" class="nav-link {{ utils.link_active(url_home) }}">
+            <span class="nav-icon icon icon-home"></span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-link">
+            <span class="nav-icon icon icon-tag"></span>
+            <span>Tags</span>
+        </a>
+        <a href="#" class="nav-link">
+            <span class="nav-icon icon icon-clock"></span>
+            <span>History</span>
+        </a>
+    </div>
+</nav>
