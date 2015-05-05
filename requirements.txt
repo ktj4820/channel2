@@ -11,6 +11,7 @@ Django>=1.8,<1.9
 django-debug-toolbar
 django-simple-captcha
 Jinja2
+jsonfield
 Markdown
 psycopg2
 pytz

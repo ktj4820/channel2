@@ -1,3 +1,5 @@
+import os
+
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, Page
 from django.template import loader
@@ -5,7 +7,7 @@ from django.utils.text import slugify as django_slugify
 import markdown
 from unidecode import unidecode
 
-from channel2.settings import EMAIL_HOST_USER, DEBUG, ADMINS
+from channel2.settings import EMAIL_HOST_USER, DEBUG, ADMINS, MEDIA_ROOT
 
 
 def slugify(s):
@@ -58,7 +60,8 @@ def email_alert(subject, template, context):
     Send an email to ADMINS
     """
 
-    if DEBUG or not EMAIL_HOST_USER: return
+    if DEBUG or not EMAIL_HOST_USER:
+        return
 
     recipient_list = [email for _, email in ADMINS]
     send_mail(
@@ -84,7 +87,7 @@ markdown_extension = MarkdownExtension()
 
 def convert_markdown(markdown_text):
     """
-    returns the markdown converted into HTML.
+    Returns the markdown converted into HTML.
     """
 
     markdown_text = markdown_text.strip()
@@ -93,3 +96,17 @@ def convert_markdown(markdown_text):
 
     html = markdown.markdown(markdown_text, [markdown_extension], safe_mode='escape').strip()
     return html
+
+
+def remove_media_file(path):
+    """
+    Delete the media file located at "path".
+    """
+
+    if not path:
+        return
+
+    path = MEDIA_ROOT + path
+
+    try: os.unlink(path)
+    except FileNotFoundError: pass

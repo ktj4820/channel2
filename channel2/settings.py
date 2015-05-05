@@ -31,6 +31,8 @@ INSTALLED_APPS = (
     'channel2.account',
     'channel2.core',
     'channel2.home',
+    'channel2.tag',
+    'channel2.video',
 )
 
 MIDDLEWARE_CLASSES = (
