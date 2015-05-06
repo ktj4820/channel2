@@ -11,7 +11,7 @@ class Tag(models.Model):
 
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200)
-    type = models.CharField(choices=TagType.choices, max_length=20)
+    type = models.CharField(choices=TagType.choices, max_length=20, default=TagType.COMMON)
     markdown = models.TextField(blank=True)
     html = models.TextField(blank=True)
     json = JSONField(default={})
