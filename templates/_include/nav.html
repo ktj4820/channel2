@@ -2,6 +2,7 @@
 
 {% set url_home = url('home') %}
 {% set url_tag_list = url('tag.list') %}
+{% set url_tag_list_anime = url('tag.list.anime') %}
 
 <nav>
     <div class="nav-section">
@@ -9,7 +10,7 @@
             <span class="nav-icon icon icon-home"></span>
             <span>Home</span>
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ url_tag_list_anime }}" class="nav-link {{ utils.link_active(url_tag_list_anime) }}">
             <span class="nav-icon icon icon-video"></span>
             <span>Anime</span>
         </a>

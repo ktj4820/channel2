@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul class="tcl">
+        {% for tag in tag_list %}
+            <li class="tcli">
+                <a href="#" class="tcli-inner">
+                    <img src="{{ STATIC_URL }}images/no-image.png">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
