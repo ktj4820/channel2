@@ -1,4 +1,5 @@
 from collections import defaultdict
+
 from django.shortcuts import get_object_or_404
 
 from channel2.core.views import ProtectedTemplateView
@@ -16,6 +17,9 @@ class TagListView(ProtectedTemplateView):
             k = tag.name[0].upper()
             if k.isdigit(): k = '#'
             tag_dict[k].append(tag)
+
+        for k, v in tag_dict.items():
+            tag_dict[k] = sorted(v, key=lambda t: t.name)
 
         return self.render_to_response({
             'tag_dict': tag_dict,

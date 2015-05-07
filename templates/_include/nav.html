@@ -1,9 +1,10 @@
 {% import '_macros/utils.html' as utils with context %}
 
 {% set url_home = url('home') %}
+{% set url_staff_anime_add = url('staff.anime.add') %}
+{% set url_staff_user_add = url('staff.user.add') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_tag_list_anime = url('tag.list.anime') %}
-{% set url_staff_user_add = url('staff.user.add') %}
 
 <nav>
     <div class="nav-section">
@@ -25,7 +26,7 @@
         </a>
         {% if user.is_staff %}
             <div class="nav-spacer"></div>
-            <a href="#" class="nav-link">
+            <a href="{{ url_staff_anime_add }}" class="nav-link">
                 <span class="nav-icon icon icon-publish"></span>
                 <span>Add Anime</span>
             </a>

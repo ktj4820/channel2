@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <form action="" method="get">
+        <h2 class="h2-heading">Add Anime</h2>
+        <div class="max-400 inline-block space-right-10">
+            {{ forms.field(form.title, show_label=False) }}
+        </div>
+        <button type="submit" class="button-primary inline-block">Search</button>
+    </form>
+    {% if anime_list %}
+        <table class="space-top-20 max-800">
+            <thead>
+                <tr>
+                    <th width="100px">ID</th>
+                    <th>Title</th>
+                    <th width="100px">Episodes</th>
+                    <th width="125px">Show Type</th>
+                    <th width="50px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for anime in anime_list %}
+                    <tr>
+                        <td>{{ anime['id'] }}</td>
+                        <td>{{ anime['title'] }}</td>
+                        <td>{{ anime['episode_count'] }}</td>
+                        <td>{{ anime['show_type'] }}</td>
+                        <td class="text-center">
+                            <form action="" method="post">
+                                {{ forms.csrf_input() }}
+                                <input type="hidden" name="hummingbird_id" value="{{ anime['id'] }}">
+                                <button class="table-button button-primary">+</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

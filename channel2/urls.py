@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 
 from channel2.home.views import HomeView
+from channel2.settings import DEBUG, MEDIA_ROOT
 
 
 urlpatterns = [
@@ -13,3 +14,9 @@ urlpatterns = [
     url(r'^tag/',           include('channel2.tag.urls')),
 
 ]
+
+
+if DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT}),
+    ]

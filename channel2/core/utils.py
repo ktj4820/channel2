@@ -110,3 +110,14 @@ def remove_media_file(path):
 
     try: os.unlink(path)
     except FileNotFoundError: pass
+
+
+def prepare_filepath(path):
+    """
+    Creates the missing directories for a file at the given path to exist
+    if necessary
+    """
+
+    dirpath = os.path.dirname(path)
+    if not os.path.exists(dirpath):
+        os.makedirs(dirpath)

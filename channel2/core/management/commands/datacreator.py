@@ -83,7 +83,7 @@ class Command(BaseCommand):
             slug='cowboy-bebop',
             type=TagType.ANIME,
             json=anime_json,
-            cover='/cover/cowboy-bepop.jpg',
+            cover='/cover/cowboy-bebop.jpg',
         )
         anime.children.add(pinned_tag, *tag_list)
         self.tag = anime
@@ -93,8 +93,8 @@ class Command(BaseCommand):
         video_list = []
         for i in range(1, 25):
             video_list.append(Video(
-                file='/video/cowboy-bepop/cowboy-bepop-{}'.format(i),
-                name='Cowboy Bepop {}'.format(i),
+                file='/video/cowboy-bebop/cowboy-bebop-{}'.format(i),
+                name='Cowboy Bebop {}'.format(i),
                 tag=self.tag,
             ))
         Video.objects.bulk_create(video_list)
