@@ -6,7 +6,7 @@
             <div class="no-break-column">
                 <h2 class="h2-heading">{{ key }}</h2>
                 {% for tag in tag_list %}
-                    <a href="#" class="tli{% if loop.last %} space-bottom-15{% endif %}">
+                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli{% if loop.last %} space-bottom-15{% endif %}">
                         <div class="tli-inner">
                             <span class="icon icon-right-open tli-icon"></span>
                             <span>{{ tag.name }}</span>

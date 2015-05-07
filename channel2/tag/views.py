@@ -1,4 +1,5 @@
 from collections import defaultdict
+from django.shortcuts import get_object_or_404
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.enums import TagType
@@ -29,4 +30,15 @@ class TagListAnimeView(ProtectedTemplateView):
         tag_list = Tag.objects.filter(type=TagType.ANIME).order_by('name')
         return self.render_to_response({
             'tag_list': tag_list,
+        })
+
+
+class TagView(ProtectedTemplateView):
+
+    template_name = 'tag/tag.html'
+
+    def get(self, request, id, slug):
+        tag = get_object_or_404(Tag, id=id)
+        return self.render_to_response({
+            'tag': tag,
         })

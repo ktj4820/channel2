@@ -7,5 +7,6 @@ urlpatterns = [
 
     url(r'^$',          views.TagListView.as_view(), name='tag.list'),
     url(r'^anime/$',    views.TagListAnimeView.as_view(), name='tag.list.anime'),
+    url(r'(?P<id>\d+)/(?P<slug>[\w-]+)/$',  views.TagView.as_view(), name='tag'),
 
 ]
