@@ -67,7 +67,7 @@ class Command(BaseCommand):
             return user
 
         self.user = create_user_helper('testuser@example.com', 'Test User')
-        self.staff_user = create_user_helper('staffuser@example.com', 'Staff User')
+        self.staff_user = create_user_helper('staffuser@example.com', 'Staff User', is_staff=True)
 
     @timed
     def create_tags(self):

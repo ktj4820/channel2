@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'channel2.account',
     'channel2.core',
     'channel2.home',
+    'channel2.staff',
     'channel2.tag',
     'channel2.video',
 )

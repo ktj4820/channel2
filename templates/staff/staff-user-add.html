@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <form action="" method="post" class="max-400">
+        <h2 class="h2-heading">Add User</h2>
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        {{ forms.field(form.email, show_label=False) }}
+        <button type="submit" class="button-primary">Add User</button>
+    </form>
+{% endblock %}

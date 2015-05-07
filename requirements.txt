@@ -15,6 +15,7 @@ jsonfield
 Markdown
 psycopg2
 pytz
+SQLAlchemy
 Unidecode
 
 #------------------------------------------------------------------------------
