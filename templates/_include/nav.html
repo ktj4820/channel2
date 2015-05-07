@@ -1,5 +1,7 @@
-{% set url_home = url('home') %}
 {% import '_macros/utils.html' as utils with context %}
+
+{% set url_home = url('home') %}
+{% set url_tag_list = url('tag.list') %}
 
 <nav>
     <div class="nav-section">
@@ -8,6 +10,10 @@
             <span>Home</span>
         </a>
         <a href="#" class="nav-link">
+            <span class="nav-icon icon icon-video"></span>
+            <span>Anime</span>
+        </a>
+        <a href="{{ url_tag_list }}" class="nav-link {{ utils.link_active(url_tag_list) }}">
             <span class="nav-icon icon icon-tag"></span>
             <span>Tags</span>
         </a>
@@ -21,9 +27,5 @@
             <span>Random!</span>
         </a>
         <div class="nav-spacer"></div>
-        <a href="#" class="nav-link">
-            <span class="nav-icon icon icon-tag"></span>
-            <span>Anime</span>
-        </a>
     </div>
 </nav>

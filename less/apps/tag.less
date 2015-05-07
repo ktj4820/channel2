@@ -1,45 +1,82 @@
 /* -----------------------------------------------------------------------------
-    tag styles
+    tag list (tl)
 ----------------------------------------------------------------------------- */
 
 .tl {
-    list-style-type: none;
-    margin: -10px -10px 20px;
+    .column-width(260px);
+    .column-gap(20px);
+
+    margin: -3px;
 }
+
 .tli {
-    .inline-block();
-    margin: 0;
-    padding: 10px;
+    display: block;
+    padding: 3px;
+    line-height: 30px;
+
+    &:hover {
+        background-color: #ddd;
+    }
 }
+
 .tli-inner {
     display: block;
 }
 
+.tli-icon {
+    .inline-block();
+
+    background-color: @color-accent3;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+    text-align: center;
+    width: 30px;
+}
+
+/* -----------------------------------------------------------------------------
+    tag cover list (tcl)
+----------------------------------------------------------------------------- */
+
+.tcl {
+    list-style-type: none;
+    margin: -10px -10px 20px;
+}
+.tcli {
+    .inline-block();
+    margin: 0;
+    padding: 10px;
+}
+.tcli-inner {
+    display: block;
+}
+
 @media screen and (min-width: 1025px) {
-    .tli-inner { width: 200px; }
+    .tcli-inner { width: 200px; }
 }
 
 @media screen and (min-width: @screen-md) and (max-width: 1024px) {
-    .tli {
+    .tcli {
         width: 100% / 4;
         padding: 5px;
     }
 }
 
 @media screen and (min-width: @screen-sm) and (max-width: @screen-md1) {
-    .tli {
+    .tcli {
         width: 100% / 4;
         padding: 5px;
     }
 }
 @media screen and (min-width: @screen-xs) and (max-width: @screen-sm1) {
-    .tli {
+    .tcli {
         width: 100% / 3;
         padding: 5px;
     }
 }
 @media screen and (max-width: @screen-xs1) {
-    .tli {
+    .tcli {
         width: 100% / 2;
         padding: 5px;
     }
