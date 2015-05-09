@@ -72,3 +72,39 @@ class StaffAnimeAddViewTests(BaseStaffTests):
 
         response = self.client.post(reverse('staff.anime.add'))
         self.assertRedirects(response, reverse('tag', args=[tag.id, tag.slug]))
+
+
+class StaffTagEditViewTests(BaseStaffTests):
+
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.get(name='Action')
+
+    def test_staff_tag_edit_view_get(self):
+        response = self.client.get(reverse('staff.tag.edit', args=[self.tag.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-tag-edit.html')
+    
+    def test_staff_tag_edit_view_post_invalid(self):
+        pass
+        
+    def test_staff_tag_edit_view_post(self):
+        pass
+
+
+class StaffTagVideoViewTests(BaseStaffTests):
+    
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.get(name='Action')
+
+    def test_staff_tag_video_view_get(self):
+        response = self.client.get(reverse('staff.tag.video', args=[self.tag.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-tag-video.html')
+    
+    def test_staff_tag_video_view_post_invalid(self):
+        pass
+        
+    def test_staff_tag_video_view_post(self):
+        pass

@@ -2,8 +2,8 @@
 
 {% block content %}
     {% if user.is_staff %}
-        <a href="#" class="button button-primary tag-button right">Edit Tag</a>
-        <a href="#" class="button button-primary tag-button right space-right-10">Manage Videos</a>
+        <a href="{{ url('staff.tag.edit', args=[tag.id]) }}" class="button button-primary tag-button right">Edit Tag</a>
+        <a href="{{ url('staff.tag.video', args=[tag.id]) }}" class="button button-primary tag-button right space-right-10">Manage Videos</a>
     {% endif %}
     <h2 class="h2-heading">{{ tag.name }}</h2>
     {% if children_list %}

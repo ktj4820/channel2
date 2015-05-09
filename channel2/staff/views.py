@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 import requests
 
 from channel2.core.views import StaffTemplateView
 from channel2.staff.forms import StaffUserAddForm, StaffAnimeSearchForm, StaffAnimeAddForm
+from channel2.tag.models import Tag
 
 
 class StaffUserAddView(StaffTemplateView):
@@ -56,3 +57,25 @@ class StaffAnimeAddView(StaffTemplateView):
             for error in form.errors[field]:
                 messages.error(request, error)
         return redirect('staff.anime.add')
+
+
+class StaffTagEditView(StaffTemplateView):
+
+    template_name = 'staff/staff-tag-edit.html'
+
+    def get(self, request, id):
+        tag = get_object_or_404(Tag, id=id)
+        return self.render_to_response({
+            'tag': tag,
+        })
+
+
+class StaffTagVideoView(StaffTemplateView):
+
+    template_name = 'staff/staff-tag-video.html'
+
+    def get(self,  request, id):
+        tag = get_object_or_404(Tag, id=id)
+        return self.render_to_response({
+            'tag': tag,
+        })
