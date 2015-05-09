@@ -52,5 +52,7 @@ class StaffAnimeAddView(StaffTemplateView):
             tag = form.save()
             return redirect('tag', id=tag.id, slug=tag.slug)
 
-        messages.error(request, 'An error occurred while processing the data: {}'.format(form.errors))
+        for field in form.errors:
+            for error in form.errors[field]:
+                messages.error(request, error)
         return redirect('staff.anime.add')

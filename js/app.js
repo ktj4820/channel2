@@ -7,6 +7,11 @@ $(function() {
     $headerMenuButton.click(function() {
         $headerMenuButton.toggleClass('active');
         $nav.toggleClass('active');
-    })
+    });
+
+    // messages
+    $('.message .icon-cancel').click(function () {
+        $(this).parent().slideUp(200);
+    });
 
 });

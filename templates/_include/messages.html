@@ -1,0 +1,10 @@
+{% if messages %}
+    <ul class="message-list">
+        {% for message in messages %}
+            <li class="message message-{{ message.tags }}">
+                <span class="icon icon-cancel right"></span>
+                <span>{{ message|safe }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
