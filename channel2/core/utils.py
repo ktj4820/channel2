@@ -106,7 +106,7 @@ def remove_media_file(path):
     if not path:
         return
 
-    path = MEDIA_ROOT + path
+    path = os.path.join(MEDIA_ROOT, path)
 
     try: os.unlink(path)
     except FileNotFoundError: pass

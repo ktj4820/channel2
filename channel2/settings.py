@@ -116,7 +116,7 @@ EMAIL_USE_TLS = True
 
 FFMPEG_PATH = ''
 VIDEO_DIR = '.'
-VIDEO_LINK_EXPIRE = 6 * 60 * 60
+VIDEO_LINK_EXPIRE = 24 * 60 * 60
 X_ACCEL = False
 
 #-------------------------------------------------------------------------------

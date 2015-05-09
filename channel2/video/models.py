@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
+import os
 
 from channel2.account.models import User
 from channel2.core.utils import slugify, remove_media_file
+from channel2.settings import MEDIA_ROOT, MEDIA_URL
 from channel2.tag.models import Tag
 
 
@@ -28,6 +30,14 @@ class Video(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)[:200] or '-'
         super().save(*args, **kwargs)
+
+    @property
+    def filepath(self):
+        return os.path.join(MEDIA_ROOT, self.file)
+
+    @property
+    def url(self):
+        return os.path.join(MEDIA_URL, self.file)
 
 
 class VideoLink(models.Model):

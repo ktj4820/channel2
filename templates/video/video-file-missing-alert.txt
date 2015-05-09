@@ -1,0 +1,5 @@
+Video file is missing. Details:
+
+File: {{ video.file }}
+Name: {{ video.name }}
+Created On: {{ video.created_on }}
