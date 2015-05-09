@@ -1,5 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if user.is_staff %}
+        <a href="#" class="button button-primary tag-button right">Edit Tag</a>
+        <a href="#" class="button button-primary tag-button right space-right-10">Manage Videos</a>
+    {% endif %}
     <h2 class="h2-heading">{{ tag.name }}</h2>
+    {% if children_list %}
+        <div class="ttl">
+            {% for tag in children_list %}
+                <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="ttli">
+                    <span class="ttli-text">{{ tag.name }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if parent_list %}
+        <div class="tl">
+            {% for tag in parent_list %}
+                <div class="no-break-column">
+                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.anme }}">
+                        <div class="tli-inner">
+                            <span class="icon icon-right-open tli-icon"></span>
+                            <span>{{ tag.name }}</span>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if tag.type == 'anime' %}
+    {% endif %}
+    <div class="tl">
+        {% for video in video_list %}
+            <div class="tli">
+                <a href="#abc" class="left">
+                    <span class="icon icon-down-circled tli-icon tli-icon-short"></span>
+                </a>
+                <a href="#" class="block">
+                    <span class="icon icon-play tli-icon"></span>
+                    {% if video.episode %}
+                        <span>Episode {{ video.episode }}</span>
+                    {% else %}
+                        <span>{{ video.name }}</span>
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

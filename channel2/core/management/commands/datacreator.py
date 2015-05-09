@@ -94,7 +94,8 @@ class Command(BaseCommand):
         for i in range(1, 25):
             video_list.append(Video(
                 file='/video/cowboy-bebop/cowboy-bebop-{}'.format(i),
-                name='Cowboy Bebop {}'.format(i),
+                name='Cowboy Bebop {0:02d}'.format(i),
+                episode='{0:02d}'.format(i),
                 tag=self.tag,
             ))
         Video.objects.bulk_create(video_list)

@@ -11,6 +11,7 @@ class Video(models.Model):
 
     file = models.CharField(max_length=300)
     name = models.CharField(max_length=200)
+    episode = models.CharField(max_length=200, blank=True)
     slug = models.SlugField(max_length=200)
     views = models.IntegerField(default=0)
     cover = models.CharField(max_length=300, blank=True)

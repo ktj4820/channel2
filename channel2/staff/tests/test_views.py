@@ -56,6 +56,7 @@ class StaffAnimeAddViewTests(BaseStaffTests):
     def test_staff_anime_add_view_post_invalid(self, mock_form_cls):
         mock_form = mock.Mock()
         mock_form.is_valid.return_value = False
+        mock_form.errors = []
         mock_form_cls.return_value = mock_form
         response = self.client.post(reverse('staff.anime.add'))
         self.assertRedirects(response, reverse('staff.anime.add'))

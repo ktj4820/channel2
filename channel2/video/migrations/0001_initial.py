@@ -16,12 +16,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Video',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('file', models.CharField(max_length=300)),
                 ('name', models.CharField(max_length=200)),
+                ('episode', models.CharField(blank=True, max_length=200)),
                 ('slug', models.SlugField(max_length=200)),
                 ('views', models.IntegerField(default=0)),
-                ('cover', models.CharField(max_length=300, blank=True)),
+                ('cover', models.CharField(blank=True, max_length=300)),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
                 ('tag', models.ForeignKey(to='tag.Tag')),
             ],
@@ -32,11 +33,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='VideoLink',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('key', models.CharField(max_length=64, unique=True)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('key', models.CharField(unique=True, max_length=64)),
                 ('ip_address', models.CharField(max_length=200)),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+')),
+                ('created_by', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL)),
                 ('video', models.ForeignKey(to='video.Video')),
             ],
             options={

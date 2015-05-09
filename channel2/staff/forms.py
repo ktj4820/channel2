@@ -89,7 +89,7 @@ class StaffAnimeAddForm(forms.Form):
             json=self.json,
         )
 
-        tag.cover = download_cover(tag)
+        tag.cover = download_cover(tag, self.json['cover_image'])
         tag.save()
 
         children = []

@@ -22,12 +22,12 @@ month_to_season = {
     12: 'Winter',
 }
 
-def download_cover(self, tag):
-    r = requests.get(self.json['cover_image'])
+def download_cover(tag, cover_url):
+    r = requests.get(cover_url)
 
     ext = Image.open(BytesIO(r.content)).format.lower()
     cover = '/covers/{}.{}'.format(tag.id, ext)
-    cover_path = MEDIA_ROOT + cover
+    cover_path = '{}{}'.format(MEDIA_ROOT, cover)
     prepare_filepath(cover_path)
 
     with open(cover_path, 'wb') as f:

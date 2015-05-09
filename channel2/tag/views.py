@@ -43,6 +43,10 @@ class TagView(ProtectedTemplateView):
 
     def get(self, request, id, slug):
         tag = get_object_or_404(Tag, id=id)
+        video_list = tag.video_set.order_by('name')
         return self.render_to_response({
+            'children_list': tag.children.all(),
+            'parent_list': tag.parents.all(),
             'tag': tag,
+            'video_list': video_list,
         })
