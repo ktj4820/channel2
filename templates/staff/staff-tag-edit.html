@@ -1,6 +1,0 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="button button-primary tag-button right">Back</a>
-    <h2 class="h2-heading">{{ tag.name }}</h2>
-{% endblock %}

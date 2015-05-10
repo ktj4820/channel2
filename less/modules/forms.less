@@ -11,7 +11,14 @@
 ----------------------------------------------------------------------------- */
 
 label {
-	display: none;
+    color: #666;
+    font-size: 13px;
+    font-weight: @font-weight-bold;
+    text-transform: uppercase;
+}
+
+label + select {
+    margin-left: 10px;
 }
 
 input[type="email"], input[type="password"], input[type="text"] {
@@ -23,10 +30,24 @@ input[type="email"], input[type="password"], input[type="text"] {
 	height: 46px;
 	line-height: 24px;
 	outline: none;
-	padding: 10px 15px;
+	padding: 10px;
 	width: 100%;
 
     -webkit-appearance: none;
+}
+
+textarea {
+    .border-radius(0);
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    font-family: @font-family-monospace;
+    font-size: 15px;
+    line-height: 1.2;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    width: 100%;
 }
 
 /* -----------------------------------------------------------------------------

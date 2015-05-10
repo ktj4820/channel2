@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 
 from channel2.account.models import User
 from channel2.core.tests import BaseTestCase
+from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
 
 
@@ -74,6 +75,34 @@ class StaffAnimeAddViewTests(BaseStaffTests):
         self.assertRedirects(response, reverse('tag', args=[tag.id, tag.slug]))
 
 
+class StaffTagAddViewTests(BaseStaffTests):
+
+    def test_staff_tag_add_view_get(self):
+        response = self.client.get(reverse('staff.tag.add'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-tag.html')
+    
+    def test_staff_tag_add_view_post_invalid(self):
+        response = self.client.post(reverse('staff.tag.add'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-tag.html')
+
+    def test_staff_tag_add_view_post(self):
+        response = self.client.post(reverse('staff.tag.add'), {
+            'name': 'New Tag',
+            'type': TagType.ANIME,
+            'markdown': 'Some markdown for the new tag.',
+        })
+        tag = Tag.objects.get(name='New Tag')
+        self.assertRedirects(response, reverse('tag', args=[tag.id, tag.slug]))
+
+        self.assertEqual(tag.type, TagType.ANIME)
+        self.assertEqual(tag.markdown, 'Some markdown for the new tag.')
+        self.assertEqual(tag.html, '<p>Some markdown for the new tag.</p>')
+        self.assertFalse(tag.pinned)
+        self.assertEqual(tag.order, None)
+
+
 class StaffTagEditViewTests(BaseStaffTests):
 
     def setUp(self):
@@ -83,13 +112,28 @@ class StaffTagEditViewTests(BaseStaffTests):
     def test_staff_tag_edit_view_get(self):
         response = self.client.get(reverse('staff.tag.edit', args=[self.tag.id]))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'staff/staff-tag-edit.html')
+        self.assertTemplateUsed(response, 'staff/staff-tag.html')
     
     def test_staff_tag_edit_view_post_invalid(self):
-        pass
+        response = self.client.post(reverse('staff.tag.edit', args=[self.tag.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-tag.html')
         
     def test_staff_tag_edit_view_post(self):
-        pass
+        response = self.client.post(reverse('staff.tag.edit', args=[self.tag.id]), {
+            'name': 'New Tag Name',
+            'type': TagType.COMMON,
+            'markdown': 'Some new markdown for the tag',
+        })
+        tag = Tag.objects.get(id=self.tag.id)
+        self.assertRedirects(response, reverse('tag', args=[tag.id, tag.slug]))
+
+        self.assertEqual(tag.name, 'New Tag Name')
+        self.assertEqual(tag.type, TagType.COMMON)
+        self.assertEqual(tag.markdown, 'Some new markdown for the tag')
+        self.assertEqual(tag.pinned, False)
+        self.assertEqual(tag.order, None)
+        self.assertEqual(tag.html, '<p>Some new markdown for the tag</p>')
 
 
 class StaffTagVideoViewTests(BaseStaffTests):

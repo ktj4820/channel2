@@ -1,8 +1,8 @@
 import datetime
 
 from django import forms
-
 from django.core.mail import send_mail
+import markdown
 import requests
 
 from channel2.account.models import User
@@ -108,4 +108,92 @@ class StaffAnimeAddForm(forms.Form):
             children.append(child)
 
         tag.children.add(*children)
+        return tag
+
+
+class StaffTagForm(forms.ModelForm):
+
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Name',
+            'required': 'required',
+        })
+    )
+
+    children = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Children Tags',
+        })
+    )
+
+    markdown = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Markdown',
+        })
+    )
+
+    error_messages = {
+        'name_has_comma': 'The tag name cannot have a comma in it',
+        'tag_not_found': 'Unable to find tag "{}"',
+    }
+
+    class Meta:
+        model = Tag
+        fields = ('name', 'type', 'markdown')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ''
+        self.html = ''
+        self.children_tag_list = []
+
+        if 'instance' in kwargs:
+            instance = kwargs['instance']
+            self.fields['children'].initial = ', '.join(Tag.objects.filter(parents=instance).order_by('slug').values_list('name', flat=True))
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if ',' in name:
+            raise forms.ValidationError(self.error_messages['name_has_comma'])
+        return name
+
+    def clean_children(self):
+        children = self.cleaned_data.get('children')
+        self.children_tag_list = []
+        for tag_name in children.split(','):
+            tag_name = tag_name.strip()
+            if not tag_name:
+                continue
+            try:
+                tag = Tag.objects.get(name=tag_name)
+                self.children_tag_list.append(tag)
+            except Tag.DoesNotExist:
+                raise forms.ValidationError(self.error_messages['tag_not_found'].format(tag_name))
+        return children
+
+    def clean_markdown(self):
+        md = self.cleaned_data.get('markdown')
+        self.html = markdown.markdown(md)
+        return md
+
+    def save(self, commit=True):
+        tag = super().save(commit=False)
+        tag.html = self.html
+
+        if not commit:
+            return tag
+
+        tag.save()
+
+        cur_tags = set(tag.children.all())
+        new_tags = set(self.children_tag_list)
+
+        for ctag in (cur_tags - new_tags):
+            tag.children.remove(ctag)
+        for ctag in (new_tags - cur_tags):
+            tag.children.add(ctag)
+
         return tag

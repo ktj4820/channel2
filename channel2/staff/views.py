@@ -1,9 +1,12 @@
+import json
+
 from django.contrib import messages
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 import requests
 
 from channel2.core.views import StaffTemplateView
-from channel2.staff.forms import StaffUserAddForm, StaffAnimeSearchForm, StaffAnimeAddForm
+from channel2.staff.forms import StaffUserAddForm, StaffAnimeSearchForm, StaffAnimeAddForm, StaffTagForm
 from channel2.tag.models import Tag
 
 
@@ -59,13 +62,46 @@ class StaffAnimeAddView(StaffTemplateView):
         return redirect('staff.anime.add')
 
 
+class StaffTagAddView(StaffTemplateView):
+
+    template_name = 'staff/staff-tag.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'form': StaffTagForm(),
+        })
+
+    def post(self, request):
+        form = StaffTagForm(data=request.POST)
+        if form.is_valid():
+            tag = form.save()
+            return redirect('tag', id=tag.id, slug=tag.slug)
+
+        return self.render_to_response({
+            'form': form,
+        })
+
+
 class StaffTagEditView(StaffTemplateView):
 
-    template_name = 'staff/staff-tag-edit.html'
+    template_name = 'staff/staff-tag.html'
 
     def get(self, request, id):
         tag = get_object_or_404(Tag, id=id)
         return self.render_to_response({
+            'form': StaffTagForm(instance=tag),
+            'tag': tag,
+        })
+
+    def post(self, request, id):
+        tag = get_object_or_404(Tag, id=id)
+        form = StaffTagForm(instance=tag, data=request.POST)
+        if form.is_valid():
+            tag = form.save()
+            return redirect('tag', id=tag.id, slug=tag.slug)
+
+        return self.render_to_response({
+            'form': form,
             'tag': tag,
         })
 
@@ -79,3 +115,11 @@ class StaffTagVideoView(StaffTemplateView):
         return self.render_to_response({
             'tag': tag,
         })
+
+
+class StaffTagAutocompleteView(StaffTemplateView):
+
+    def get(self, request):
+        tag_list = Tag.objects.order_by('name').values_list('name', flat=True)
+        content = json.dumps(list(tag_list), ensure_ascii=False)
+        return HttpResponse(content=content, content_type='application/json')

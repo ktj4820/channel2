@@ -2,7 +2,7 @@ from unittest import mock
 
 from channel2.core.management.commands.datacreator import anime_json
 from channel2.core.tests import BaseTestCase
-from channel2.staff.forms import StaffUserAddForm, StaffAnimeAddForm
+from channel2.staff.forms import StaffUserAddForm, StaffAnimeAddForm, StaffTagForm
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
 
@@ -64,3 +64,51 @@ class StaffAnimeAddFormTests(BaseTestCase):
         self.assertTrue(Tag.objects.get(name='Action') in tag.children.all())
 
 
+class StaffTagFormTests(BaseTestCase):
+
+    def test_tag_form_create(self):
+        form = StaffTagForm(data={
+            'name': 'New Tag',
+            'type': 'common',
+            'markdown': 'Some markdown for the new tag.',
+        })
+        self.assertTrue(form.is_valid(), form.errors)
+        tag = form.save()
+
+        self.assertEqual(tag.name, 'New Tag')
+        self.assertEqual(tag.markdown, 'Some markdown for the new tag.')
+        self.assertEqual(tag.html, '<p>Some markdown for the new tag.</p>')
+
+    def test_tag_form_create_name_with_comma(self):
+        form = StaffTagForm(data={
+            'name': 'New Tag, with comma',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['name'], [StaffTagForm.error_messages['name_has_comma']])
+
+    def test_tag_form_create_children_not_exists(self):
+        form = StaffTagForm(data={
+            'name': 'New Tag',
+            'children': 'Invalid Tag',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['children'], [StaffTagForm.error_messages['tag_not_found'].format('Invalid Tag')])
+
+    def test_tag_form_create_children(self):
+        form = StaffTagForm(data={
+            'name': 'New Tag',
+            'type': 'common',
+            'children': ', '.join([tag.name for tag in Tag.objects.all()]),
+        })
+        self.assertTrue(form.is_valid())
+        tag = form.save()
+        self.assertEqual(set(tag.children.all()), set(Tag.objects.all().exclude(id=tag.id)))
+
+        form = StaffTagForm(instance=tag, data={
+            'name': 'New Tag',
+            'type': 'common',
+            'children': '',
+        })
+        self.assertTrue(form.is_valid())
+        tag = form.save()
+        self.assertEqual(set(tag.children.all()), set())

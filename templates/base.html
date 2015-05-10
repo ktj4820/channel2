@@ -9,7 +9,7 @@
     <meta name="msapplication-TileColor" content="#eeeeee">
     <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
     <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/touch.png">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Inconsolata">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
     <title>Channel 2</title>
@@ -25,10 +25,10 @@
                 {% block content %}{% endblock %}
             </div>
         </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="{{ STATIC_URL }}js/app.js"></script>
     {% endblock %}
     {% block javascript %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}js/app.js"></script>
     {% endblock %}
 </body>
 </html>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    {% if tag %}
+        <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="button button-primary tag-button right">Back</a>
+        <h2 class="h2-heading">{{ tag.name }}</h2>
+    {% else %}
+        <h2 class="h2-heading">Create Tag</h2>
+    {% endif %}
+    <form action="" method="post" class="max-800">
+        {{ forms.csrf_input() }}
+        {{ forms.non_field_errors(form) }}
+        {{ forms.field(form.name) }}
+        {{ forms.field(form.children) }}
+        {{ forms.field(form.type) }}
+        {{ forms.field(form.markdown) }}
+        <div class="markdown markdown-preview" data-for="id_markdown"></div>
+        <div class="space-top-30">
+            {% if tag %}
+                <button class="button-primary">Save</button>
+            {% else %}
+                <button class="button-primary">Create</button>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/markdown.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{{ STATIC_URL }}js/app.js"></script>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 {% set url_home = url('home') %}
 {% set url_staff_anime_add = url('staff.anime.add') %}
+{% set url_staff_tag_add = url('staff.tag.add') %}
 {% set url_staff_user_add = url('staff.user.add') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_tag_list_anime = url('tag.list.anime') %}
@@ -34,7 +35,7 @@
                 <span class="nav-icon icon icon-user-add"></span>
                 <span>Add User</span>
             </a>
-            <a href="#" class="nav-link">
+            <a href="{{ url_staff_tag_add }}" class="nav-link">
                 <span class="nav-icon icon icon-plus"></span>
                 <span>Create Tag</span>
             </a>

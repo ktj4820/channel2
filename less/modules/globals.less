@@ -22,6 +22,37 @@ img {
 }
 
 /* -----------------------------------------------------------------------------
+    markdown preview
+----------------------------------------------------------------------------- */
+
+.markdown-preview {
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+
+/* -----------------------------------------------------------------------------
+    utlity classes
+----------------------------------------------------------------------------- */
+
+.captcha { border: 1px solid #ccc; }
+.clickable { cursor: pointer; }
+
+.circle { .border-radius(50%); }
+
+.placeholder-no-transform {
+    &::-webkit-input-placeholder { text-transform: none; }
+    &:-moz-placeholder { text-transform: none; }
+    &::-moz-placeholder { text-transform: none; }
+    &:-ms-input-placeholder { text-transform: none; }
+}
+
+.no-break-column {
+    break-inside: avoid-column;
+    overflow: hidden;
+    -webkit-column-break-inside: avoid;
+}
+
+/* -----------------------------------------------------------------------------
     spacing
 ----------------------------------------------------------------------------- */
 
@@ -52,28 +83,6 @@ img {
 .space-left-15      { margin-left: 15px; }
 .space-left-20      { margin-left: 20px; }
 .space-left-30      { margin-left: 30px; }
-
-/* -----------------------------------------------------------------------------
-    utlity classes
------------------------------------------------------------------------------ */
-
-.captcha { border: 1px solid #ccc; }
-.clickable { cursor: pointer; }
-
-.circle { .border-radius(50%); }
-
-.placeholder-no-transform {
-    &::-webkit-input-placeholder { text-transform: none; }
-    &:-moz-placeholder { text-transform: none; }
-    &::-moz-placeholder { text-transform: none; }
-    &:-ms-input-placeholder { text-transform: none; }
-}
-
-.no-break-column {
-    break-inside: avoid-column;
-    overflow: hidden;
-    -webkit-column-break-inside: avoid;
-}
 
 /* -----------------------------------------------------------------------------
     display classes
