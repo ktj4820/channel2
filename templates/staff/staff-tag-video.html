@@ -1,6 +1,35 @@
 {% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
     <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="button button-primary tag-button right">Back</a>
     <h2 class="h2-heading">{{ tag.name }}</h2>
+    <form action="" method="post">
+        {{ forms.csrf_input() }}
+        {{ formset.management_form|safe }}
+        <table class="space-bottom-20">
+            <thead>
+                <tr>
+                    <th width="35px"></th>
+                    <th>Filename</th>
+                    <th width="400px">Name</th>
+                    <th width="80px">Episode</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                    <tr>
+                        <td>{{ form.selected|safe }}</td>
+                        <td>
+                            <label for="{{ form.selected.auto_id }}" class="unselectable text-overflow" title="{{ form.filename.value() }}">{{ form.filename.value() }}</label>
+                            {{ form.filename|safe }}
+                        </td>
+                        <td>{{ form.name|safe }}</td>
+                        <td>{{ form.episode|safe }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="button-primary">Add Videos</button>
+    </form>
 {% endblock %}

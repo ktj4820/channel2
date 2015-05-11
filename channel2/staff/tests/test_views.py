@@ -53,7 +53,7 @@ class StaffAnimeAddViewTests(BaseStaffTests):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'staff/staff-anime-add.html')
 
-    @mock.patch('channel2.staff.views.StaffAnimeAddForm')
+    @mock.patch('channel2.staff.views.forms.StaffAnimeAddForm')
     def test_staff_anime_add_view_post_invalid(self, mock_form_cls):
         mock_form = mock.Mock()
         mock_form.is_valid.return_value = False
@@ -62,7 +62,7 @@ class StaffAnimeAddViewTests(BaseStaffTests):
         response = self.client.post(reverse('staff.anime.add'))
         self.assertRedirects(response, reverse('staff.anime.add'))
 
-    @mock.patch('channel2.staff.views.StaffAnimeAddForm')
+    @mock.patch('channel2.staff.views.forms.StaffAnimeAddForm')
     def test_staff_anime_add_view_post(self, mock_form_cls):
         tag = Tag.objects.get(name='Cowboy Bebop')
 

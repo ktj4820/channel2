@@ -2,8 +2,10 @@
 
 {% block content %}
     {% if user.is_staff %}
-        <a href="{{ url('staff.tag.edit', args=[tag.id]) }}" class="button button-primary tag-button right">Edit Tag</a>
-        <a href="{{ url('staff.tag.video', args=[tag.id]) }}" class="button button-primary tag-button right space-right-10">Manage Videos</a>
+        <div class="right min-md">
+            <a href="{{ url('staff.tag.video', args=[tag.id]) }}" class="button button-primary tag-button space-right-10">Manage Videos</a>
+            <a href="{{ url('staff.tag.edit', args=[tag.id]) }}" class="button button-primary tag-button">Edit Tag</a>
+        </div>
     {% endif %}
     <h2 class="h2-heading">{{ tag.name }}</h2>
     {% if children_list %}

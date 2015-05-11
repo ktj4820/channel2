@@ -14,10 +14,10 @@ class VideoModelTests(BaseTestCase):
 
     def test_video_delete(self):
         file = 'test-video-01.mp4'
-        file_path = os.path.join(MEDIA_ROOT, file)
+        filepath = os.path.join(MEDIA_ROOT, file)
 
-        open(file_path, 'a').close()
-        self.assertTrue(os.path.exists(file_path))
+        open(filepath, 'a').close()
+        self.assertTrue(os.path.exists(filepath))
 
         video = Video.objects.create(
             name='Test Video',
@@ -26,4 +26,4 @@ class VideoModelTests(BaseTestCase):
         )
 
         video.delete()
-        self.assertFalse(os.path.exists(file_path))
+        self.assertFalse(os.path.exists(filepath))

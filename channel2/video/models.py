@@ -11,7 +11,7 @@ from channel2.tag.models import Tag
 
 class Video(models.Model):
 
-    file = models.CharField(max_length=300)
+    file = models.CharField(max_length=300, unique=True)
     name = models.CharField(max_length=200)
     episode = models.CharField(max_length=200, blank=True)
     slug = models.SlugField(max_length=200)
