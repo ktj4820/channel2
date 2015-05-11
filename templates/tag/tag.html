@@ -8,7 +8,21 @@
         </div>
     {% endif %}
     <h2 class="h2-heading">{{ tag.name }}</h2>
-    {% if children_list %}
+    {% if tag.type == 'anime' %}
+        {% if tag.cover %}
+            <img src="{{ tag.cover_url }}" class="tag-cover">
+        {% endif %}
+        <div class="tag-info">
+            <div class="ttl">
+                {% for tag in children_list %}
+                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="ttli">
+                        <span class="ttli-text">{{ tag.name }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+            <div>{{ tag.json.get('synopsis') }}</div>
+        </div>
+    {% elif children_list %}
         <div class="ttl">
             {% for tag in children_list %}
                 <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="ttli">
@@ -30,8 +44,6 @@
                 </div>
             {% endfor %}
         </div>
-    {% endif %}
-    {% if tag.type == 'anime' %}
     {% endif %}
     {% if video_list %}
         <div class="tl">

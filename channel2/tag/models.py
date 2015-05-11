@@ -1,9 +1,12 @@
+import os
+
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
 from jsonfield.fields import JSONField
 
 from channel2.core.utils import slugify, remove_media_file
+from channel2.settings import MEDIA_URL
 from channel2.tag.enums import TagType
 
 
@@ -27,13 +30,18 @@ class Tag(models.Model):
     class Meta:
         db_table = 'tag'
 
+    def __str__(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)[:200] or '-'
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.name
-
+    @property
+    def cover_url(self):
+        if self.cover:
+            return os.path.join(MEDIA_URL, self.cover)
+        return ''
 
 #-------------------------------------------------------------------------------
 # Unmanaged join tables

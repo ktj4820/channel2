@@ -5,7 +5,7 @@
         {% for tag in tag_list %}
             <li class="tcli">
                 <a href="#" class="tcli-inner">
-                    <img src="/media{{ tag.cover }}">
+                    <img src="{{ tag.cover_url }}">
                 </a>
             </li>
         {% endfor %}

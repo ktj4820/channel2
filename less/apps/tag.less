@@ -42,10 +42,31 @@
     margin-right: 6px;
 }
 
+/* -----------------------------------------------------------------------------
+    tag styles
+----------------------------------------------------------------------------- */
+
 .tag-button {
     font-size: 13px;
     line-height: 24px;
     padding: 1px 10px;
+}
+
+.tag-cover {
+    float: left;
+    width: 200px;
+}
+@media screen and (max-width: 479px) {
+    .tag-cover {
+        float: right;
+        margin: 0 0 10px 10px;
+        width: 50%;
+    }
+}
+@media screen and (min-width: 480px) {
+    .tag-info {
+        margin-left: 215px;
+    }
 }
 
 .staff-tag-video-input[type="text"] {
@@ -59,7 +80,7 @@
 ----------------------------------------------------------------------------- */
 
 .ttl {
-    margin: -12px -3px 10px;
+    margin: -3px -3px 10px;
 }
 
 .ttli {
@@ -70,6 +91,7 @@
 .ttli-text {
     background-color: @color-accent3;
     color: #fff;
+    display: block;
     font-size: 13px;
     padding: 3px 6px;
 }

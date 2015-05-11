@@ -1,4 +1,5 @@
 from io import BytesIO
+import os
 
 from PIL import Image
 import requests
@@ -26,8 +27,8 @@ def download_cover(tag, cover_url):
     r = requests.get(cover_url)
 
     ext = Image.open(BytesIO(r.content)).format.lower()
-    cover = '/covers/{}.{}'.format(tag.id, ext)
-    cover_path = '{}{}'.format(MEDIA_ROOT, cover)
+    cover = 'covers/{}.{}'.format(tag.id, ext)
+    cover_path = os.path.join(MEDIA_ROOT, cover)
     prepare_filepath(cover_path)
 
     with open(cover_path, 'wb') as f:

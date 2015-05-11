@@ -28,7 +28,7 @@ $(function() {
     }
 
     // tag autocomplete
-    if (('#template-staff-tag').length) {
+    if ($('#template-staff-tag').length) {
         var split = function(val) { return val.split(/,\s*/); };
         var extractLast = function(term) { return split(term).pop(); };
 
