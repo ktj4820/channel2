@@ -174,3 +174,11 @@ class StaffTagAutocompleteView(StaffTemplateView):
         tag_list = Tag.objects.order_by('name').values_list('name', flat=True)
         content = json.dumps(list(tag_list), ensure_ascii=False)
         return HttpResponse(content=content, content_type='application/json')
+
+
+class StaffTagDeleteView(StaffTemplateView):
+
+    def post(self, request, id):
+        tag = get_object_or_404(Tag, id=id)
+        tag.delete()
+        return redirect('tag.list')

@@ -147,8 +147,18 @@ class StaffTagVideoViewTests(BaseStaffTests):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'staff/staff-tag-video.html')
     
-    def test_staff_tag_video_view_post_invalid(self):
-        pass
-        
-    def test_staff_tag_video_view_post(self):
-        pass
+
+class StaffTagDeleteViewTests(BaseStaffTests):
+
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.get(name='Action')
+
+    def test_staff_tag_delete_view_get(self):
+        response = self.client.get(reverse('staff.tag.delete', args=[self.tag.id]))
+        self.assertEqual(response.status_code, 405)
+
+    def test_staff_tag_delete_view_post(self):
+        response = self.client.post(reverse('staff.tag.delete', args=[self.tag.id]))
+        self.assertRedirects(response, reverse('tag.list'))
+        self.assertFalse(Tag.objects.filter(id=self.tag.id).exists())

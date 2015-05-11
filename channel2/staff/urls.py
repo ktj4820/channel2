@@ -9,6 +9,7 @@ urlpatterns = [
 
     url(r'^tag/add/$',                  views.StaffTagAddView.as_view(), name='staff.tag.add'),
     url(r'^tag/(?P<id>\d+)/edit/$',     views.StaffTagEditView.as_view(), name='staff.tag.edit'),
+    url(r'^tag/(?P<id>\d+)/delete/$',   views.StaffTagDeleteView.as_view(), name='staff.tag.delete'),
     url(r'^tag/(?P<id>\d+)/video/$',    views.StaffTagVideoView.as_view(), name='staff.tag.video'),
     url(r'^tag/autocomplete.json',      views.StaffTagAutocompleteView.as_view(), name='staff.tag.autocomplete'),
 

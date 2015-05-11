@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
 
 {% block content %}
     {% if user.is_staff %}
         <div class="right min-md">
+            <form action="{{ url('staff.tag.delete', args=[tag.id]) }}" method="post" class="inline-block">
+                {{ forms.csrf_input() }}
+                <button class="button button-error tag-button space-right-10">Delete</button>
+            </form>
             <a href="{{ url('staff.tag.video', args=[tag.id]) }}" class="button button-primary tag-button space-right-10">Manage Videos</a>
             <a href="{{ url('staff.tag.edit', args=[tag.id]) }}" class="button button-primary tag-button">Edit Tag</a>
         </div>
@@ -22,6 +27,7 @@
             </div>
             <div>{{ tag.json.get('synopsis') }}</div>
         </div>
+        <div class="clear"></div>
     {% elif children_list %}
         <div class="ttl">
             {% for tag in children_list %}
@@ -46,6 +52,7 @@
         </div>
     {% endif %}
     {% if video_list %}
+        <div class="space-top-20"></div>
         <div class="tl">
             {% for video in video_list %}
                 {% set url_video = url('video', args=[video.id, video.slug]) %}
