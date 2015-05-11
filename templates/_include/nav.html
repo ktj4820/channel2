@@ -5,12 +5,17 @@
 {% set url_staff_tag_add = url('staff.tag.add') %}
 {% set url_staff_user_add = url('staff.user.add') %}
 {% set url_tag_list = url('tag.list') %}
+{% set url_tag_list_anime = url('tag.list.anime') %}
 
 <nav>
     <div class="nav-section">
         <a href="{{ url_home }}" class="nav-link">
             <span class="nav-icon icon icon-home"></span>
             <span>Home</span>
+        </a>
+        <a href="{{ url_tag_list_anime }}" class="nav-link">
+            <span class="nav-icon icon icon-video"></span>
+            <span>Anime</span>
         </a>
         <a href="{{ url_tag_list }}" class="nav-link">
             <span class="nav-icon icon icon-tag"></span>
