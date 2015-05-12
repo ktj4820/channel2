@@ -1,0 +1,40 @@
+SECRET_KEY = '{{ secret_key }}'
+
+ADMINS = [
+    ('Derek Kwok', 'derek.kai.chun.kwok@gmail.com'),
+]
+
+RESOURCE_VERSION = '{{ resource_version.stdout }}'
+
+ALLOWED_HOSTS = ['{{ fqdn }}']
+SESSION_COOKIE_DOMAIN = '{{ fqdn }}'
+
+MEDIA_ROOT = '/var/www/channel2/media'
+
+STATIC_ROOT = '/var/www/channel2/static/{}'.format(RESOURCE_VERSION)
+STATIC_URL = '/static/{}/'.format(RESOURCE_VERSION)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'channel2',
+        'USER': 'channel2_user',
+        'PASSWORD': '{{ db_password }}',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+}
+
+SITE_DOMAIN = 'channel2.derekkwok.net'
+SITE_SCHEME = 'http'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'derek.kai.chun.kwok@gmail.com'
+EMAIL_HOST_PASSWORD = '{{ email_password }}'
+EMAIL_USE_TLS = True
+
+FFMPEG_PATH = '/usr/bin/ffmpeg'
+VIDEO_DIR = '/var/www/downloads'
+VIDEO_LINK_EXPIRE = 24 * 60 * 60
+X_ACCEL = True

@@ -34,7 +34,7 @@ Create the database and populate it with some test data:
 
 	(channel2) $ ./scripts/autosync.sh
 
-Create `imagepress/localsettings.py` with the following:
+Create `channel2/localsettings.py` with the following:
 	
 	DEBUG = True
 

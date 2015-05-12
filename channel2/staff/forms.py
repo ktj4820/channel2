@@ -239,7 +239,7 @@ class StaffTagVideoFormSet(BaseFormSet):
             # move the file in filepath to the correct location
             cur_filepath_abs = os.path.join(VIDEO_DIR, data.get('filename'))
 
-            new_filepath = os.path.join('videos', tag.slug, '{}.mp4'.format(slugify(name)))
+            new_filepath = os.path.join('video', tag.slug, '{}.mp4'.format(slugify(name)))
             new_filepath_abs = os.path.join(MEDIA_ROOT, new_filepath)
             prepare_filepath(new_filepath_abs)
 

@@ -1,0 +1,149 @@
+---
+
+- hosts: all
+
+  vars_files:
+    - vars/private.yml
+
+  #-----------------------------------------------------------------------------
+  # tasks
+  #-----------------------------------------------------------------------------
+
+  tasks:
+
+    # nginx repo
+    - apt_repository: repo='ppa:nginx/stable' state=present
+
+    # postgres repo
+    - apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    - apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' state=present
+
+    # java repo
+    - apt_repository: repo='ppa:webupd8team/java' state=present
+    - debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+    # install packages
+    - apt: update_cache=yes cache_valid_time=3600
+    - apt: pkg={{ item }} state=latest
+      with_items:
+        - build-essential
+        - cron
+        - exim4
+        - fail2ban
+        - gettext
+        - git
+        - htop
+        - libbz2-dev
+        - libfreetype6-dev
+        - libjpeg8-dev
+        - libpng12-dev
+        - libpq-dev
+        - memcached
+        - nginx
+        - ntp
+        - oracle-java8-installer
+        - oracle-java8-set-default
+        - postgresql-9.4
+        - postgresql-client-9.4
+        - postgresql-contrib-9.4
+        - postgresql-server-dev-9.4
+        - python-dev
+        - python-pip
+        - python-software-properties
+        - rsync
+        - tmux
+        - update-notifier-common
+
+    # ssh setup
+    - template: src=templates/sshd_config.j2 dest=/etc/ssh/sshd_config owner=0 group=0 mode=0644 validate='/usr/sbin/sshd -T -f %s'
+      notify:
+        - restart ssh
+
+    # fail2ban setup
+    - template: src=templates/jail.local.j2 dest=/etc/fail2ban/jail.local
+      notify:
+        - restart fail2ban
+
+    # /etc/hosts setup
+    - template: src=templates/hosts.j2 dest=/etc/hosts owner=0 group=0 mode=0644
+      notify:
+        - apply hostname
+
+    # hostname and relic
+    - template: src=templates/hostname.j2 dest=/etc/hostname owner=0 group=0 mode=0644
+
+    # python packages
+    - pip: name=psycopg2 state=latest
+    - pip: name=supervisor state=latest
+    - pip: name=virtualenv state=latest
+
+    # setup the database
+    - postgresql_db: name="channel2" encoding='UTF-8'
+      sudo_user: postgres
+      sudo: True
+    - postgresql_user: name="channel2_user" password="{{ db_password }}" role_attr_flags=SUPERUSER,CREATEDB
+      sudo_user: postgres
+      sudo: True
+    - postgresql_privs: database="channel2" privs=ALL type=database role="channel2_user"
+      sudo_user: postgres
+      sudo: True
+    - file: path=/var/log/postgresql state=directory owner=postgres group=postgres mode=0755 recurse=yes
+
+    # ensure ownership of directories
+    - file: state=directory path={{ item }} owner=www-data group=www-data
+      with_items:
+        - "{{ django_path }}"
+        - "{{ download_path }}"
+        - "{{ log_path }}"
+        - "{{ media_path }}"
+        - "{{ static_path }}"
+        - "{{ venv_path }}"
+
+    # memcached setup
+    - template: src=templates/memcached.conf.j2 dest=/etc/memcached.conf
+      notify: restart memcached
+
+    # nginx setup
+    - file: path=/etc/nginx/sites-enabled/default state=absent
+    - file: path=/etc/nginx/sites-available/default state=absent
+    - template: src=templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+      notify: restart nginx
+
+    # supervisor setup
+    - template: src=templates/supervisord.conf.j2 dest=/var/www/channel2/supervisord.conf
+    - command: /usr/local/bin/supervisord -c /var/www/channel2/supervisord.conf creates=/var/www/channel2/supervisord.pid
+    - lineinfile: dest=/etc/rc.local line="/usr/local/bin/supervisord -c /var/www/channel2/supervisord.conf" insertbefore="exit 0"
+
+    # ufw setup
+    - ufw: state=enabled policy=deny
+    - ufw: rule=allow port={{ item }}
+      with_items:
+        - 22
+        - 80
+        - 443
+
+  #-----------------------------------------------------------------------------
+  # handlers
+  #-----------------------------------------------------------------------------
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+    - name: restart supervisor
+      service: name=supervisor state=restarted
+
+    - name: restart postgres
+      service: name=postgresql state=restarted
+
+    - name: restart memcached
+      service: name=memcached state=restarted
+
+    - name: restart fail2ban
+      service: name=fail2ban state=restarted
+
+    - name: restart ssh
+      service: name=ssh state=restarted
+
+    - name: apply hostname
+      command: hostname {{ hostname }}

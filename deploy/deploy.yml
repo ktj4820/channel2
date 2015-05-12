@@ -1,0 +1,53 @@
+---
+
+- hosts: all
+
+  vars_files:
+    - vars/private.yml
+
+  #-----------------------------------------------------------------------------
+  # tasks
+  #-----------------------------------------------------------------------------
+
+  tasks:
+
+    # stop channel2
+    - supervisorctl: name={{ item }} state=stopped server_url=http://127.0.0.1:9001
+      with_items:
+        - channel2
+
+    # update repository
+    - git: repo=git@github.com:derekkwok/channel2.git
+           dest={{ django_path }}
+           version=3.0
+           accept_hostkey=yes
+
+    # resource_version
+    - shell: git rev-parse --short HEAD
+      args:
+        chdir: "{{ django_path }}"
+      register: resource_version
+
+    # install requirements
+    - pip: requirements={{ django_path }}/requirements.txt extra_args='--upgrade'
+           virtualenv={{ venv_path }}
+           virtualenv_command="/usr/local/bin/virtualenv --python=/usr/bin/python3"
+
+    # compile static files
+    - shell: gulp build
+
+    # localsettings.py
+    - template: src=templates/localsettings.py.j2 dest={{ django_path }}/channel2/localsettings.py
+
+    # clear and re-create the static dir
+    - file: path={{ static_path }} state=absent
+    - file: path={{ static_path }} state=directory
+
+    # python manage.py migrate & collectstatic
+    - django_manage: command={{ item }} app_path={{ django_path }} virtualenv={{ venv_path }}
+      with_items:
+        - migrate
+        - collectstatic
+
+    # ensure proper permissions for /var/www
+    - file: path=/var/www state=directory owner=www-data group=www-data recurse=yes

@@ -6,6 +6,7 @@
 .DS_Store
 
 channel2/localsettings.py
+deploy/vars/private.yml
 media-test
 node_modules
 static/css/app.css

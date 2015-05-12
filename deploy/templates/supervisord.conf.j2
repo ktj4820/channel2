@@ -1,0 +1,29 @@
+[supervisord]
+logfile=/var/www/channel2/logs/supervisord.log
+logfile_maxbytes=1MB
+logfile_backups=10
+loglevel=info
+autorestart=true
+pidfile=/var/www/channel2/supervisord.pid
+user=www-data
+
+[inet_http_server]
+port=127.0.0.1:9001
+
+[supervisorctl]
+serverurl=http://127.0.0.1:9001
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
+
+[program:channel2]
+command=/var/www/channel2/venv/bin/gunicorn channel2.wsgi:application
+    --bind unix:/var/www/channel2/gunicorn.sock
+    --workers 2
+    --max-requests 5000
+    --timeout 30
+    --error-logfile /var/www/channel2/logs/gunicorn-error.log
+directory=/var/www/channel2/django
+user=www-data
+autostart=true
+autorestart=true
