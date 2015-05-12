@@ -37,7 +37,7 @@ class Video(models.Model):
     def generate_cover(self):
         """
         generate a cover using the ffmpeg command:
-        ffmpeg -ss 00:00:05 -t 1 -i <input_file.file> -s 1280x720 -f image2 <output.jpg>
+        ffmpeg -ss 00:00:05 -i <input.mp4> -vframes 1 <output.jpg>
         """
 
         if self.file and FFMPEG_PATH:
@@ -50,7 +50,7 @@ class Video(models.Model):
                 '-vframes', '1',
                 self.cover_filepath,
             ]
-            subprocess.call(command)
+            subprocess.call(command, shell=True)
 
     @property
     def filepath(self):

@@ -36,7 +36,7 @@ EMAIL_HOST_USER = 'derek.kai.chun.kwok@gmail.com'
 EMAIL_HOST_PASSWORD = '{{ email_password }}'
 EMAIL_USE_TLS = True
 
-FFMPEG_PATH = '/usr/bin/ffmpeg'
+FFMPEG_PATH = '/usr/local/bin/ffmpeg'
 VIDEO_DIR = '/var/www/downloads'
 VIDEO_LINK_EXPIRE = 24 * 60 * 60
 X_ACCEL = True
@@ -72,10 +72,10 @@ LOGGING = {
             'filters': ['email_admin_limit'],
             'class': 'django.utils.log.AdminEmailHandler',
         },
-        'imagepress': {
+        'channel2': {
             'level': 'WARNING',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': '/var/www/imagepress/logs/imagepress.log',
+            'filename': '/var/www/channel2/logs/channel2.log',
             'encoding': 'utf-8',
             'when': 'midnight',
             'backupCount': 14,
@@ -86,12 +86,12 @@ LOGGING = {
     # loggers
     'loggers': {
         '': {
-            'handlers': ['imagepress'],
+            'handlers': ['channel2'],
             'level': 'INFO',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['email_admin', 'imagepress'],
+            'handlers': ['email_admin', 'channel2'],
             'level': 'INFO',
             'propagate': True,
         },
