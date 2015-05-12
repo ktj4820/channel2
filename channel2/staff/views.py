@@ -152,6 +152,7 @@ class StaffTagVideoView(StaffTemplateView):
                 'episode': episode,
             })
 
+        initial = sorted(initial, key=lambda i: i['episode'])
         formset = self.get_formset_cls()(initial=initial)
         context['formset'] = formset
         return self.render_to_response(context)

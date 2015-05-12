@@ -23,6 +23,7 @@
                         <td>
                             <label for="{{ form.selected.auto_id }}" class="unselectable text-overflow" title="{{ form.filename.value() }}">{{ form.filename.value() }}</label>
                             {{ form.filename|safe }}
+                            <div class="none">{{ form.ORDER|safe }}</div>
                         </td>
                         <td>{{ form.name|safe }}</td>
                         <td>{{ form.episode|safe }}</td>
