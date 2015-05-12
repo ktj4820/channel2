@@ -5,7 +5,7 @@
 <header>
     <span class="max-md icon icon-menu" id="header-menu-button"></span>
     <a href="{{ url('home') }}" class="header-logo min-sm">Channel 2</a>
-    <form action="" method="get" class="header-form">
+    <form action="{{ url('search') }}" method="get" class="header-form">
         <input type="text" name="q" placeholder="Search Channel 2..." id="header-search-input" value="{{ request.GET.q }}">
         <button class="icon icon-search" id="header-search-button"></button>
     </form>

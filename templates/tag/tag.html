@@ -41,7 +41,7 @@
         <div class="tl">
             {% for tag in parent_list %}
                 <div class="no-break-column">
-                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.anme }}">
+                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
                         <div class="tli-inner">
                             <span class="icon icon-right-open tli-icon"></span>
                             <span>{{ tag.name }}</span>
