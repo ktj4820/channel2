@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('tag', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Video',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('file', models.CharField(max_length=300)),
+                ('file', models.CharField(max_length=300, unique=True)),
                 ('name', models.CharField(max_length=200)),
                 ('episode', models.CharField(blank=True, max_length=200)),
                 ('slug', models.SlugField(max_length=200)),
@@ -34,10 +34,10 @@ class Migration(migrations.Migration):
             name='VideoLink',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('key', models.CharField(unique=True, max_length=64)),
+                ('key', models.CharField(max_length=64, unique=True)),
                 ('ip_address', models.CharField(max_length=200)),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(related_name='+', to=settings.AUTH_USER_MODEL)),
+                ('created_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='+')),
                 ('video', models.ForeignKey(to='video.Video')),
             ],
             options={
