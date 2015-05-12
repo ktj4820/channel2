@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^anime/$',    views.TagListAnimeView.as_view(), name='tag.list.anime'),
     url(r'^random/$',   views.TagRandomView.as_view(), name='tag.random'),
 
-    url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/$',     views.TagView.as_view(), name='tag'),
+    url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/$',                         views.TagView.as_view(), name='tag'),
+    url(r'^(?P<id>\d+)/(?P<slug>[\w-]+)/(?P<video_id>\d+)/$',       views.TagVideoView.as_view(), name='tag.video'),
 
 ]

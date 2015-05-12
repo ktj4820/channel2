@@ -1,3 +1,22 @@
 /* -----------------------------------------------------------------------------
     video tag list
 ----------------------------------------------------------------------------- */
+
+video {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+@media screen and (min-height: 600px) and (min-width: 1199px) {
+    video {
+        max-height: 480px;
+        max-width: 854px;
+    }
+}
+@media screen and (min-height: 840px) and (min-width: 1560px) {
+    video {
+        max-height: 720px;
+        max-width: 1280px;
+    }
+}

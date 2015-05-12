@@ -2,10 +2,11 @@ from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
 import os
+import subprocess
 
 from channel2.account.models import User
-from channel2.core.utils import slugify, remove_media_file
-from channel2.settings import MEDIA_ROOT, MEDIA_URL
+from channel2.core.utils import slugify, remove_media_file, prepare_filepath
+from channel2.settings import MEDIA_ROOT, MEDIA_URL, FFMPEG_PATH
 from channel2.tag.models import Tag
 
 
@@ -29,7 +30,27 @@ class Video(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)[:200] or '-'
+        if not self.cover:
+            self.generate_cover()
         super().save(*args, **kwargs)
+
+    def generate_cover(self):
+        """
+        generate a cover using the ffmpeg command:
+        ffmpeg -ss 00:00:05 -t 1 -i <input_file.file> -s 1280x720 -f image2 <output.jpg>
+        """
+
+        if self.file and FFMPEG_PATH:
+            self.cover = 'covers/video/{}/{}.jpg'.format(self.tag.slug, self.slug)
+            prepare_filepath(self.cover_filepath)
+            command = [
+                FFMPEG_PATH,
+                '-ss', '00:00:5',
+                '-i', self.filepath,
+                '-vframes', '1',
+                self.cover_filepath,
+            ]
+            subprocess.call(command)
 
     @property
     def filepath(self):
@@ -38,6 +59,14 @@ class Video(models.Model):
     @property
     def url(self):
         return os.path.join(MEDIA_URL, self.file)
+
+    @property
+    def cover_filepath(self):
+        return os.path.join(MEDIA_ROOT, self.cover)
+
+    @property
+    def cover_url(self):
+        return os.path.join(MEDIA_URL, self.cover)
 
 
 class VideoLink(models.Model):

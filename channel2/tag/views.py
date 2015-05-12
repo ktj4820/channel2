@@ -1,11 +1,13 @@
 from collections import defaultdict
 import random
 
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
+from channel2.video.models import Video
 
 
 class TagListView(ProtectedTemplateView):
@@ -42,15 +44,34 @@ class TagView(ProtectedTemplateView):
 
     template_name = 'tag/tag.html'
 
-    def get(self, request, id, slug):
+    def get_context_data(self, id):
         tag = get_object_or_404(Tag, id=id)
         video_list = tag.video_set.order_by('name')
-        return self.render_to_response({
+        return {
             'children_list': tag.children.order_by('name'),
             'parent_list': tag.parents.order_by('name'),
             'tag': tag,
             'video_list': video_list,
-        })
+        }
+
+    def get(self, request, id, slug):
+        context = self.get_context_data(id)
+        return self.render_to_response(context)
+
+
+class TagVideoView(TagView):
+
+    template_name = 'tag/tag.html'
+
+    def get(self, request, id, slug, video_id):
+        context = self.get_context_data(id)
+        video = get_object_or_404(Video, id=video_id)
+
+        if video not in context['video_list']:
+            raise Http404
+
+        context['video'] = video
+        return self.render_to_response(context)
 
 
 class TagRandomView(ProtectedTemplateView):
