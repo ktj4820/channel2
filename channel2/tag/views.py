@@ -1,6 +1,7 @@
 from collections import defaultdict
+import random
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.enums import TagType
@@ -50,3 +51,12 @@ class TagView(ProtectedTemplateView):
             'tag': tag,
             'video_list': video_list,
         })
+
+
+class TagRandomView(ProtectedTemplateView):
+
+    def get(self, request):
+        id_list = Tag.objects.filter(type=TagType.ANIME).values_list('id', flat=True)
+        id = random.choice(id_list)
+        tag = Tag.objects.get(id=id)
+        return redirect('tag', id=tag.id, slug=tag.slug)
