@@ -17,9 +17,9 @@
         - channel2
 
     # update repository
-    - git: repo=git@github.com:derekkwok/channel2.git
+    - git: repo=https://github.com/derekkwok/channel2.git
            dest={{ django_path }}
-           version=3.0
+           version=master
            accept_hostkey=yes
 
     # resource_version
@@ -34,7 +34,13 @@
            virtualenv_command="/usr/local/bin/virtualenv --python=/usr/bin/python3"
 
     # compile static files
+    - shell: npm install -g gulp
+    - shell: npm install
+      args:
+        chdir: "{{ django_path }}"
     - shell: gulp build
+      args:
+        chdir: "{{ django_path }}"
 
     # localsettings.py
     - template: src=templates/localsettings.py.j2 dest={{ django_path }}/channel2/localsettings.py

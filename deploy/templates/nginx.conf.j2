@@ -48,7 +48,7 @@ http {
 
     server {
         listen                  80;
-        server_name             {{ fqdn }}, *.{{ fqdn }};
+        server_name             {{ fqdn }};
 
         location /robots.txt {
             alias /var/www/channel2/static/robots.txt;

@@ -40,6 +40,8 @@
         - libpq-dev
         - memcached
         - nginx
+        - nodejs
+        - npm
         - ntp
         - oracle-java8-installer
         - oracle-java8-set-default
@@ -50,6 +52,7 @@
         - python-dev
         - python-pip
         - python-software-properties
+        - python3.4-dev
         - rsync
         - tmux
         - update-notifier-common
@@ -113,6 +116,9 @@
     - template: src=templates/supervisord.conf.j2 dest=/var/www/channel2/supervisord.conf
     - command: /usr/local/bin/supervisord -c /var/www/channel2/supervisord.conf creates=/var/www/channel2/supervisord.pid
     - lineinfile: dest=/etc/rc.local line="/usr/local/bin/supervisord -c /var/www/channel2/supervisord.conf" insertbefore="exit 0"
+
+    # nodejs setup
+    - file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
 
     # ufw setup
     - ufw: state=enabled policy=deny
