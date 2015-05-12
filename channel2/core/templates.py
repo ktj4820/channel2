@@ -65,5 +65,6 @@ TEMPLATE_ENV.filters.update(**{
     'naturaltime':                  naturaltime,
     'starts_with':                  str.startswith,
 
+    'date':                         filters.date,
     'gravatar':                     filters.gravatar_url,
 })

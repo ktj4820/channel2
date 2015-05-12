@@ -1,6 +1,10 @@
 import hashlib
 
 
+def date(value, format='%Y/%m/%d %H:%M'):
+    return value.strftime(format)
+
+
 def gravatar_url(email):
     """
     returns the url to a gravatar profile image

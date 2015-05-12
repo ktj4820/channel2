@@ -6,7 +6,7 @@ from django.views.generic.base import View
 
 from channel2.account.forms import AccountLoginForm, AccountActivateForm, AccountPasswordResetForm, AccountPasswordSetForm
 from channel2.account.models import User
-from channel2.core.views import TemplateView
+from channel2.core.views import TemplateView, ProtectedTemplateView
 
 
 class AccountLoginView(TemplateView):
@@ -113,3 +113,14 @@ class AccountPasswordSetView(TemplateView):
         return self.render_to_response({
             'form': form,
         })
+
+
+class AccountSettingsView(ProtectedTemplateView):
+
+    template_name = 'account/account-settings.html'
+
+    def get(self, request):
+        return self.render_to_response({})
+
+    def post(self, request):
+        return self.render_to_response({})

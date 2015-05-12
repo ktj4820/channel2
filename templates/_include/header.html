@@ -1,6 +1,7 @@
 {% import '_macros/forms.html' as forms with context %}
 
 {% set gravatar_url = user.email|gravatar %}
+{% set url_account_settings = url('account.settings') %}
 
 <header>
     <span class="max-md icon icon-menu" id="header-menu-button"></span>

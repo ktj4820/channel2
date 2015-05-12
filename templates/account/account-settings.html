@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% set gravatar_url = user.email|gravatar %}
+
+{% block content %}
+    <h2 class="h2-heading">Account Settings</h2>
+    <div class="account-settings-info space-bottom-30">
+        <img class="account-settings-gravatar circle left" src="{{ gravatar_url }}&s=160">
+        <span>{{ user.email }}</span>
+    </div>
+    <table class="max-400">
+        <tr>
+            <td width="150px">Joined on</td>
+            <td>{{ user.date_joined|date }}</td>
+        </tr>
+        <tr>
+            <td>Last login</td>
+            <td>{{ user.last_login|date }}</td>
+        </tr>
+    </table>
+{% endblock %}
