@@ -8,7 +8,7 @@ from django.utils import timezone
 import pytz
 
 from channel2.core.responses import HttpResponseXAccel
-from channel2.core.utils import get_ip_address, email_alert
+from channel2.core.utils import get_ip_address, email_alert, paginate
 from channel2.core.views import ProtectedTemplateView, TemplateView
 from channel2.settings import VIDEO_LINK_EXPIRE
 from channel2.video.models import Video, VideoLink
@@ -77,3 +77,17 @@ class VideoLinkView(TemplateView):
 
         download = 'download' in request.GET
         return HttpResponseXAccel(link.video.url, link.video.name, content_type='video/mp4', attachment=download)
+
+
+class VideoHistoryView(ProtectedTemplateView):
+
+    page_size = 50
+    template_name = 'video/video-history.html'
+
+    def get(self, request):
+        video_list = VideoLink.objects.filter(created_by=request.user).order_by('-created_on').select_related('video', 'video__tag')
+        video_list = paginate(video_list, self.page_size, request.GET.get('p'))
+        video_list.object_list = [vl.video for vl in video_list]
+        return self.render_to_response({
+            'video_list': video_list,
+        })

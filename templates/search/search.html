@@ -2,16 +2,20 @@
 
 {% block content %}
     <h2 class="h2-heading">Search Results for <em>{{ request.GET.q }}</em></h2>
-    <div class="tl">
-        {% for tag in tag_list %}
-            <div class="no-break-column">
-                <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
-                    <div class="tli-inner">
-                        <span class="icon icon-right-open tli-icon"></span>
-                        <span>{{ tag.name }}</span>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+    {% if tag_list %}
+        <div class="tl">
+            {% for tag in tag_list %}
+                <div class="no-break-column">
+                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
+                        <div class="tli-inner">
+                            <span class="icon icon-right-open tli-icon"></span>
+                            <span>{{ tag.name }}</span>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Sorry, no results were found.</p>
+    {% endif %}
 {% endblock %}

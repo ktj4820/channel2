@@ -25,7 +25,11 @@
                     </a>
                 {% endfor %}
             </div>
-            <div>{{ tag.json.get('synopsis') }}</div>
+            {% if tag.json.get('synopsis') %}
+                {% for p in tag.json.get('synopsis').split('\n\n') %}
+                    <p>{{ p }}</p>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="clear"></div>
     {% elif children_list %}
@@ -56,18 +60,20 @@
         <div class="tl">
             {% for video in video_list %}
                 {% set url_video = url('video', args=[video.id, video.slug]) %}
-                <div class="tli">
-                    <a href="{{ url_video }}" class="left">
-                        <span class="icon icon-down-circled tli-icon tli-icon-short"></span>
-                    </a>
-                    <a href="{{ url_video }}" class="block">
-                        <span class="icon icon-play tli-icon"></span>
-                        {% if video.episode %}
-                            <span>Episode {{ video.episode }}</span>
-                        {% else %}
-                            <span>{{ video.name }}</span>
-                        {% endif %}
-                    </a>
+                <div class="no-break-column">
+                    <div class="tli">
+                        <a href="{{ url_video }}" class="left">
+                            <span class="icon icon-down-circled tli-icon tli-icon-short"></span>
+                        </a>
+                        <a href="{{ url_video }}" class="block">
+                            <span class="icon icon-play tli-icon"></span>
+                            {% if video.episode %}
+                                <span>Episode {{ video.episode }}</span>
+                            {% else %}
+                                <span>{{ video.name }}</span>
+                            {% endif %}
+                        </a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
