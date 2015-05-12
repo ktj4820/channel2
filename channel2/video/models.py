@@ -45,7 +45,7 @@ class Video(models.Model):
             prepare_filepath(self.cover_filepath)
             command = [
                 FFMPEG_PATH,
-                '-ss', '00:00:5',
+                '-ss', '00:00:05',
                 '-i', self.filepath,
                 '-vframes', '1',
                 self.cover_filepath,

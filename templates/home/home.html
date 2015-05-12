@@ -2,6 +2,17 @@
 
 {% block content %}
     <h2 class="h2-heading">Recently Watched</h2>
+        {% for tag in recent_list %}
+            <div class="tcli-wrapper">
+                <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tcli">
+                    <img src="{{ tag.cover_url }}">
+                    <div class="tcli-data">
+                        <h3 class="tcli-heading">{{ tag.name }}</h3>
+                        <div class="tcli-tl">{% for ctag in tag.children_list %}{{ ctag.name }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
     <h2 class="h2-heading">Newly Added</h2>
     <div class="tcl">
         {% for tag in new_list %}
