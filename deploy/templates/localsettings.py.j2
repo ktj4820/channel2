@@ -1,3 +1,5 @@
+from channel2.core.utils import email_admin_limit
+
 SECRET_KEY = '{{ secret_key }}'
 
 ADMINS = [
@@ -38,3 +40,60 @@ FFMPEG_PATH = '/usr/bin/ffmpeg'
 VIDEO_DIR = '/var/www/downloads'
 VIDEO_LINK_EXPIRE = 24 * 60 * 60
 X_ACCEL = True
+
+#-------------------------------------------------------------------------------
+# logging settings
+#-------------------------------------------------------------------------------
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+
+    # formatters
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+
+    # filters
+    'filters': {
+        'email_admin_limit': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': email_admin_limit,
+        }
+    },
+
+    # handlers
+    'handlers': {
+        'email_admin': {
+            'level': 'ERROR',
+            'filters': ['email_admin_limit'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        'imagepress': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': '/var/www/imagepress/logs/imagepress.log',
+            'encoding': 'utf-8',
+            'when': 'midnight',
+            'backupCount': 14,
+            'utc': True,
+        },
+    },
+
+    # loggers
+    'loggers': {
+        '': {
+            'handlers': ['imagepress'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['email_admin', 'imagepress'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

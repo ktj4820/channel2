@@ -121,3 +121,17 @@ def prepare_filepath(path):
     dirpath = os.path.dirname(path)
     if not os.path.exists(dirpath):
         os.makedirs(dirpath)
+
+
+def email_admin_limit(record):
+    """
+    limit to 1 email sent to admin per minute
+    """
+
+    from django.core.cache import cache
+    CACHE_KEY = 'email-admin-limit'
+    if cache.get(CACHE_KEY, False):
+        return False
+
+    cache.set(CACHE_KEY, True, 60)
+    return True
