@@ -85,11 +85,3 @@ class VideoLinkViewTests(BaseTestCase):
 
         actual_path = urlsplit(response['location'])[2]
         self.assertEqual(self.video.url, actual_path)
-
-
-class VideoHistoryViewTests(BaseTestCase):
-
-    def test_video_history_view_get(self):
-        response = self.client.get(reverse('video.history'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'video/video-history.html')

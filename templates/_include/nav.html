@@ -7,7 +7,6 @@
 {% set url_tag_list = url('tag.list') %}
 {% set url_tag_list_anime = url('tag.list.anime') %}
 {% set url_tag_random = url('tag.random') %}
-{% set url_video_history = url('video.history') %}
 
 <nav>
     <div class="nav-section">
@@ -22,10 +21,6 @@
         <a href="{{ url_tag_list }}" class="nav-link">
             <span class="nav-icon icon icon-tag"></span>
             <span>Tags</span>
-        </a>
-        <a href="{{ url_video_history }}" class="nav-link">
-            <span class="nav-icon icon icon-clock"></span>
-            <span>History</span>
         </a>
         {% if user.is_staff %}
             <div class="nav-spacer"></div>
