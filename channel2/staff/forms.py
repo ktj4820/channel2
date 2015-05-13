@@ -242,6 +242,7 @@ class StaffTagVideoFormSet(BaseFormSet):
             new_filepath = os.path.join('video', tag.slug, '{}.mp4'.format(slugify(name)))
             new_filepath_abs = os.path.join(MEDIA_ROOT, new_filepath)
             prepare_filepath(new_filepath_abs)
+            shutil.move(cur_filepath_abs, new_filepath_abs)
 
             Video.objects.create(
                 file=new_filepath,
@@ -249,4 +250,3 @@ class StaffTagVideoFormSet(BaseFormSet):
                 episode=data.get('episode', ''),
                 tag=tag,
             )
-            shutil.move(cur_filepath_abs, new_filepath_abs)

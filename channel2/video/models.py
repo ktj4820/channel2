@@ -50,7 +50,7 @@ class Video(models.Model):
                 '-vframes', '1',
                 self.cover_filepath,
             ]
-            subprocess.call(command, shell=True)
+            subprocess.call(command)
 
     @property
     def filepath(self):
