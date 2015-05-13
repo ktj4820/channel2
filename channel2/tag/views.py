@@ -46,11 +46,15 @@ class TagView(ProtectedTemplateView):
 
     def get_context_data(self, id):
         tag = get_object_or_404(Tag, id=id)
-        video_list = tag.video_set.order_by('name')
+        video_list = tag.video_set.order_by('episode', 'name')
+        video = None
+        if video_list:
+            video = video_list[0]
         return {
             'children_list': tag.children.order_by('name'),
             'parent_list': tag.parents.order_by('name'),
             'tag': tag,
+            'video': video,
             'video_list': video_list,
         }
 
