@@ -22,5 +22,5 @@ class HomeView(ProtectedTemplateView):
             tag.children_list = sorted(tag.children.all(), key=lambda t: t.name)
         return self.render_to_response({
             'new_list': new_list,
-            'recent_list': recent_list,
+            'recent_list': recent_list[:5],
         })
