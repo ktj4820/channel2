@@ -66,7 +66,7 @@ class Video(models.Model):
 
     @property
     def cover_url(self):
-        if self.cover.url:
+        if self.cover:
             return os.path.join(MEDIA_URL, self.cover)
         return os.path.join(STATIC_URL, 'images', 'no-preview.png')
 
