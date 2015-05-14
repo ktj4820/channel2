@@ -3,10 +3,12 @@ $(function() {
     // header/nav menu for mobile devices
     var $headerMenuButton = $('#header-menu-button');
     var $nav = $('nav');
+    var $body = $('body');
 
     $headerMenuButton.click(function() {
         $headerMenuButton.toggleClass('active');
         $nav.toggleClass('active');
+        $body.toggleClass('noscroll');
     });
 
     // messages
