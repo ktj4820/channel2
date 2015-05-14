@@ -6,7 +6,7 @@ import subprocess
 
 from channel2.account.models import User
 from channel2.core.utils import slugify, remove_media_file, prepare_filepath
-from channel2.settings import MEDIA_ROOT, MEDIA_URL, FFMPEG_PATH
+from channel2.settings import MEDIA_ROOT, MEDIA_URL, FFMPEG_PATH, STATIC_URL
 from channel2.tag.models import Tag
 
 
@@ -66,7 +66,9 @@ class Video(models.Model):
 
     @property
     def cover_url(self):
-        return os.path.join(MEDIA_URL, self.cover)
+        if self.cover.url:
+            return os.path.join(MEDIA_URL, self.cover)
+        return os.path.join(STATIC_URL, 'images', 'no-preview.png')
 
 
 class VideoLink(models.Model):

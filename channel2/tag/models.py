@@ -6,7 +6,7 @@ from django.dispatch.dispatcher import receiver
 from jsonfield.fields import JSONField
 
 from channel2.core.utils import slugify, remove_media_file
-from channel2.settings import MEDIA_URL
+from channel2.settings import MEDIA_URL, STATIC_URL
 from channel2.tag.enums import TagType
 
 
@@ -41,7 +41,7 @@ class Tag(models.Model):
     def cover_url(self):
         if self.cover:
             return os.path.join(MEDIA_URL, self.cover)
-        return ''
+        return os.path.join(STATIC_URL, 'images', 'no-image.png')
 
 #-------------------------------------------------------------------------------
 # Unmanaged join tables

@@ -51,10 +51,10 @@ http {
         server_name             {{ fqdn }};
 
         location /robots.txt {
-            alias /var/www/channel2/static/robots.txt;
+            alias /var/www/channel2/django/static/robots.txt;
         }
         location /favicon.ico {
-            alias /var/www/channel2/static/favicon.ico;
+            alias /var/www/channel2/django/static/favicon.ico;
             expires 24h;
         }
         location /media/video/ {

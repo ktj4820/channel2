@@ -1,13 +1,12 @@
 from collections import defaultdict
 import random
 
-from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect
 
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
-from channel2.video.models import Video
+from channel2.video.models import VideoLink
 
 
 class TagListView(ProtectedTemplateView):
@@ -44,38 +43,35 @@ class TagView(ProtectedTemplateView):
 
     template_name = 'tag/tag.html'
 
-    def get_context_data(self, id):
+    def get(self, request, id, slug, video_id=None):
         tag = get_object_or_404(Tag, id=id)
         video_list = tag.video_set.order_by('episode', 'name')
-        video = None
+        video_dict = {str(v.id): v for v in video_list}
+        user_video_id_list = VideoLink.objects\
+            .filter(video__in=video_list, created_by=request.user)\
+            .values_list('video_id', flat=True)\
+            .distinct()
+
+        if video_id and video_id in video_dict:
+            video = video_dict[video_id]
+        else:
+            video = None
+
         if video_list:
-            video = video_list[0]
-        return {
+            for v in video_list:
+                v.watched = v.id in user_video_id_list
+                if video is None and not v.watched:
+                    video = v
+            if video is None:
+                video = video_list[0]
+
+        return self.render_to_response({
             'children_list': tag.children.order_by('name'),
             'parent_list': tag.parents.order_by('name'),
             'tag': tag,
             'video': video,
             'video_list': video_list,
-        }
-
-    def get(self, request, id, slug):
-        context = self.get_context_data(id)
-        return self.render_to_response(context)
-
-
-class TagVideoView(TagView):
-
-    template_name = 'tag/tag.html'
-
-    def get(self, request, id, slug, video_id):
-        context = self.get_context_data(id)
-        video = get_object_or_404(Video, id=video_id)
-
-        if video not in context['video_list']:
-            raise Http404
-
-        context['video'] = video
-        return self.render_to_response(context)
+        })
 
 
 class TagRandomView(ProtectedTemplateView):

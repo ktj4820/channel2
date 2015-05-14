@@ -4,7 +4,7 @@
 {% block content %}
     {% if video %}
         <div class="video-container">
-            <video controls preload="none" {% if video.cover %}poster="{{ video.cover_url }}"{% endif %}>
+            <video controls preload="none" poster="{{ video.cover_url }}">
                 <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
                 <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
             </video>
@@ -73,7 +73,7 @@
                 {% set url_tag_video = url('tag.video', args=[tag.id, tag.slug, v.id]) %}
                 {% set url_video = url('video', args=[v.id, v.slug]) %}
                 <div class="no-break-column">
-                    <div class="tli {% if v.id == video.id %}active{% endif %}">
+                    <div class="tli{% if v.id == video.id %} active{% endif %}{% if v.watched %} watched{% endif %}">
                         <a href="{{ url_video }}" class="left">
                             <span class="icon icon-down-circled tli-icon tli-icon-short"></span>
                         </a>
