@@ -1,5 +1,6 @@
 from io import BytesIO
 import os
+import re
 
 from PIL import Image
 import requests
@@ -22,6 +23,25 @@ month_to_season = {
     11: 'Fall',
     12: 'Winter',
 }
+
+season_order = {
+    'Winter': 1,
+    'Spring': 2,
+    'Summer': 3,
+    'Fall': 4,
+}
+
+season_re = re.compile(r'^(\d{4}) (Winter|Spring|Summer|Fall)$')
+
+
+def convert_season(tag):
+    match = season_re.match(tag)
+    if not match: return tag
+
+    year = match.group(1)
+    season = season_order[match.group(2)]
+    return '{} {}'.format(year, season)
+
 
 def download_cover(tag, cover_url):
     r = requests.get(cover_url)

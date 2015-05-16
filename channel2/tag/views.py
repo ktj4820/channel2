@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
+from channel2.tag.utils import convert_season
 from channel2.video.models import VideoLink
 
 
@@ -26,6 +27,7 @@ class TagListView(ProtectedTemplateView):
         for k, v in tag_dict.items():
             tag_dict[k] = sorted(v, key=lambda t: t.name)
 
+        tag_dict['#'] = sorted(tag_dict['#'], key=lambda t: convert_season(t.name))
         return self.render_to_response({
             'tag_dict': tag_dict,
         })
