@@ -26,8 +26,8 @@ class TagListView(ProtectedTemplateView):
 
         for k, v in tag_dict.items():
             tag_dict[k] = sorted(v, key=lambda t: t.name)
-
-        tag_dict['#'] = sorted(tag_dict['#'], key=lambda t: convert_season(t.name))
+        if '#' in tag_dict:
+            tag_dict['#'] = sorted(tag_dict['#'], key=lambda t: convert_season(t.name))
         return self.render_to_response({
             'tag_dict': tag_dict,
         })
