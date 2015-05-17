@@ -10,26 +10,27 @@
         <table class="space-bottom-20">
             <thead>
                 <tr>
-                    <th width="42px"><span class="icon icon-trash left"></span></th>
-                    <th>Name</th>
+                    <th width="42px"></th>
+                    <th>Filename</th>
+                    <th width="400px">Name</th>
                     <th width="80px">Episode</th>
-                    <th width="80px">Views</th>
                 </tr>
             </thead>
             <tbody>
                 {% for form in formset %}
                     <tr>
-                        <td class="text-center">{{ form.DELETE|safe }}</td>
+                        <td class="text-center">{{ form.selected|safe }}</td>
                         <td>
-                            {{ form.name }}
-                            <div class="none">{{ form.id }}</div>
+                            <label for="{{ form.selected.auto_id }}" class="unselectable text-overflow" title="{{ form.filename.value() }}">{{ form.filename.value() }}</label>
+                            {{ form.filename|safe }}
+                            <div class="none">{{ form.ORDER|safe }}</div>
                         </td>
-                        <td>{{ form.episode }}</td>
-                        <td>{{ form.instance.views }}</td>
+                        <td>{{ form.name|safe }}</td>
+                        <td>{{ form.episode|safe }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <button class="button-primary space-right-10">Update Videos</button>
+        <button class="button-primary">Add Videos</button>
     </form>
 {% endblock %}

@@ -16,6 +16,7 @@
                 {{ forms.csrf_input() }}
                 <button class="button button-error tag-button space-right-10">Delete</button>
             </form>
+            <a href="{{ url('staff.tag.video.add', args=[tag.id]) }}" class="button button-primary tag-button space-right-10">Add Videos</a>
             <a href="{{ url('staff.tag.video', args=[tag.id]) }}" class="button button-primary tag-button space-right-10">Manage Videos</a>
             <a href="{{ url('staff.tag.edit', args=[tag.id]) }}" class="button button-primary tag-button">Edit Tag</a>
         </div>

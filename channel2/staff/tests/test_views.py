@@ -136,8 +136,20 @@ class StaffTagEditViewTests(BaseStaffTests):
         self.assertEqual(tag.html, '<p>Some new markdown for the tag</p>')
 
 
-class StaffTagVideoViewTests(BaseStaffTests):
+class StaffTagAddVideoViewTests(BaseStaffTests):
     
+    def setUp(self):
+        super().setUp()
+        self.tag = Tag.objects.get(name='Action')
+
+    def test_staff_tag_video_view_get(self):
+        response = self.client.get(reverse('staff.tag.video.add', args=[self.tag.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-tag-video-add.html')
+    
+
+class StaffTagVideoViewTests(BaseStaffTests):
+
     def setUp(self):
         super().setUp()
         self.tag = Tag.objects.get(name='Action')
@@ -146,7 +158,7 @@ class StaffTagVideoViewTests(BaseStaffTests):
         response = self.client.get(reverse('staff.tag.video', args=[self.tag.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'staff/staff-tag-video.html')
-    
+
 
 class StaffTagDeleteViewTests(BaseStaffTests):
 

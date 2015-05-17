@@ -3,6 +3,7 @@ import os
 
 from django.contrib import messages
 from django.forms.formsets import formset_factory
+from django.forms.models import modelformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 import requests
@@ -117,12 +118,12 @@ class StaffTagVideoView(StaffTemplateView):
 
     @classmethod
     def get_formset_cls(cls):
-        return formset_factory(
-            form=forms.StaffTagVideoForm,
-            formset=forms.StaffTagVideoFormSet,
+        return modelformset_factory(
+            model=Video,
             extra=0,
-            can_order=True,
-            max_num=1000)
+            can_delete=True,
+            fields=('name', 'episode',)
+        )
 
     def get_context_data(self, id):
         tag = get_object_or_404(Tag, id=id)
@@ -132,9 +133,37 @@ class StaffTagVideoView(StaffTemplateView):
             'video_list': video_list,
         }
 
-    def get(self,  request, id):
+    def get(self, request, id):
         context = self.get_context_data(id)
+        context['formset'] = self.get_formset_cls()(queryset=context['video_list'])
+        return self.render_to_response(context)
 
+    def post(self, request, id):
+        context = self.get_context_data(id)
+        formset = self.get_formset_cls()(queryset=context['video_list'], data=request.POST)
+
+        if formset.is_valid():
+            formset.save()
+            return redirect('staff.tag.video', id=id)
+
+        context['formset'] = formset
+        return self.render_to_response(context)
+
+
+class StaffTagAddVideoView(StaffTagVideoView):
+
+    template_name = 'staff/staff-tag-video-add.html'
+
+    @classmethod
+    def get_formset_cls(cls):
+        return formset_factory(
+            form=forms.StaffTagVideoForm,
+            formset=forms.StaffTagVideoFormSet,
+            extra=0,
+            can_order=True,
+            max_num=1000)
+
+    def get_initial(self, context):
         initial = []
         for filename in os.listdir(VIDEO_DIR):
             if not filename.endswith('mp4'):
@@ -153,6 +182,11 @@ class StaffTagVideoView(StaffTemplateView):
             })
 
         initial = sorted(initial, key=lambda i: i['episode'])
+        return initial
+
+    def get(self,  request, id):
+        context = self.get_context_data(id)
+        initial = self.get_initial(context)
         formset = self.get_formset_cls()(initial=initial)
         context['formset'] = formset
         return self.render_to_response(context)
@@ -162,10 +196,9 @@ class StaffTagVideoView(StaffTemplateView):
         formset = self.get_formset_cls()(data=request.POST)
         if formset.is_valid():
             formset.save(tag=context['tag'])
-            return redirect('staff.tag.video', id=id)
+            return redirect('staff.tag.video.add', id=id)
 
         context['formset'] = formset
-        print(formset.errors)
         return self.render_to_response(context)
 
 
