@@ -4,7 +4,7 @@
     <div id="template-{{ TEMPLATE_NAME }}" class="account-page">
         <div class="absolute-center">
             <div class="account-form">
-                <h2 class="account-header">Channel 2</h2>
+                <h2 class="account-header">{% block account_title %}Channel 2{% endblock %}</h2>
                 {% include '_include/messages.html' %}
                 {% block content %}{% endblock %}
             </div>
