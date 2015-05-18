@@ -1,21 +1,16 @@
 import datetime
-import os
-import shutil
 
 from django import forms
 from django.core.mail import send_mail
-from django.forms.formsets import BaseFormSet
 import markdown
 import requests
 
 from channel2.account.models import User
 from channel2.core.templates import TEMPLATE_ENV
-from channel2.core.utils import slugify, prepare_filepath
-from channel2.settings import SITE_SCHEME, SITE_DOMAIN, EMAIL_HOST_USER, VIDEO_DIR, MEDIA_ROOT
+from channel2.settings import SITE_SCHEME, SITE_DOMAIN, EMAIL_HOST_USER
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
 from channel2.tag.utils import month_to_season, download_cover
-from channel2.video.models import Video
 
 
 class StaffUserAddForm(forms.ModelForm):
@@ -147,7 +142,7 @@ class StaffTagForm(forms.ModelForm):
 
     class Meta:
         model = Tag
-        fields = ('name', 'type', 'markdown')
+        fields = ('name', 'type', 'markdown', 'pinned',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -210,29 +205,3 @@ class StaffTagVideoForm(forms.Form):
     filename = forms.CharField(widget=forms.HiddenInput)
     name = forms.CharField(max_length=100)
     episode = forms.CharField(required=False, max_length=100)
-
-
-class StaffTagVideoFormSet(BaseFormSet):
-
-    def save(self, tag):
-        for form in self.ordered_forms:
-            data = form.cleaned_data
-            if not data.get('selected'):
-                continue
-
-            name = data['name']
-
-            # move the file in filepath to the correct location
-            cur_filepath_abs = os.path.join(VIDEO_DIR, data.get('filename'))
-
-            new_filepath = os.path.join('video', tag.slug, '{}.mp4'.format(slugify(name)))
-            new_filepath_abs = os.path.join(MEDIA_ROOT, new_filepath)
-            prepare_filepath(new_filepath_abs)
-            shutil.move(cur_filepath_abs, new_filepath_abs)
-
-            Video.objects.create(
-                file=new_filepath,
-                name=name,
-                episode=data.get('episode', ''),
-                tag=tag,
-            )

@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^anime/add/$',                    views.StaffAnimeAddView.as_view(), name='staff.anime.add'),
 
     url(r'^tag/add/$',                      views.StaffTagAddView.as_view(), name='staff.tag.add'),
+    url(r'^tag/pinned/$',                   views.StaffTagPinnedView.as_view(), name='staff.tag.pinned'),
     url(r'^tag/(?P<id>\d+)/edit/$',         views.StaffTagEditView.as_view(), name='staff.tag.edit'),
     url(r'^tag/(?P<id>\d+)/delete/$',       views.StaffTagDeleteView.as_view(), name='staff.tag.delete'),
     url(r'^tag/(?P<id>\d+)/video/$',        views.StaffTagVideoView.as_view(), name='staff.tag.video'),

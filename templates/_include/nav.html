@@ -3,6 +3,7 @@
 {% set url_home = url('home') %}
 {% set url_staff_anime_add = url('staff.anime.add') %}
 {% set url_staff_tag_add = url('staff.tag.add') %}
+{% set url_staff_tag_pinned = url('staff.tag.pinned') %}
 {% set url_staff_user_add = url('staff.user.add') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_tag_list_anime = url('tag.list.anime') %}
@@ -28,13 +29,17 @@
                 <span class="nav-icon icon icon-publish"></span>
                 <span>Add Anime</span>
             </a>
-            <a href="{{ url_staff_user_add }}" class="nav-link">
-                <span class="nav-icon icon icon-user-add"></span>
-                <span>Add User</span>
-            </a>
             <a href="{{ url_staff_tag_add }}" class="nav-link">
                 <span class="nav-icon icon icon-plus"></span>
                 <span>Create Tag</span>
+            </a>
+            <a href="{{ url_staff_tag_pinned }}" class="nav-link">
+                <span class="nav-icon icon icon-arrow-combo"></span>
+                <span>Reorder Pinned Tags</span>
+            </a>
+            <a href="{{ url_staff_user_add }}" class="nav-link">
+                <span class="nav-icon icon icon-user-add"></span>
+                <span>Add User</span>
             </a>
         {% endif %}
         <div class="nav-spacer"></div>
@@ -43,5 +48,12 @@
             <span>Random!</span>
         </a>
         <div class="nav-spacer"></div>
+        {% for tag in PINNED_TAGS %}
+            {% set url_tag = url('tag', args=[tag.id, tag.slug]) %}
+            <a href="{{ url_tag }}" class="nav-link">
+                <span class="nav-icon icon icon-right-open"></span>
+                <span>{{ tag.name }}</span>
+            </a>
+        {% endfor %}
     </div>
 </nav>

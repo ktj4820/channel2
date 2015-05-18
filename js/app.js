@@ -64,4 +64,18 @@ $(function() {
         });
     }
 
+    // reorder pinned tags
+    if ($('#template-staff-tag-pinned').length) {
+        var $tagList = $('.ptl');
+        if ($tagList.length) {
+            $tagList.sortable();
+            $tagList.bind('sortstop', function(event, ui) {
+                var $ptliList = $('.ptli');
+                for (var i = 0; i < $ptliList.length; i++) {
+                    $($ptliList[i]).find('input[id$="ORDER"]').attr('value', i+1);
+                }
+            });
+        }
+    }
+
 });

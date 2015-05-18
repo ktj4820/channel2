@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <h2 class="h2-heading">Reorder Pinned Tags</h2>
+    <form action="" method="post">
+        {{ forms.csrf_input() }}
+        {{ formset.management_form|safe }}
+        <ul class="ptl">
+            {% for form in formset %}
+                <li class="ptli">
+                    <div class="none">
+                        {{ form.id }}
+                        {{ form.ORDER }}
+                    </div>
+                    <span>{{ form.instance.name }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <button class="button-primary">Save</button>
+    </form>
+{% endblock %}
+
+{% block javascript %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{{ STATIC_URL }}js/app.js"></script>
+{% endblock %}

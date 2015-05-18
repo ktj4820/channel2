@@ -65,11 +65,7 @@
     width: 202px;
 }
 @media screen and (max-width: 479px) {
-    .tag-cover {
-        float: right;
-        margin: 0 0 10px 10px;
-        width: 50%;
-    }
+    .tag-cover { display: none; }
 }
 @media screen and (min-width: 480px) {
     .tag-info {
@@ -175,3 +171,21 @@
     left: 0;
 }
 
+/* -----------------------------------------------------------------------------
+    pinned tag list
+----------------------------------------------------------------------------- */
+
+.ptl {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.ptli {
+    background-color: @color-accent3;
+    color: #fff;
+    cursor: move;
+    margin-bottom: 5px;
+    max-width: 300px;
+    padding: 15px;
+    width: 100%;
+}

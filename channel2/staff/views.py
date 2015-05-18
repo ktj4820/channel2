@@ -11,6 +11,7 @@ import requests
 from channel2.core.views import StaffTemplateView
 from channel2.settings import VIDEO_DIR
 from channel2.staff import forms
+from channel2.staff.formsets import StaffTagVideoFormSet, StaffTagPinnedFormSet
 from channel2.tag.models import Tag
 from channel2.video.models import Video
 from channel2.video.utils import get_episode
@@ -158,7 +159,7 @@ class StaffTagAddVideoView(StaffTagVideoView):
     def get_formset_cls(cls):
         return formset_factory(
             form=forms.StaffTagVideoForm,
-            formset=forms.StaffTagVideoFormSet,
+            formset=StaffTagVideoFormSet,
             extra=0,
             can_order=True,
             max_num=1000)
@@ -216,3 +217,37 @@ class StaffTagDeleteView(StaffTemplateView):
         tag = get_object_or_404(Tag, id=id)
         tag.delete()
         return redirect('tag.list')
+
+
+class StaffTagPinnedView(StaffTemplateView):
+
+    template_name = 'staff/staff-tag-pinned.html'
+
+    @classmethod
+    def get_formset(cls):
+        return modelformset_factory(
+            model=Tag,
+            formset=StaffTagPinnedFormSet,
+            fields=[],
+            can_order=True,
+            extra=0,
+        )
+
+    def get_tag_list(self):
+        return Tag.objects.filter(pinned=True).order_by('order')
+
+    def get(self, request):
+        formset = self.get_formset()(queryset=self.get_tag_list())
+        return self.render_to_response({
+            'formset': formset,
+        })
+
+    def post(self, request):
+        formset = self.get_formset()(queryset=self.get_tag_list(), data=request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('staff.tag.pinned')
+
+        return self.render_to_response({
+            'formset': formset,
+        })
