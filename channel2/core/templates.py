@@ -67,4 +67,5 @@ TEMPLATE_ENV.filters.update(**{
 
     'date':                         filters.date,
     'gravatar':                     filters.gravatar_url,
+    'imagepress':                   filters.imagepress,
 })

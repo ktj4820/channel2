@@ -7,7 +7,7 @@
             {% for tag in recent_list %}
                 <div class="tcli-wrapper">
                     <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tcli">
-                        <img src="{{ tag.cover_url }}">
+                        <img src="{{ tag.cover_url|imagepress }}?w=400">
                         <div class="tcli-data">
                             <h3 class="tcli-heading">{{ tag.name }}</h3>
                             <div class="tcli-tl">{% for ctag in tag.children_list %}{{ ctag.name }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
@@ -22,7 +22,7 @@
         {% for tag in new_list %}
             <div class="tcli-wrapper">
                 <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tcli">
-                    <img src="{{ tag.cover_url }}">
+                    <img src="{{ tag.cover_url|imagepress }}?w=400">
                     <div class="tcli-data">
                         <h3 class="tcli-heading">{{ tag.name }}</h3>
                         <div class="tcli-tl">{% for ctag in tag.children_list %}{{ ctag.name }}{% if not loop.last %}, {% endif %}{% endfor %}</div>

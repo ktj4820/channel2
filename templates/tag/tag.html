@@ -24,7 +24,7 @@
     <h2 class="h2-heading">{{ tag.name }}</h2>
     {% if tag.type == 'anime' %}
         {% if tag.cover %}
-            <img src="{{ tag.cover_url }}" class="tag-cover">
+            <img src="{{ tag.cover_url|imagepress }}?w=400" class="tag-cover">
         {% endif %}
         <div class="tag-info">
             <div class="ttl">
