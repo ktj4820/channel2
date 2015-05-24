@@ -4,7 +4,7 @@
 {% block content %}
     {% if video %}
         <div class="video-container">
-            <video controls preload="none" poster="{{ video.cover_url }}">
+            <video controls preload="none" poster="{{ video.cover_url|imagepress }}">
                 <source src="{{ url('video', args=[video.id, video.slug]) }}" type="video/mp4">
                 <p>{% trans %}Your browser does not support the video tag.{% endtrans %}</p>
             </video>

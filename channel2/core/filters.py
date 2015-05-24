@@ -1,5 +1,7 @@
 import hashlib
 
+from channel2.settings import DEBUG
+
 
 def date(value, format='%Y/%m/%d %H:%M'):
     return value.strftime(format)
@@ -21,5 +23,8 @@ def imagepress(url):
     """
     returns an imagepress version of the URL
     """
+
+    if DEBUG:
+        return url
 
     return 'http://channel2.imagepress.io' + url
