@@ -44,7 +44,7 @@ class StaffUserAddViewTests(BaseStaffTests):
         self.assertTrue(user.token)
 
 
-class STaffUserView(BaseStaffTests):
+class StaffUserView(BaseStaffTests):
 
     def test_staff_user_view_get(self):
         response = self.client.get(reverse('staff.user'))
@@ -180,3 +180,11 @@ class StaffTagDeleteViewTests(BaseStaffTests):
         response = self.client.post(reverse('staff.tag.delete', args=[self.tag.id]))
         self.assertRedirects(response, reverse('tag.list'))
         self.assertFalse(Tag.objects.filter(id=self.tag.id).exists())
+
+
+class StaffVideoActivityViewTests(BaseStaffTests):
+
+    def test_staff_video_activity_view_get(self):
+        response = self.client.get(reverse('staff.video.activity'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-video-activity.html')

@@ -9,12 +9,13 @@ from django.shortcuts import redirect, get_object_or_404
 import requests
 
 from channel2.account.models import User
+from channel2.core.utils import paginate
 from channel2.core.views import StaffTemplateView
 from channel2.settings import VIDEO_DIR
 from channel2.staff import forms
 from channel2.staff.formsets import StaffTagVideoFormSet, StaffTagPinnedFormSet
 from channel2.tag.models import Tag
-from channel2.video.models import Video
+from channel2.video.models import Video, VideoLink
 from channel2.video.utils import get_episode
 
 
@@ -276,4 +277,17 @@ class StaffTagPinnedView(StaffTemplateView):
 
         return self.render_to_response({
             'formset': formset,
+        })
+
+
+class StaffVideoActivityView(StaffTemplateView):
+
+    page_size = 50
+    template_name = 'staff/staff-video-activity.html'
+
+    def get(self, request):
+        link_list = VideoLink.objects.select_related('video', 'created_by').order_by('-created_on')
+        link_list = paginate(link_list, self.page_size, request.GET.get('p'))
+        return self.render_to_response({
+            'link_list': link_list,
         })

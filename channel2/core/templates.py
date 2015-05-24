@@ -66,6 +66,7 @@ TEMPLATE_ENV.filters.update(**{
     'starts_with':                  str.startswith,
 
     'date':                         filters.date,
+    'exclude_keys':                 filters.exclude_keys,
     'gravatar':                     filters.gravatar_url,
     'imagepress':                   filters.imagepress,
 })

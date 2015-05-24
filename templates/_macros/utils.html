@@ -1,2 +1,23 @@
 {% macro link_active(path) %}{% if request.path == path %}active{% endif %}{% endmacro %}
 {% macro link_active_starts_with(path) %}{% if request.path|starts_with(path) %}active{% endif %}{% endmacro %}
+
+{% macro pagination(page) %}
+    {% if page.paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if page.has_previous() %}
+                <a href="?{{ (request.GET|exclude_keys('p')).urlencode() }}&p={{ page.previous_page_number() }}" class="icon icon-left-open pagination-prev"></a>
+            {% else %}
+                <span class="icon icon-left-open pagination-prev"></span>
+            {% endif %}
+            <div class="pagination-control">
+                <input type="text" value="{{ request.GET.p or 1 }}" name="p">
+                <span>of {{ page.paginator.num_pages }}</span>
+            </div>
+            {% if page.has_next() %}
+                <a href="?{{ (request.GET|exclude_keys('p')).urlencode() }}&p={{ page.next_page_number() }}" class="icon icon-right-open pagination-next"></a>
+            {% else %}
+                <span class="icon icon-right-open pagination-next"></span>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}

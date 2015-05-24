@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% import '_macros/utils.html' as utils with context %}
+
+{% block content %}
+    <h2 class="h2-heading">Video Activity</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="80px">ID</th>
+                <th>Video</th>
+                <th width="300px">Email</th>
+                <th width="200px">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for link in link_list %}
+                <tr>
+                    <td>{{ link.id }}</td>
+                    <td>{{ link.video.name }}</td>
+                    <td>{{ link.created_by.email }}</td>
+                    <td>{{ link.created_on|date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="space-top-20">
+        {{ utils.pagination(link_list) }}
+    </div>
+{% endblock %}

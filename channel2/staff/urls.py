@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^user/$',                         views.StaffUserView.as_view(), name='staff.user'),
     url(r'^user/add/$',                     views.StaffUserAddView.as_view(), name='staff.user.add'),
 
+    url(r'^video/activity/$',               views.StaffVideoActivityView.as_view(), name='staff.video.activity'),
+
 ]
