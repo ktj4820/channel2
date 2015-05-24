@@ -8,6 +8,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 import requests
 
+from channel2.account.models import User
 from channel2.core.views import StaffTemplateView
 from channel2.settings import VIDEO_DIR
 from channel2.staff import forms
@@ -17,25 +18,50 @@ from channel2.video.models import Video
 from channel2.video.utils import get_episode
 
 
-class StaffUserAddView(StaffTemplateView):
+class StaffUserView(StaffTemplateView):
 
-    template_name = 'staff/staff-user-add.html'
+    template_name = 'staff/staff-user.html'
+
+    @classmethod
+    def get_formset_cls(cls):
+        return modelformset_factory(
+            model=User,
+            extra=0,
+            can_delete=True,
+            fields=('name', 'is_active', 'is_staff',),
+        )
 
     def get(self, request):
+        user_qs = User.objects.order_by('email')
+        formset = self.get_formset_cls()(queryset=user_qs)
         return self.render_to_response({
             'form': forms.StaffUserAddForm(),
+            'formset': formset,
         })
+
+    def post(self, request):
+        user_qs = User.objects.order_by('email')
+        formset = self.get_formset_cls()(queryset=user_qs, data=request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('staff.user')
+
+        return self.render_to_response({
+            'form': forms.StaffUserAddForm(),
+            'formset': formset,
+        })
+
+
+class StaffUserAddView(StaffTemplateView):
 
     def post(self, request):
         form = forms.StaffUserAddForm(data=request.POST)
         if form.is_valid():
             user = form.save()
             messages.success(request, 'An activation email has been sent to {}'.format(user.email))
-            return redirect('staff.user.add')
-
-        return self.render_to_response({
-            'form': form,
-        })
+        else:
+            messages.error(request, 'An error occurred while trying to add user.')
+        return redirect('staff.user')
 
 
 class StaffAnimeAddView(StaffTemplateView):

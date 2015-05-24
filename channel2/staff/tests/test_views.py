@@ -27,23 +27,29 @@ class StaffUserAddViewTests(BaseStaffTests):
 
     def test_staff_user_add_view_get(self):
         response = self.client.get(reverse('staff.user.add'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'staff/staff-user-add.html')
+        self.assertEqual(response.status_code, 405)
 
     def test_staff_user_add_view_post_invalid(self):
         response = self.client.post(reverse('staff.user.add'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'staff/staff-user-add.html')
+        self.assertRedirects(response, reverse('staff.user'))
 
     def test_staff_user_add_view_post(self):
         response = self.client.post(reverse('staff.user.add'), {
             'email': 'newuser@example.com',
         })
-        self.assertRedirects(response, reverse('staff.user.add'))
+        self.assertRedirects(response, reverse('staff.user'))
 
         user = User.objects.get(email='newuser@example.com')
         self.assertFalse(user.is_active)
         self.assertTrue(user.token)
+
+
+class STaffUserView(BaseStaffTests):
+
+    def test_staff_user_view_get(self):
+        response = self.client.get(reverse('staff.user'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-user.html')
 
 
 class StaffAnimeAddViewTests(BaseStaffTests):

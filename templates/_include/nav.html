@@ -4,7 +4,7 @@
 {% set url_staff_anime_add = url('staff.anime.add') %}
 {% set url_staff_tag_add = url('staff.tag.add') %}
 {% set url_staff_tag_pinned = url('staff.tag.pinned') %}
-{% set url_staff_user_add = url('staff.user.add') %}
+{% set url_staff_user = url('staff.user') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_tag_list_anime = url('tag.list.anime') %}
 {% set url_tag_random = url('tag.random') %}
@@ -35,11 +35,11 @@
             </a>
             <a href="{{ url_staff_tag_pinned }}" class="nav-link">
                 <span class="nav-icon icon icon-arrow-combo"></span>
-                <span>Reorder Pinned Tags</span>
+                <span>Pinned Tags</span>
             </a>
-            <a href="{{ url_staff_user_add }}" class="nav-link">
+            <a href="{{ url_staff_user }}" class="nav-link">
                 <span class="nav-icon icon icon-user-add"></span>
-                <span>Add User</span>
+                <span>Manage Users</span>
             </a>
         {% endif %}
         <div class="nav-spacer"></div>

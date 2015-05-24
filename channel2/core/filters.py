@@ -4,6 +4,8 @@ from channel2.settings import DEBUG
 
 
 def date(value, format='%Y/%m/%d %H:%M'):
+    if not value:
+        return ''
     return value.strftime(format)
 
 

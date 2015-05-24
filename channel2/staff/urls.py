@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^tag/(?P<id>\d+)/video/add/$',    views.StaffTagAddVideoView.as_view(), name='staff.tag.video.add'),
     url(r'^tag/autocomplete.json',          views.StaffTagAutocompleteView.as_view(), name='staff.tag.autocomplete'),
 
+    url(r'^user/$',                         views.StaffUserView.as_view(), name='staff.user'),
     url(r'^user/add/$',                     views.StaffUserAddView.as_view(), name='staff.user.add'),
 
 ]

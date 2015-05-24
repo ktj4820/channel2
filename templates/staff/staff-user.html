@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% import '_macros/forms.html' as forms with context %}
+
+{% block content %}
+    <h2 class="h2-heading">Manage User</h2>
+    <form action="{{ url('staff.user.add') }}" method="post">
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        <div class="max-400 inline-block space-right-10">
+            {{ forms.field(form.email, show_label=False) }}
+        </div>
+        <button type="submit" class="button-primary inline-block">Add User</button>
+    </form>
+    <form action="" method="post">
+        {{ forms.non_field_errors(form) }}
+        {{ forms.csrf_input() }}
+        {{ formset.management_form|safe }}
+        <table class="space-top-20 space-bottom-20">
+            <thead>
+                <tr>
+                    <th width="42px"><span class="icon icon-trash left"></span></th>
+                    <th>Email</th>
+                    <th width="300px">Name</th>
+                    <th width="80px">Active</th>
+                    <th width="80px">Staff</th>
+                    <th width="200px">Last Login</th>
+                    <th width="200px">Date Joined</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                    {% set user=form.instance %}
+                    <tr>
+                        <td class="text-center">{{ form.DELETE }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {{ form.name }}
+                            <div class="none">{{ form.id }}</div>
+                        </td>
+                        <td>{{ form.is_active }}</td>
+                        <td>{{ form.is_staff }}</td>
+                        <td>{{ user.last_login|date('%B %d, %Y') }}</td>
+                        <td>{{ user.date_joined|date('%B %d, %Y') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="button-primary">Update Users</button>
+    </form>
+{% endblock %}
