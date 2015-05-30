@@ -1,8 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'account/account-base.html' %}
+
+{% block account_title %}An Error Has Occurred{% endblock %}
 
 {% block content %}
-    <section>
-        <h2>{% trans %}An Error Has Occurred{% endtrans %}</h2>
-        <p>{{ message }}</p>
-    </section>
+    <ul class="message-list">
+        <li class="message message-error">
+            <span>{{ message }}</span>
+        </li>
+    </ul>
 {% endblock %}
