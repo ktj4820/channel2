@@ -74,11 +74,11 @@
                 {% set url_tag_video = url('tag.video', args=[tag.id, tag.slug, v.id]) %}
                 {% set url_video = url('video', args=[v.id, v.slug]) %}
                 <div class="no-break-column">
-                    <div class="tli{% if v.id == video.id %} active{% endif %}{% if v.watched %} watched{% endif %}">
+                    <div class="tli text-overflow{% if v.id == video.id %} active{% endif %}{% if v.watched %} watched{% endif %}">
                         <a href="{{ url_video }}" class="left">
                             <span class="icon icon-down-circled tli-icon tli-icon-short"></span>
                         </a>
-                        <a href="{{ url_tag_video }}" class="block">
+                        <a href="{{ url_tag_video }}" title="{{ v.name }}">
                             <span class="icon icon-play tli-icon"></span>
                             {% if v.episode %}
                                 <span>Episode {{ v.episode }}</span>
