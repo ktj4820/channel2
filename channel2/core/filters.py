@@ -36,14 +36,3 @@ def gravatar_url(email):
     email_hash = hashlib.md5(email.lower()).hexdigest()
     url = '//www.gravatar.com/avatar/{}?d=mm'.format(email_hash)
     return url
-
-
-def imagepress(url):
-    """
-    returns an imagepress version of the URL
-    """
-
-    if DEBUG:
-        return url
-
-    return 'http://channel2.imagepress.io' + url
