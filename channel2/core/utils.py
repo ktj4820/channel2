@@ -7,7 +7,7 @@ from django.utils.text import slugify as django_slugify
 import markdown
 from unidecode import unidecode
 
-from channel2.settings import EMAIL_HOST_USER, DEBUG, ADMINS, MEDIA_ROOT
+from channel2.settings import EMAIL_HOST_USER, DEBUG, ADMINS
 
 
 def slugify(s):
@@ -104,11 +104,12 @@ def remove_media_file(path):
     """
     if not path:
         return
+
+    from channel2.settings import MEDIA_ROOT
     path = os.path.join(MEDIA_ROOT, path)
-    try:
-        os.unlink(path)
-    except FileNotFoundError:
-        pass
+
+    try: os.unlink(path)
+    except FileNotFoundError: pass
 
 
 def prepare_filepath(path):
