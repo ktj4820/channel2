@@ -35,7 +35,6 @@ class StaffTagVideoFormSet(BaseFormSet):
             )
 
 
-
 class StaffTagPinnedFormSet(BaseModelFormSet):
 
     def save(self):

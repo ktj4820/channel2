@@ -6,6 +6,7 @@ from channel2.account.models import User
 from channel2.core.tests import BaseTestCase
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
+from channel2.video.models import Video
 
 
 class BaseStaffTests(BaseTestCase):
@@ -159,11 +160,37 @@ class StaffTagVideoViewTests(BaseStaffTests):
     def setUp(self):
         super().setUp()
         self.tag = Tag.objects.get(name='Action')
+        self.video1 = Video.objects.create(file='test1.mp4', name='test1', tag=self.tag)
+        self.video2 = Video.objects.create(file='test2.mp4', name='test2', tag=self.tag)
 
     def test_staff_tag_video_view_get(self):
         response = self.client.get(reverse('staff.tag.video', args=[self.tag.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'staff/staff-tag-video.html')
+
+    @mock.patch('channel2.video.models.remove_media_file')
+    def test_staff_tag_video_view_post(self, mock_remove_media_file):
+        response = self.client.post(reverse('staff.tag.video', args=[self.tag.id]), data={
+            'form-TOTAL_FORMS': '2',
+            'form-INITIAL_FORMS': '2',
+            'form-MIN_NUM_FORMS': '0',
+            'form-MAX_NUM_FORMS': '1000',
+            'form-0-DELETE': 'on',
+            'form-0-id': self.video1.id,
+            'form-0-name': 'test1',
+            'form-1-episode': '02',
+            'form-1-id': self.video2.id,
+            'form-1-name': 'Test 2',
+        })
+        self.assertRedirects(response, reverse('staff.tag.video', args=[self.tag.id]))
+        self.assertFalse(Video.objects.filter(id=self.video1.id).exists())
+
+        video = Video.objects.get(id=self.video2.id)
+        self.assertEqual(video.name, 'Test 2')
+        self.assertEqual(video.episode, '02')
+        self.assertEqual(mock_remove_media_file.call_count, 2)
+        mock_remove_media_file.assert_has_any_call(self.video2.file)
+        mock_remove_media_file.assert_has_any_call(self.video2.cover)
 
 
 class StaffTagDeleteViewTests(BaseStaffTests):
