@@ -102,14 +102,13 @@ def remove_media_file(path):
     """
     Delete the media file located at "path".
     """
-
     if not path:
         return
-
     path = os.path.join(MEDIA_ROOT, path)
-
-    try: os.unlink(path)
-    except FileNotFoundError: pass
+    try:
+        os.unlink(path)
+    except FileNotFoundError:
+        pass
 
 
 def prepare_filepath(path):
