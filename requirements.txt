@@ -13,6 +13,7 @@ django-simple-captcha
 Jinja2
 jsonfield
 Markdown
+Pillow
 psycopg2
 pytz
 requests
