@@ -5,6 +5,7 @@ REGEX_LIST = (
     re.compile(r'.*-(?P<episode>\d{1,3})\.mp4'),
     re.compile(r'.*- (?P<episode>\d{1,3}) [\(\[].*'),
     re.compile(r'.*_(?P<episode>\d{1,3})_.*'),
+    re.compile(r'.* (?P<episode>\d{1,3}) \[.*'),
 )
 
 
