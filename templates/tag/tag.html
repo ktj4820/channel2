@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import '_macros/forms.html' as forms with context %}
+{% import 'tag/tag-macros.html' as tag_macros %}
 
 {% block content %}
     {% if video %}
@@ -51,18 +52,22 @@
         </div>
     {% endif %}
     {% if parent_list %}
-        <div class="tl">
-            {% for tag in parent_list %}
-                <div class="no-break-column">
-                    <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
-                        <div class="tli-inner">
-                            <span class="icon icon-right-open tli-icon"></span>
-                            <span>{{ tag.name }}</span>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+        {% if tag.type == 'season' %}
+            {{ tag_macros.tag_cover_list(parent_list) }}
+        {% else %}
+            <div class="tl">
+                {% for tag in parent_list %}
+                    <div class="no-break-column">
+                        <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli" title="{{ tag.name }}">
+                            <div class="tli-inner">
+                                <span class="icon icon-right-open tli-icon"></span>
+                                <span>{{ tag.name }}</span>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endif %}
     {% if video_list %}
         <div class="space-top-20"></div>

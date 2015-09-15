@@ -67,9 +67,15 @@ class TagView(ProtectedTemplateView):
             if video is None:
                 video = video_list[0]
 
+        parent_list = tag.parents.order_by('name')
+        if tag.type == TagType.SEASON:
+            parent_list = parent_list.prefetch_related('children')
+            for parent in parent_list:
+                parent.children_list = sorted(parent.children.all(), key=lambda t: t.name)
+
         return self.render_to_response({
             'children_list': tag.children.order_by('name'),
-            'parent_list': tag.parents.order_by('name'),
+            'parent_list': parent_list,
             'tag': tag,
             'video': video,
             'video_list': video_list,
