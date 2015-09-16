@@ -63,6 +63,9 @@ class StaffAnimeAddFormTests(BaseTestCase):
         self.assertEqual(tag.type, TagType.ANIME)
         self.assertTrue(Tag.objects.get(name='Action') in tag.children.all())
 
+        tag_season = Tag.objects.get(name='1998 Spring')
+        self.assertEqual(tag_season.type, TagType.SEASON)
+
 
 class StaffTagFormTests(BaseTestCase):
 

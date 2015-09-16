@@ -104,7 +104,7 @@ class StaffAnimeAddForm(forms.Form):
             started = self.json.get('started_airing')
             d = datetime.datetime.strptime(started, '%Y-%m-%d')
             name = '{} {}'.format(d.year, month_to_season[d.month])
-            child = Tag.objects.get_or_create(name=name)[0]
+            child = Tag.objects.get_or_create(name=name, type=TagType.SEASON)[0]
             children.append(child)
 
         tag.children.add(*children)
