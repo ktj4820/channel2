@@ -53,7 +53,7 @@
     {% endif %}
     {% if parent_list %}
         {% if tag.type == 'season' %}
-            {{ tag_macros.tag_cover_list(parent_list) }}
+            {{ tag_macros.tag_cover_list(parent_list, tag) }}
         {% else %}
             <div class="tl">
                 {% for tag in parent_list %}

@@ -1,4 +1,4 @@
-{% macro tag_cover_list(tag_list) %}
+{% macro tag_cover_list(tag_list, current_tag=None) %}
     <div class="tcl">
         {% for tag in tag_list %}
             <div class="tcli-wrapper">
@@ -6,7 +6,7 @@
                     <img src="{{ tag.cover_url }}">
                     <div class="tcli-data">
                         <h3 class="tcli-heading">{{ tag.name }}</h3>
-                        <div class="tcli-tl">{% for ctag in tag.children_list %}{{ ctag.name }}{% if not loop.last %}, {% endif %}{% endfor %}</div>
+                        <div class="tcli-tl">{% for ctag in tag.children_list %}{% if current_tag != ctag %}{{ ctag.name }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}</div>
                     </div>
                 </a>
             </div>
