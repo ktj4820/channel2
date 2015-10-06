@@ -13,7 +13,7 @@ django-simple-captcha
 Jinja2
 jsonfield
 Markdown
-Pillow
+Pillow==2.9.0
 psycopg2
 python-Levenshtein
 pytz
