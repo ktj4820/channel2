@@ -199,6 +199,15 @@ class StaffTagForm(forms.ModelForm):
         return tag
 
 
+class StaffVideoForm(forms.Form):
+
+    selected = forms.BooleanField(required=False, initial=True)
+    filename = forms.CharField(widget=forms.HiddenInput)
+    tag = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'list': 'tag-list'}))
+    name = forms.CharField(max_length=100)
+    episode = forms.CharField(required=False, max_length=10)
+
+
 class StaffTagVideoForm(forms.Form):
 
     selected = forms.BooleanField(required=False, initial=True)

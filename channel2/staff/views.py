@@ -13,10 +13,10 @@ from channel2.core.utils import paginate
 from channel2.core.views import StaffTemplateView
 from channel2.settings import VIDEO_DIR
 from channel2.staff import forms
-from channel2.staff.formsets import StaffTagVideoFormSet, StaffTagPinnedFormSet
+from channel2.staff.formsets import StaffTagVideoFormSet, StaffTagPinnedFormSet, StaffVideoFormSet
 from channel2.tag.models import Tag
 from channel2.video.models import Video, VideoLink
-from channel2.video.utils import get_episode
+from channel2.video.utils import get_episode, guess_tag
 
 
 class StaffUserView(StaffTemplateView):
@@ -189,7 +189,8 @@ class StaffTagAddVideoView(StaffTagVideoView):
             formset=StaffTagVideoFormSet,
             extra=0,
             can_order=True,
-            max_num=1000)
+            max_num=1000
+        )
 
     def get_initial(self, context):
         initial = []
@@ -291,3 +292,64 @@ class StaffVideoActivityView(StaffTemplateView):
         return self.render_to_response({
             'link_list': link_list,
         })
+
+
+class StaffVideoAddView(StaffTemplateView):
+
+    template_name = 'staff/staff-video-add.html'
+
+    @classmethod
+    def get_formset_cls(cls):
+        return formset_factory(
+            form=forms.StaffVideoForm,
+            formset=StaffVideoFormSet,
+            extra=0,
+            can_order=True,
+            max_num=1000
+        )
+
+    def get_context_data(self):
+        tag_list = Tag.objects.order_by('slug').values_list('name', flat=True)
+        return {
+            'tag_list': tag_list,
+        }
+
+    def get_initial(self, context):
+        initial = []
+        for filename in os.listdir(VIDEO_DIR):
+            if not filename.endswith('mp4'):
+                continue
+
+            tag = guess_tag(filename, context['tag_list'])
+            episode = get_episode(filename)
+            name = tag
+            if episode:
+                name += ' - ' + episode
+
+            initial.append({
+                'selected': True,
+                'filename': filename,
+                'tag': tag,
+                'name': name,
+                'episode': episode,
+            })
+
+        initial = sorted(initial, key=lambda i: i['episode'])
+        return initial
+
+    def get(self, request):
+        context = self.get_context_data()
+        initial = self.get_initial(context)
+        formset = self.get_formset_cls()(initial=initial)
+        context['formset'] = formset
+        return self.render_to_response(context)
+
+    def post(self, request):
+        formset = self.get_formset_cls()(data=request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('staff.video.add')
+
+        context = self.get_context_data()
+        context['formset'] = formset
+        return self.render_to_response(context)

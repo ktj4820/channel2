@@ -9,6 +9,7 @@
 {% set url_tag_list_anime = url('tag.list.anime') %}
 {% set url_tag_random = url('tag.random') %}
 {% set url_staff_video_activity = url('staff.video.activity') %}
+{% set url_staff_video_add = url('staff.video.add') %}
 
 <nav>
     <div class="nav-section">
@@ -45,7 +46,11 @@
             </a>
             <a href="{{ url_staff_tag_add }}" class="nav-link">
                 <span class="nav-icon icon icon-plus"></span>
-                <span>Create Tag</span>
+                <span>Add Tag</span>
+            </a>
+            <a href="{{ url_staff_video_add }}" class="nav-link">
+                <span class="nav-icon icon icon-plus"></span>
+                <span>Add Video</span>
             </a>
             <a href="{{ url_staff_tag_pinned }}" class="nav-link">
                 <span class="nav-icon icon icon-arrow-combo"></span>

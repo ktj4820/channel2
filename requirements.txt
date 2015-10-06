@@ -15,6 +15,7 @@ jsonfield
 Markdown
 Pillow
 psycopg2
+python-Levenshtein
 pytz
 requests
 SQLAlchemy

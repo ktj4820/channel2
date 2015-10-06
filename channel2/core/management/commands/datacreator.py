@@ -93,8 +93,8 @@ class Command(BaseCommand):
         video_list = []
         for i in range(1, 25):
             video_list.append(Video(
-                file='video/cowboy-bebop/cowboy-bebop-{}.mp4'.format(i),
-                name='Cowboy Bebop {0:02d}'.format(i),
+                file='video/cowboy-bebop/cowboy-bebop-{0:02d}.mp4'.format(i),
+                name='Cowboy Bebop - {0:02d}'.format(i),
                 slug='cowboy-bebop-{0:02d}'.format(i),
                 episode='{0:02d}'.format(i),
                 tag=self.tag,

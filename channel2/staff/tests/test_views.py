@@ -215,3 +215,55 @@ class StaffVideoActivityViewTests(BaseStaffTests):
         response = self.client.get(reverse('staff.video.activity'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'staff/staff-video-activity.html')
+
+
+class StaffVideoAddViewTests(BaseStaffTests):
+
+    def test_staff_video_add_view_get(self):
+        response = self.client.get(reverse('staff.video.add'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-video-add.html')
+
+    def test_staff_video_add_view_post_invalid(self):
+        response = self.client.post(reverse('staff.video.add'), data={
+            'form-0-ORDER': '1',
+            'form-0-episode': '01',
+            'form-0-filename': 'file1.mp4',
+            'form-0-name': 'Cowboy Bebop - 01',
+            'form-0-selected': 'on',
+            'form-0-tag': 'Cowboy Bebop',
+            'form-INITIAL_FORMS': '1',
+            'form-MAX_NUM_FORMS': '1000',
+            'form-MIN_NUM_FORMS': '0',
+            'form-TOTAL_FORMS': '1'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'staff/staff-video-add.html')
+
+    @mock.patch('channel2.staff.formsets.shutil')
+    def test_staff_video_add_view_post(self, mock_shutil):
+        response = self.client.post(reverse('staff.video.add'), data={
+            'form-0-ORDER': '1',
+            'form-0-episode': '30',
+            'form-0-filename': 'file1.mp4',
+            'form-0-name': 'Cowboy Bebop - 30',
+            'form-0-selected': 'on',
+            'form-0-tag': 'Cowboy Bebop',
+            'form-1-ORDER': '2',
+            'form-1-episode': '31',
+            'form-1-filename': 'file2.mp4',
+            'form-1-name': 'Cowboy Bebop - 31',
+            'form-1-selected': 'on',
+            'form-1-tag': 'Cowboy Bebop',
+            'form-INITIAL_FORMS': '2',
+            'form-MAX_NUM_FORMS': '1000',
+            'form-MIN_NUM_FORMS': '0',
+            'form-TOTAL_FORMS': '2'
+        })
+        self.assertRedirects(response, reverse('staff.video.add'))
+
+        video = Video.objects.get(name='Cowboy Bebop - 30')
+        self.assertEqual(video.tag.name, 'Cowboy Bebop')
+        self.assertEqual(video.episode, '30')
+        self.assertEqual(video.file, 'video/cowboy-bebop/cowboy-bebop-30.mp4')
+        self.assertTrue(Video.objects.filter(name='Cowboy Bebop - 31').exists())

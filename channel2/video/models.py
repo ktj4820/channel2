@@ -1,8 +1,9 @@
+import os
+import subprocess
+
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
-import os
-import subprocess
 
 from channel2.account.models import User
 from channel2.core.utils import slugify, remove_media_file, prepare_filepath
