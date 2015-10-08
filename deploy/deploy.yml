@@ -62,3 +62,6 @@
     - supervisorctl: name={{ item }} state=started server_url=http://127.0.0.1:9001
       with_items:
         - channel2
+
+    # copy the encode file into directory
+    - copy: src=files/encode-21.py dest={{ download_path }}/encode-21.py
