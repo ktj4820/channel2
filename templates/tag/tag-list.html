@@ -4,7 +4,7 @@
     <div class="tl">
         {% for key, tag_list in tag_dict|dictsort %}
             <div class="no-break-column">
-                <h2 class="h2-heading">{{ key }}</h2>
+                <h2 class="h2-heading tl-heading">{{ key }}</h2>
                 {% for tag in tag_list %}
                     <a href="{{ url('tag', args=[tag.id, tag.slug]) }}" class="tli{% if loop.last %} space-bottom-15{% endif %}" title="{{ tag.name }}">
                         <div class="tli-inner">
