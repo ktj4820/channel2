@@ -334,7 +334,7 @@ class StaffVideoAddView(StaffTemplateView):
                 'episode': episode,
             })
 
-        initial = sorted(initial, key=lambda i: i['episode'])
+        initial = sorted(initial, key=lambda i: i['filename'])
         return initial
 
     def get(self, request):
