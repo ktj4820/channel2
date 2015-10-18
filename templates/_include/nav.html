@@ -5,6 +5,7 @@
 {% set url_staff_tag_add = url('staff.tag.add') %}
 {% set url_staff_tag_pinned = url('staff.tag.pinned') %}
 {% set url_staff_user = url('staff.user') %}
+{% set url_tag_current = url('tag.current') %}
 {% set url_tag_list = url('tag.list') %}
 {% set url_tag_list_anime = url('tag.list.anime') %}
 {% set url_tag_random = url('tag.random') %}
@@ -16,6 +17,10 @@
         <a href="{{ url_home }}" class="nav-link">
             <span class="nav-icon icon icon-home"></span>
             <span>Home</span>
+        </a>
+        <a href="{{ url_tag_current }}" class="nav-link">
+            <span class="nav-icon icon icon-calendar"></span>
+            <span>Current</span>
         </a>
         <a href="{{ url_tag_list_anime }}" class="nav-link">
             <span class="nav-icon icon icon-video"></span>

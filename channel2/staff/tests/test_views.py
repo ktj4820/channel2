@@ -189,8 +189,8 @@ class StaffTagVideoViewTests(BaseStaffTests):
         self.assertEqual(video.name, 'Test 2')
         self.assertEqual(video.episode, '02')
         self.assertEqual(mock_remove_media_file.call_count, 2)
-        mock_remove_media_file.assert_has_any_call(self.video2.file)
-        mock_remove_media_file.assert_has_any_call(self.video2.cover)
+        mock_remove_media_file.assert_any_call(self.video1.file)
+        mock_remove_media_file.assert_any_call(self.video1.cover)
 
 
 class StaffTagDeleteViewTests(BaseStaffTests):

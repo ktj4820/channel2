@@ -1,13 +1,16 @@
 from collections import defaultdict
 import random
+import datetime
 
 from django.shortcuts import get_object_or_404, redirect
+import pytz
 
+from channel2.core.utils import paginate
 from channel2.core.views import ProtectedTemplateView
 from channel2.tag.enums import TagType
 from channel2.tag.models import Tag
-from channel2.tag.utils import convert_season
-from channel2.video.models import VideoLink
+from channel2.tag.utils import convert_season, month_to_season
+from channel2.video.models import VideoLink, Video
 
 
 class TagListView(ProtectedTemplateView):
@@ -89,3 +92,27 @@ class TagRandomView(ProtectedTemplateView):
         id = random.choice(id_list)
         tag = Tag.objects.get(id=id)
         return redirect('tag', id=tag.id, slug=tag.slug)
+
+
+class TagCurrentView(ProtectedTemplateView):
+
+    page_size = 100
+    template_name = 'tag/tag-current.html'
+
+    def get(self, request):
+        now = datetime.datetime.now(tz=pytz.UTC)
+        tag_name = '{} {}'.format(now.year, month_to_season[now.month])
+        tag = Tag.objects.get_or_create(name=tag_name, type=TagType.SEASON)[0]
+        video_list = Video.objects.filter(tag__children=tag).order_by('-created_on').select_related('tag')
+        video_list = paginate(video_list, self.page_size, request.GET.get('p'))
+
+        video_dict = defaultdict(list)
+        for video in video_list:
+            key = video.created_on.replace(hour=0, minute=0, second=0, microsecond=0)
+            video_dict[key].append(video)
+
+        return self.render_to_response({
+            'tag': tag,
+            'video_dict': sorted(video_dict.items(), reverse=True),
+            'video_list': video_list,
+        })

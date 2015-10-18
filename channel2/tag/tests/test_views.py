@@ -38,3 +38,11 @@ class TagRandomViewTests(BaseTestCase):
         response = self.client.get(reverse('tag.random'))
         self.assertEqual(response.status_code, 302)
         self.assertTrue('/tag/' in response['location'])
+
+
+class TagCurrentViewTests(BaseTestCase):
+
+    def test_tag_current_view_get(self):
+        response = self.client.get(reverse('tag.current'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tag/tag-current.html')
