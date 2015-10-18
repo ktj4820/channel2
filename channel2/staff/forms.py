@@ -100,7 +100,7 @@ class StaffAnimeAddForm(forms.Form):
         if self.json.get('show_type') != 'TV':
             child = Tag.objects.get_or_create(name=self.json.get('show_type'))[0]
             children.append(child)
-        elif self.json.get('episode_count', 1) < 30:
+        elif 'episode_count' in self.json:
             started = self.json.get('started_airing')
             d = datetime.datetime.strptime(started, '%Y-%m-%d')
             name = '{} {}'.format(d.year, month_to_season[d.month])
