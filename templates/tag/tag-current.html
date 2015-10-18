@@ -2,6 +2,9 @@
 {% import '_macros/utils.html' as utils with context %}
 
 {% block content %}
+    {% if not video_dict %}
+        <p>There hasn't been any anime uploaded for {{ tag.name }} yet.</p>
+    {% endif %}
     {% for upload_date, video_list in video_dict %}
         <h2 class="h2-heading">{{ upload_date|date('%A, %B %d' ) }}</h2>
         <div class="tl-no-columns">
@@ -20,8 +23,10 @@
             {% endfor %}
         </div>
     {% endfor %}
-    <hr>
-    <div class="space-top-20">
-        {{ utils.pagination(video_list) }}
-    </div>
+    {% if video_list.paginator.num_pages > 1 %}
+        <hr>
+        <div class="space-top-20">
+            {{ utils.pagination(video_list) }}
+        </div>
+    {% endif %}
 {% endblock %}
