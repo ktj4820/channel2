@@ -13,7 +13,7 @@ from channel2.tag.enums import TagType
 class Tag(models.Model):
 
     name = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
     type = models.CharField(choices=TagType.choices, max_length=20, default=TagType.COMMON)
     markdown = models.TextField(blank=True)
     html = models.TextField(blank=True)
@@ -34,7 +34,11 @@ class Tag(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)[:200] or '-'
+        self.slug = slug = slugify(self.name)[:200] or '-'
+        counter = 1
+        while self._default_manager.filter(slug=self.slug).exclude(id=self.id).exists():
+            self.slug = slug + '-' + str(counter)
+            counter += 1
         super().save(*args, **kwargs)
 
     @property
