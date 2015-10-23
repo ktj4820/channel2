@@ -4,12 +4,17 @@
 
 .content {
     margin-top: 50px;
-    padding: 20px;
 }
 
 @media screen and (min-width: @screen-md) {
     .content {
         margin-left: @nav-width;
+        padding: 20px;
         padding-left: 0;
+    }
+}
+@media screen and (max-width: @screen-md1) {
+    .content {
+        padding: 15px;
     }
 }
