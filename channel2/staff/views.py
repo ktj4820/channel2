@@ -155,7 +155,7 @@ class StaffTagVideoView(StaffTemplateView):
 
     def get_context_data(self, id):
         tag = get_object_or_404(Tag, id=id)
-        video_list = Video.objects.filter(tag=tag).order_by('created_on')
+        video_list = Video.objects.filter(tag=tag).order_by('slug')
         return {
             'tag': tag,
             'video_list': video_list,
