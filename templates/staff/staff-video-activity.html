@@ -3,22 +3,38 @@
 
 {% block content %}
     <h2 class="h2-heading">Video Activity</h2>
+    <form action="" method="get" class="space-bottom-15 nowrap">
+        <div class="right min-xs">
+            {{ utils.pagination(link_list) }}
+        </div>
+        <select name="u" class="fat space-right-10" style="width: 215px;">
+            <option value="">--------</option>
+            {% for user in user_list %}
+                <option value="{{ user.id }}"{% if request.GET.u == user.id|string %} selected{% endif %}>{{ user.email }}</option>
+            {% endfor %}
+        </select>
+        <button class="button-primary button-thin">Filter</button>
+    </form>
     <table>
         <thead>
             <tr>
-                <th width="80px">ID</th>
+                <th width="80px" class="min-xs">ID</th>
                 <th>Video</th>
-                <th width="300px">Email</th>
-                <th width="200px">Date</th>
+                <th width="300px" class="min-md">Email</th>
+                <th width="200px" class="min-xs">Date</th>
             </tr>
         </thead>
         <tbody>
             {% for link in link_list %}
                 <tr>
-                    <td>{{ link.id }}</td>
-                    <td>{{ link.video.name }}</td>
-                    <td>{{ link.created_by.email }}</td>
-                    <td>{{ link.created_on|date }}</td>
+                    <td class="min-xs">{{ link.id }}</td>
+                    <td>
+                        <div class="staff-activity-video-name">{{ link.video.name }}</div>
+                        <div class="max-md">{{ link.created_by.email }}</div>
+                        <div class="max-xs">{{ link.created_on|date }}</div>
+                    </td>
+                    <td class="min-md">{{ link.created_by.email }}</td>
+                    <td class="min-xs">{{ link.created_on|date }}</td>
                 </tr>
             {% endfor %}
         </tbody>

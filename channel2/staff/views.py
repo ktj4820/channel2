@@ -283,14 +283,20 @@ class StaffTagPinnedView(StaffTemplateView):
 
 class StaffVideoActivityView(StaffTemplateView):
 
-    page_size = 50
+    page_size = 100
     template_name = 'staff/staff-video-activity.html'
 
     def get(self, request):
         link_list = VideoLink.objects.select_related('video', 'created_by').order_by('-created_on')
+
+        user_id = request.GET.get('u')
+        if user_id and user_id.isdigit():
+            link_list = link_list.filter(created_by_id=user_id)
+
         link_list = paginate(link_list, self.page_size, request.GET.get('p'))
         return self.render_to_response({
             'link_list': link_list,
+            'user_list': User.objects.order_by('email'),
         })
 
 
