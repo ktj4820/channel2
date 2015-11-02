@@ -21,7 +21,7 @@ class VideoView(ProtectedTemplateView):
         video = get_object_or_404(Video, id=id)
 
         try:
-            time_limit = datetime.datetime.now(tz=pytz.UTC) - datetime.timedelta(minutes=30)
+            time_limit = datetime.datetime.now(tz=pytz.UTC) - datetime.timedelta(hours=12)
             link = VideoLink.objects.get(
                 video=video,
                 ip_address=get_ip_address(request),
