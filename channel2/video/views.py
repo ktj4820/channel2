@@ -76,4 +76,9 @@ class VideoLinkView(TemplateView):
             return self.render_to_response({'message': self.messages['link_expired']})
 
         download = 'download' in request.GET
-        return HttpResponseXAccel(link.video.url, link.video.name, content_type='video/mp4', attachment=download)
+        return HttpResponseXAccel(
+            url=link.video.url,
+            name='{}.mp4'.format(link.video.slug),
+            content_type='video/mp4',
+            attachment=download
+        )
