@@ -45,7 +45,8 @@ class VideoView(ProtectedTemplateView):
 
     def get(self, request, id, slug):
         video, link = self.get_video_link(request, id)
-        url = '{}?{}'.format(reverse('video.link', args=[link.key, video.slug]), request.META.get('QUERY_STRING'))
+        # url = '{}?{}'.format(reverse('video.link', args=[link.key, video.slug]), request.META.get('QUERY_STRING'))
+        url = reverse('video.link', args=[link.key, video.slug])
         return redirect(url)
 
 
