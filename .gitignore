@@ -6,6 +6,9 @@
 .DS_Store
 
 channel2/localsettings.py
+deploy/files/derekkwok.crt
+deploy/files/derekkwok.csr
+deploy/files/derekkwok.key
 deploy/vars/private.yml
 media-test
 node_modules

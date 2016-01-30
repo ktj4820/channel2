@@ -76,9 +76,9 @@
     - template: src=templates/hostname.j2 dest=/etc/hostname owner=0 group=0 mode=0644
 
     # python packages
-    - pip: name=psycopg2 state=latest
-    - pip: name=supervisor state=latest
-    - pip: name=virtualenv state=latest
+    - pip: executable=pip2 name=psycopg2 state=latest
+    - pip: executable=pip2 name=supervisor state=latest
+    - pip: executable=pip2 name=virtualenv state=latest
 
     # setup the database
     - postgresql_db: name="channel2" encoding='UTF-8'
@@ -105,6 +105,11 @@
     # memcached setup
     - template: src=templates/memcached.conf.j2 dest=/etc/memcached.conf
       notify: restart memcached
+
+    # add files necesssary for SSL
+    - file: path=/etc/nginx/ssl state=directory
+    - copy: src=files/derekkwok.crt dest=/etc/nginx/ssl/derekkwok.crt
+    - copy: src=files/derekkwok.key dest=/etc/nginx/ssl/derekkwok.key
 
     # nginx setup
     - file: path=/etc/nginx/sites-enabled/default state=absent
