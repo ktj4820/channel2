@@ -80,7 +80,7 @@
                 {% set url_video = url('video', args=[v.id, v.slug]) %}
                 <div class="no-break-column">
                     <div class="tli{% if v.id == video.id %} active{% endif %}{% if v.watched %} watched{% endif %}">
-                        <a href="{{ url_video }}" download="{{ v.slug }}.mp4"  class="left tli-download">
+                        <a href="{{ url_video }}" type="video/mp4"  class="left tli-download">
                             <span class="icon icon-down-circled tli-icon tli-icon-short"></span>
                         </a>
                         <a href="{{ url_tag_video }}" title="{{ v.name }}" class="tli-inner">

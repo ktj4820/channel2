@@ -5,6 +5,12 @@
   vars_files:
     - vars/private.yml
 
+  vars_prompt:
+    - name: "version"
+      prompt: "enter the branch/tag to deploy"
+      default: "3.0"
+      private: no
+
   #-----------------------------------------------------------------------------
   # tasks
   #-----------------------------------------------------------------------------
@@ -19,7 +25,7 @@
     # update repository
     - git: repo=https://github.com/derekkwok/channel2.git
            dest={{ django_path }}
-           version=master
+           version={{ version }}
            accept_hostkey=yes
 
     # resource_version

@@ -126,13 +126,14 @@ X_ACCEL = False
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
     },
 ]
-TEMPLATE_DIRS = (
+JINJA2_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
-TEMPLATE_CONTEXT_PROCESSORS = (
+JINJA2_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.template.context_processors.debug',
     'django.template.context_processors.i18n',

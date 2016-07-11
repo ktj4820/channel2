@@ -9,7 +9,7 @@ from jinja2.ext import Extension
 from jinja2.loaders import FileSystemLoader
 
 from channel2.core import filters
-from channel2.settings import DEBUG, TEMPLATE_DIRS
+from channel2.settings import DEBUG, JINJA2_DIRS
 
 #-------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ class Spaceless(Extension):
 
 
 TEMPLATE_SETTINGS = {
-    'loader': FileSystemLoader(TEMPLATE_DIRS),
+    'loader': FileSystemLoader(JINJA2_DIRS),
     'auto_reload': DEBUG,
     'autoescape': True,
     'extensions': [

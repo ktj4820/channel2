@@ -16,7 +16,7 @@ def get_template_context_processors():
     if _standard_context_processors is None:
         processors = []
         collect = []
-        collect.extend(settings.TEMPLATE_CONTEXT_PROCESSORS)
+        collect.extend(settings.JINJA2_CONTEXT_PROCESSORS)
         for path in collect:
             func = import_string(path)
             processors.append(func)
